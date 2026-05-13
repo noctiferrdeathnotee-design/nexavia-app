@@ -16,10 +16,7 @@ $_ENV['CACHE_STORE'] = 'array';
 $_SERVER['CACHE_STORE'] = 'array';
 putenv('CACHE_STORE=array');
 
-// TEMPORARY: enable debug to see POST errors
-$_ENV['APP_DEBUG'] = 'true';
-$_SERVER['APP_DEBUG'] = 'true';
-putenv('APP_DEBUG=true');
+
 
 try {
     // 1. Create writable directories in /tmp
@@ -38,11 +35,11 @@ try {
         }
     }
 
-    // 2. Copy SQLite database to /tmp (writable)
+    // 2. ALWAYS copy fresh SQLite database to /tmp (overwrite stale data from warm starts)
     $sourceSqlite = __DIR__ . '/../database/database.sqlite';
     $targetSqlite = '/tmp/database/database.sqlite';
 
-    if (file_exists($sourceSqlite) && !file_exists($targetSqlite)) {
+    if (file_exists($sourceSqlite)) {
         copy($sourceSqlite, $targetSqlite);
     }
 
@@ -59,16 +56,8 @@ try {
         $request = Illuminate\Http\Request::capture()
     );
 
-    // 6. DEBUG: If response is 500 on POST, show actual error
-    if ($response->getStatusCode() === 500 && $request->isMethod('POST')) {
-        header('Content-Type: text/html');
-        echo $response->getContent();
-        exit;
-    }
-
     $response->send();
     $kernel->terminate($request, $response);
-
 } catch (\Throwable $e) {
     http_response_code(500);
     header('Content-Type: text/plain');
