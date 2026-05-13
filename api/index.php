@@ -16,6 +16,11 @@ $_ENV['CACHE_STORE'] = 'array';
 $_SERVER['CACHE_STORE'] = 'array';
 putenv('CACHE_STORE=array');
 
+// TEMPORARY: enable debug to see POST errors
+$_ENV['APP_DEBUG'] = 'true';
+$_SERVER['APP_DEBUG'] = 'true';
+putenv('APP_DEBUG=true');
+
 try {
     // 1. Create writable directories in /tmp
     $tmpPaths = [
@@ -53,6 +58,14 @@ try {
     $response = $kernel->handle(
         $request = Illuminate\Http\Request::capture()
     );
+
+    // 6. DEBUG: If response is 500 on POST, show actual error
+    if ($response->getStatusCode() === 500 && $request->isMethod('POST')) {
+        header('Content-Type: text/html');
+        echo $response->getContent();
+        exit;
+    }
+
     $response->send();
     $kernel->terminate($request, $response);
 
