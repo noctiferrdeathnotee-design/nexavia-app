@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengiriman;
 use Illuminate\View\View;
-use Picqer\Barcode\BarcodeGeneratorPNG;
+use Picqer\Barcode\BarcodeGeneratorSVG;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
-use chillerlan\QRCode\Output\QRGdImagePNG;
+use chillerlan\QRCode\Output\QRMarkupSVG;
 use chillerlan\QRCode\Common\EccLevel;
 use Symfony\Component\HttpFoundation\Response;
 use TCPDF;
@@ -17,7 +17,7 @@ class ResiController extends Controller
     private function getQrCode($text)
     {
         $options = new QROptions([
-            'outputType'  => QRGdImagePNG::class,
+            'outputType'  => QRMarkupSVG::class,
             'eccLevel'    => EccLevel::L,
             'scale'       => 4,
             'imageBase64' => true,
@@ -27,9 +27,9 @@ class ResiController extends Controller
 
     private function getBarcode($resi)
     {
-        $generator = new BarcodeGeneratorPNG();
+        $generator = new BarcodeGeneratorSVG();
         $barcode = $generator->getBarcode($resi, $generator::TYPE_CODE_128, 2, 48);
-        return 'data:image/png;base64,' . base64_encode($barcode);
+        return 'data:image/svg+xml;base64,' . base64_encode($barcode);
     }
 
     public function print(Pengiriman $pengiriman): View
