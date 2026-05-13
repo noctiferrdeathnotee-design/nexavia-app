@@ -16,8 +16,6 @@ $_ENV['CACHE_STORE'] = 'array';
 $_SERVER['CACHE_STORE'] = 'array';
 putenv('CACHE_STORE=array');
 
-
-
 try {
     // 1. Create writable directories in /tmp
     $tmpPaths = [
@@ -35,12 +33,23 @@ try {
         }
     }
 
-    // 2. ALWAYS copy fresh SQLite database to /tmp (overwrite stale data from warm starts)
+    // 2. Smart SQLite copy: only on new deployment (not every request)
+    // Uses a version marker to detect when a new deployment has fresh DB
     $sourceSqlite = __DIR__ . '/../database/database.sqlite';
     $targetSqlite = '/tmp/database/database.sqlite';
+    $versionFile = '/tmp/database/.deploy_version';
 
-    if (file_exists($sourceSqlite)) {
-        copy($sourceSqlite, $targetSqlite);
+    // Create a unique version hash from the source database
+    $sourceVersion = file_exists($sourceSqlite) ? md5_file($sourceSqlite) : 'none';
+
+    // Only copy if: target doesn't exist OR deployment version changed
+    $currentVersion = file_exists($versionFile) ? file_get_contents($versionFile) : '';
+
+    if ($sourceVersion !== $currentVersion) {
+        if (file_exists($sourceSqlite)) {
+            copy($sourceSqlite, $targetSqlite);
+        }
+        file_put_contents($versionFile, $sourceVersion);
     }
 
     // 3. Autoload
