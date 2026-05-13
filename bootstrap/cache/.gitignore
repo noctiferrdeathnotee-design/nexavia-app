@@ -1,2 +1,3 @@
-*
-!.gitignore
+*.tmp
+config.php
+routes-v7.php

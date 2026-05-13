@@ -16,7 +16,6 @@ try {
         '/tmp/storage/logs',
         '/tmp/storage/app/public',
         '/tmp/database',
-        '/tmp/bootstrap/cache',
     ];
 
     foreach ($tmpPaths as $path) {
@@ -33,23 +32,14 @@ try {
         copy($sourceSqlite, $targetSqlite);
     }
 
-    // 3. Remove stale cache files that reference local paths
-    $cacheDir = __DIR__ . '/../bootstrap/cache';
-    foreach (['services.php', 'packages.php', 'config.php', 'routes-v7.php'] as $cacheFile) {
-        $filePath = $cacheDir . '/' . $cacheFile;
-        if (file_exists($filePath)) {
-            @unlink($filePath);
-        }
-    }
-
-    // 4. Autoload
+    // 3. Autoload
     require __DIR__ . '/../vendor/autoload.php';
 
-    // 5. Bootstrap Laravel
+    // 4. Bootstrap Laravel
     $app = require_once __DIR__ . '/../bootstrap/app.php';
     $app->useStoragePath('/tmp/storage');
 
-    // 6. Handle request
+    // 5. Handle request
     $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
     $response = $kernel->handle(
         $request = Illuminate\Http\Request::capture()
@@ -64,7 +54,6 @@ try {
     echo "Message: " . $e->getMessage() . "\n";
     echo "File: " . $e->getFile() . "\n";
     echo "Line: " . $e->getLine() . "\n\n";
-    echo "Trace:\n" . $e->getTraceAsString() . "\n\n";
-    echo "PHP: " . phpversion() . "\n";
+    echo "Trace:\n" . $e->getTraceAsString() . "\n";
     exit(1);
 }
