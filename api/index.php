@@ -7,6 +7,11 @@
 ini_set('display_errors', '1');
 error_reporting(E_ALL);
 
+// TEMPORARY: Force debug mode to see actual error on Vercel
+$_ENV['APP_DEBUG'] = 'true';
+$_SERVER['APP_DEBUG'] = 'true';
+putenv('APP_DEBUG=true');
+
 try {
     // 1. Create writable directories in /tmp
     $tmpPaths = [
