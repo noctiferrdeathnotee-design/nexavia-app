@@ -7,6 +7,15 @@
 ini_set('display_errors', '0');
 error_reporting(E_ALL);
 
+// Force serverless-safe env overrides
+$_ENV['SESSION_ENCRYPT'] = 'false';
+$_SERVER['SESSION_ENCRYPT'] = 'false';
+putenv('SESSION_ENCRYPT=false');
+
+$_ENV['CACHE_STORE'] = 'array';
+$_SERVER['CACHE_STORE'] = 'array';
+putenv('CACHE_STORE=array');
+
 try {
     // 1. Create writable directories in /tmp
     $tmpPaths = [
@@ -24,7 +33,7 @@ try {
         }
     }
 
-    // 2. Copy SQLite database to /tmp
+    // 2. Copy SQLite database to /tmp (writable)
     $sourceSqlite = __DIR__ . '/../database/database.sqlite';
     $targetSqlite = '/tmp/database/database.sqlite';
 
@@ -46,6 +55,7 @@ try {
     );
     $response->send();
     $kernel->terminate($request, $response);
+
 } catch (\Throwable $e) {
     http_response_code(500);
     header('Content-Type: text/plain');
