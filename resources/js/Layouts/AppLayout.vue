@@ -31,14 +31,17 @@ watch(flashError, (value) => {
 
 <template>
     <div class="min-h-screen bg-slate-50">
-        <div v-show="sidebarOpen" class="fixed inset-0 z-30 bg-slate-900/40 xl:hidden" @click="sidebarOpen = false" />
+        <div v-show="sidebarOpen"
+            class="fixed inset-0 z-30 bg-slate-900/40 xl:hidden"
+            :style="{ transition: 'opacity 0.25s ease' }"
+            @click="sidebarOpen = false" />
 
         <Sidebar :open="sidebarOpen" @close="sidebarOpen = false" />
 
         <div class="flex min-h-screen flex-col xl:pl-60">
             <Navbar @toggle-sidebar="sidebarOpen = !sidebarOpen" />
 
-            <main class="flex-1 overflow-x-hidden p-4 sm:p-5 lg:p-6">
+            <main class="flex-1 overflow-x-hidden p-3 sm:p-5 lg:p-6">
                 <slot />
             </main>
         </div>

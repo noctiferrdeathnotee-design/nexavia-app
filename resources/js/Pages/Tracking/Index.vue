@@ -58,16 +58,16 @@ const submit = async () => {
     <Head title="Tracking" />
 
     <PublicLayout>
-        <div class="flex min-h-[70vh] items-center justify-center">
+        <div class="flex min-h-[65vh] items-center justify-center sm:min-h-[70vh]">
             <div class="w-full max-w-md">
                 <div class="card p-5 sm:p-6">
                     <div class="mb-5 text-center">
                         <div
-                            class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-slate-200 bg-white">
-                            <img src="/images/logo-brand.png" alt="SoftSend" class="h-11 w-11 object-contain">
+                            class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 bg-white sm:h-16 sm:w-16">
+                            <img src="/images/logo-brand.png" alt="SoftSend" class="h-9 w-9 object-contain sm:h-11 sm:w-11">
                         </div>
 
-                        <h1 class="text-xl font-bold text-slate-800">
+                        <h1 class="text-lg font-bold text-slate-800 sm:text-xl">
                             Lacak Pengiriman
                         </h1>
                         <p class="mt-1 text-sm text-slate-500">

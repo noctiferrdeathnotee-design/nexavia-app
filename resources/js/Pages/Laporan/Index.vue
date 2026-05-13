@@ -220,8 +220,9 @@ const setTab = (tab) => {
     <Head title="Laporan" />
 
     <AppLayout>
-        <div class="space-y-5">
-            <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+        <div class="space-y-4 sm:space-y-5">
+            <div
+                class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between lg:flex-row lg:items-start lg:justify-between">
                 <div>
                     <h2 class="text-lg font-semibold text-slate-800">Laporan</h2>
                     <p class="text-sm text-slate-500">
@@ -232,14 +233,15 @@ const setTab = (tab) => {
                     </p>
                 </div>
 
-                <a :href="exportPdfUrl" class="btn-secondary w-full justify-center lg:w-auto">
+                <a :href="exportPdfUrl" class="btn-secondary w-full justify-center sm:w-auto">
                     <i class="bi bi-file-earmark-pdf" />
                     Export PDF
                 </a>
             </div>
 
-            <div class="card p-4">
-                <div class="flex flex-wrap gap-2">
+            <!-- Period Selector -->
+            <div class="card p-3 sm:p-4">
+                <div class="flex flex-wrap gap-1.5 sm:gap-2">
                     <button type="button" class="btn-secondary btn-sm"
                         :class="{ '!border-indigo-500 !bg-indigo-50 !text-indigo-600': period === 'hari_ini' }"
                         @click="applyPeriod('hari_ini')">
@@ -271,18 +273,18 @@ const setTab = (tab) => {
                     </button>
                 </div>
 
-                <div class="mt-4 flex flex-col gap-3 lg:flex-row">
-                    <div class="max-w-[170px]">
+                <div class="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:gap-3 lg:flex lg:flex-row">
+                    <div class="col-span-1 lg:w-[170px]">
                         <label class="form-label">Mulai</label>
                         <input v-model="customForm.mulai" type="date" class="form-input">
                     </div>
 
-                    <div class="max-w-[170px]">
+                    <div class="col-span-1 lg:w-[170px]">
                         <label class="form-label">Akhir</label>
                         <input v-model="customForm.akhir" type="date" class="form-input">
                     </div>
 
-                    <div class="flex items-end">
+                    <div class="col-span-2 flex items-end lg:col-span-1">
                         <button type="button" class="btn-primary w-full justify-center lg:w-auto"
                             @click="applyCustomPeriod">
                             Terapkan Custom
@@ -291,8 +293,9 @@ const setTab = (tab) => {
                 </div>
             </div>
 
+            <!-- Tab Selector -->
             <div class="card p-2">
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-1.5 sm:gap-2">
                     <button type="button" class="btn-secondary btn-sm"
                         :class="{ '!border-indigo-500 !bg-indigo-50 !text-indigo-600': tab === 'rekap' }"
                         @click="setTab('rekap')">
@@ -313,139 +316,152 @@ const setTab = (tab) => {
                 </div>
             </div>
 
-            <div v-if="tab === 'rekap'" class="space-y-5">
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                    <div class="card p-4">
+            <!-- Tab: Rekap -->
+            <div v-if="tab === 'rekap'" class="space-y-4 sm:space-y-5">
+                <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-3">
+                    <div class="card p-3 sm:p-4">
                         <p class="text-xs text-slate-500">Total Pengiriman</p>
-                        <p class="mt-2 text-2xl font-bold text-slate-800">{{ formatNumber(totalPengiriman) }}</p>
+                        <p class="mt-1.5 text-xl font-bold text-slate-800 sm:mt-2 sm:text-2xl">{{
+                            formatNumber(totalPengiriman) }}</p>
                     </div>
 
-                    <div class="card p-4">
+                    <div class="card p-3 sm:p-4">
                         <p class="text-xs text-slate-500">Terkirim</p>
-                        <p class="mt-2 text-2xl font-bold text-emerald-600">{{ formatNumber(totalTerkirim) }}</p>
+                        <p class="mt-1.5 text-xl font-bold text-emerald-600 sm:mt-2 sm:text-2xl">{{
+                            formatNumber(totalTerkirim) }}</p>
                     </div>
 
-                    <div class="card p-4">
+                    <div class="card p-3 sm:p-4">
                         <p class="text-xs text-slate-500">Batal / Gagal</p>
-                        <p class="mt-2 text-2xl font-bold text-red-500">{{ formatNumber(totalBatal) }}</p>
+                        <p class="mt-1.5 text-xl font-bold text-red-500 sm:mt-2 sm:text-2xl">{{ formatNumber(totalBatal)
+                            }}</p>
                     </div>
 
-                    <div class="card p-4">
+                    <div class="card p-3 sm:p-4">
                         <p class="text-xs text-slate-500">Sukses Rate</p>
-                        <p class="mt-2 text-2xl font-bold text-indigo-600">{{ formatNumber(successRate, 2) }}%</p>
+                        <p class="mt-1.5 text-xl font-bold text-indigo-600 sm:mt-2 sm:text-2xl">{{
+                            formatNumber(successRate, 2) }}%</p>
                     </div>
 
-                    <div class="card p-4">
+                    <div class="card p-3 sm:p-4">
                         <p class="text-xs text-slate-500">Tepat Waktu</p>
-                        <p class="mt-2 text-2xl font-bold text-emerald-600">{{ formatNumber(onTimeCount) }}</p>
+                        <p class="mt-1.5 text-xl font-bold text-emerald-600 sm:mt-2 sm:text-2xl">{{
+                            formatNumber(onTimeCount) }}</p>
                     </div>
 
-                    <div class="card p-4">
+                    <div class="card p-3 sm:p-4">
                         <p class="text-xs text-slate-500">Terlambat</p>
-                        <p class="mt-2 text-2xl font-bold text-amber-500">{{ formatNumber(lateCount) }}</p>
+                        <p class="mt-1.5 text-xl font-bold text-amber-500 sm:mt-2 sm:text-2xl">{{
+                            formatNumber(lateCount) }}</p>
                     </div>
 
-                    <div class="card p-4">
+                    <div class="card p-3 sm:p-4">
                         <p class="text-xs text-slate-500">Total Pendapatan</p>
-                        <p class="mt-2 text-xl font-bold text-slate-800">{{ formatCurrency(totalPendapatan) }}</p>
+                        <p class="mt-1.5 text-lg font-bold text-slate-800 sm:mt-2 sm:text-xl">{{
+                            formatCurrency(totalPendapatan) }}</p>
                     </div>
 
-                    <div class="card p-4">
+                    <div class="card p-3 sm:p-4">
                         <p class="text-xs text-slate-500">Rata Berat Tagihan</p>
-                        <p class="mt-2 text-xl font-bold text-slate-800">{{ formatWeight(rataBeratTagihan) }}</p>
+                        <p class="mt-1.5 text-lg font-bold text-slate-800 sm:mt-2 sm:text-xl">{{
+                            formatWeight(rataBeratTagihan) }}</p>
                     </div>
 
-                    <div class="card p-4">
+                    <div class="card p-3 sm:p-4">
                         <p class="text-xs text-slate-500">Pending</p>
-                        <p class="mt-2 text-2xl font-bold text-slate-700">{{ formatNumber(pendingCount) }}</p>
+                        <p class="mt-1.5 text-xl font-bold text-slate-700 sm:mt-2 sm:text-2xl">{{
+                            formatNumber(pendingCount) }}</p>
                     </div>
                 </div>
 
-                <div class="card p-4">
+                <div class="card p-3 sm:p-4">
                     <h3 class="text-sm font-semibold text-slate-800">Rekap Per Status</h3>
 
-                    <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                    <div class="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:grid-cols-4 sm:gap-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2.5 sm:p-3">
                             <p class="text-xs text-slate-500">Pending</p>
-                            <p class="mt-1 text-lg font-bold text-slate-800">{{ formatNumber(rekapStatus.pending) }}</p>
+                            <p class="mt-1 text-base font-bold text-slate-800 sm:text-lg">{{
+                                formatNumber(rekapStatus.pending) }}</p>
                         </div>
 
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2.5 sm:p-3">
                             <p class="text-xs text-slate-500">Diproses</p>
-                            <p class="mt-1 text-lg font-bold text-slate-800">{{ formatNumber(rekapStatus.diproses) }}
-                            </p>
+                            <p class="mt-1 text-base font-bold text-slate-800 sm:text-lg">{{
+                                formatNumber(rekapStatus.diproses) }}</p>
                         </div>
 
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2.5 sm:p-3">
                             <p class="text-xs text-slate-500">Dalam Perjalanan</p>
-                            <p class="mt-1 text-lg font-bold text-slate-800">{{
+                            <p class="mt-1 text-base font-bold text-slate-800 sm:text-lg">{{
                                 formatNumber(rekapStatus.dalam_perjalanan) }}</p>
                         </div>
 
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2.5 sm:p-3">
                             <p class="text-xs text-slate-500">Tiba Kota Tujuan</p>
-                            <p class="mt-1 text-lg font-bold text-slate-800">{{
+                            <p class="mt-1 text-base font-bold text-slate-800 sm:text-lg">{{
                                 formatNumber(rekapStatus.tiba_di_kota_tujuan) }}</p>
                         </div>
 
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2.5 sm:p-3">
                             <p class="text-xs text-slate-500">Sedang Diantar</p>
-                            <p class="mt-1 text-lg font-bold text-slate-800">{{ formatNumber(rekapStatus.sedang_diantar)
-                                }}</p>
+                            <p class="mt-1 text-base font-bold text-slate-800 sm:text-lg">{{
+                                formatNumber(rekapStatus.sedang_diantar) }}</p>
                         </div>
 
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2.5 sm:p-3">
                             <p class="text-xs text-slate-500">Terkirim</p>
-                            <p class="mt-1 text-lg font-bold text-emerald-600">{{ formatNumber(rekapStatus.terkirim) }}
-                            </p>
+                            <p class="mt-1 text-base font-bold text-emerald-600 sm:text-lg">{{
+                                formatNumber(rekapStatus.terkirim) }}</p>
                         </div>
 
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2.5 sm:p-3">
                             <p class="text-xs text-slate-500">Gagal</p>
-                            <p class="mt-1 text-lg font-bold text-red-500">{{ formatNumber(rekapStatus.gagal) }}</p>
+                            <p class="mt-1 text-base font-bold text-red-500 sm:text-lg">{{
+                                formatNumber(rekapStatus.gagal) }}</p>
                         </div>
 
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2.5 sm:p-3">
                             <p class="text-xs text-slate-500">Dibatalkan</p>
-                            <p class="mt-1 text-lg font-bold text-slate-500">{{ formatNumber(rekapStatus.dibatalkan) }}
-                            </p>
+                            <p class="mt-1 text-base font-bold text-slate-500 sm:text-lg">{{
+                                formatNumber(rekapStatus.dibatalkan) }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="card p-4">
+                <div class="card p-3 sm:p-4">
                     <h3 class="text-sm font-semibold text-slate-800">Rekap Per Layanan</h3>
 
-                    <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                    <div class="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:grid-cols-4 sm:gap-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2.5 sm:p-3">
                             <p class="text-xs text-slate-500">Ekonomis</p>
-                            <p class="mt-1 text-lg font-bold text-slate-800">{{ formatNumber(rekapLayanan.ekonomis) }}
-                            </p>
+                            <p class="mt-1 text-base font-bold text-slate-800 sm:text-lg">{{
+                                formatNumber(rekapLayanan.ekonomis) }}</p>
                         </div>
 
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2.5 sm:p-3">
                             <p class="text-xs text-slate-500">Reguler</p>
-                            <p class="mt-1 text-lg font-bold text-slate-800">{{ formatNumber(rekapLayanan.reguler) }}
-                            </p>
+                            <p class="mt-1 text-base font-bold text-slate-800 sm:text-lg">{{
+                                formatNumber(rekapLayanan.reguler) }}</p>
                         </div>
 
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2.5 sm:p-3">
                             <p class="text-xs text-slate-500">Express</p>
-                            <p class="mt-1 text-lg font-bold text-slate-800">{{ formatNumber(rekapLayanan.express) }}
-                            </p>
+                            <p class="mt-1 text-base font-bold text-slate-800 sm:text-lg">{{
+                                formatNumber(rekapLayanan.express) }}</p>
                         </div>
 
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                        <div class="rounded-lg border border-slate-200 bg-slate-50 p-2.5 sm:p-3">
                             <p class="text-xs text-slate-500">Same Day</p>
-                            <p class="mt-1 text-lg font-bold text-slate-800">{{ formatNumber(rekapLayanan.same_day) }}
-                            </p>
+                            <p class="mt-1 text-base font-bold text-slate-800 sm:text-lg">{{
+                                formatNumber(rekapLayanan.same_day) }}</p>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Tab: Detail -->
             <div v-else-if="tab === 'detail'" class="space-y-4">
-                <div class="card p-4">
+                <div class="card p-3 sm:p-4">
                     <div class="max-w-sm">
                         <label class="form-label">Cari di tabel</label>
                         <input v-model="search.keyword" type="text" class="form-input"
@@ -462,28 +478,28 @@ const setTab = (tab) => {
                                         class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                                         No Resi</th>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:table-cell">
                                         Tanggal</th>
                                     <th
                                         class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                                         Pengirim</th>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 md:table-cell">
                                         Tujuan</th>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 lg:table-cell">
                                         Layanan</th>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 lg:table-cell">
                                         B. Asli</th>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 lg:table-cell">
                                         B. Tagihan</th>
                                     <th
                                         class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                                         Status</th>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:table-cell">
                                         Biaya</th>
                                 </tr>
                             </thead>
@@ -495,21 +511,23 @@ const setTab = (tab) => {
                                             {{ item.nomor_resi }}
                                         </Link>
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{ formatDate(item.tanggal, true) }}
-                                    </td>
+                                    <td class="hidden px-3 py-2 text-sm text-slate-600 sm:table-cell">{{
+                                        formatDate(item.tanggal, true) }}</td>
                                     <td class="px-3 py-2 text-sm text-slate-600">{{ item.pengirim }}</td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">
+                                    <td class="hidden px-3 py-2 text-sm text-slate-600 md:table-cell">
                                         {{ item.kota_asal || '-' }} → {{ item.tujuan || '-' }}
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{ formatService(item.layanan) }}</td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{ formatWeight(item.berat_asli) }}
-                                    </td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{ formatWeight(item.berat_tagihan) }}
-                                    </td>
+                                    <td class="hidden px-3 py-2 text-sm text-slate-600 lg:table-cell">{{
+                                        formatService(item.layanan) }}</td>
+                                    <td class="hidden px-3 py-2 text-sm text-slate-600 lg:table-cell">{{
+                                        formatWeight(item.berat_asli) }}</td>
+                                    <td class="hidden px-3 py-2 text-sm text-slate-600 lg:table-cell">{{
+                                        formatWeight(item.berat_tagihan) }}</td>
                                     <td class="px-3 py-2 text-sm">
                                         <StatusBadge :status="item.status" />
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{ formatCurrency(item.biaya) }}</td>
+                                    <td class="hidden px-3 py-2 text-sm text-slate-600 sm:table-cell">{{
+                                        formatCurrency(item.biaya) }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -521,25 +539,26 @@ const setTab = (tab) => {
                 </div>
             </div>
 
+            <!-- Tab: Keuangan -->
             <div v-else class="space-y-4">
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <div class="card p-4">
+                <div class="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2">
+                    <div class="card p-3 sm:p-4">
                         <p class="text-xs text-slate-500">Total Pendapatan</p>
-                        <p class="mt-2 text-2xl font-bold text-slate-800">
+                        <p class="mt-1.5 text-xl font-bold text-slate-800 sm:mt-2 sm:text-2xl">
                             {{ formatCurrency(totalPendapatan) }}
                         </p>
                     </div>
 
-                    <div class="card p-4">
+                    <div class="card p-3 sm:p-4">
                         <p class="text-xs text-slate-500">Rata-rata per Pengiriman</p>
-                        <p class="mt-2 text-2xl font-bold text-indigo-600">
+                        <p class="mt-1.5 text-xl font-bold text-indigo-600 sm:mt-2 sm:text-2xl">
                             {{ formatCurrency(totalPengiriman ? totalPendapatan / totalPengiriman : 0) }}
                         </p>
                     </div>
                 </div>
 
                 <div class="card overflow-hidden">
-                    <div class="border-b border-slate-200 px-4 py-3">
+                    <div class="border-b border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3">
                         <h3 class="text-sm font-semibold text-slate-800">Breakdown Per Layanan</h3>
                     </div>
 
@@ -552,12 +571,12 @@ const setTab = (tab) => {
                                         Layanan</th>
                                     <th
                                         class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                        Jumlah Pengiriman</th>
+                                        Jumlah</th>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:table-cell">
                                         Total Pendapatan</th>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:table-cell">
                                         Rata-rata</th>
                                 </tr>
                             </thead>
@@ -568,10 +587,10 @@ const setTab = (tab) => {
                                     </td>
                                     <td class="px-3 py-2 text-sm text-slate-600">{{ formatNumber(item.jumlah_pengiriman)
                                         }}</td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{
+                                    <td class="hidden px-3 py-2 text-sm text-slate-600 sm:table-cell">{{
                                         formatCurrency(item.total_pendapatan) }}</td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{ formatCurrency(item.rata_rata) }}
-                                    </td>
+                                    <td class="hidden px-3 py-2 text-sm text-slate-600 sm:table-cell">{{
+                                        formatCurrency(item.rata_rata) }}</td>
                                 </tr>
                             </tbody>
                         </table>

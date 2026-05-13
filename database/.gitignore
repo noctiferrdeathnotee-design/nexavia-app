@@ -1,1 +1,2 @@
-*.sqlite*
+# Jangan ignore database.sqlite karena dibutuhkan Vercel
+# *.sqlite*

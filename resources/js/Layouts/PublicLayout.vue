@@ -23,30 +23,30 @@ watch(flashError, (value) => {
 <template>
     <div class="min-h-screen bg-slate-50">
         <header class="border-b border-slate-200 bg-white">
-            <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-                <div class="flex items-center gap-3">
+            <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-3 py-2.5 sm:px-6 lg:px-8">
+                <div class="flex items-center gap-2.5 sm:gap-3">
                     <img src="/images/logo-brand.png" alt="SoftSend"
-                        class="h-10 w-10 rounded-xl border border-slate-200 object-contain p-1">
+                        class="h-9 w-9 rounded-xl border border-slate-200 object-contain p-1 sm:h-10 sm:w-10">
 
                     <div>
                         <p class="text-sm font-semibold text-slate-800">Nexavia</p>
-                        <p class="text-xs text-slate-500">Sistem Manajemen Pengiriman</p>
+                        <p class="hidden text-xs text-slate-500 sm:block">Sistem Manajemen Pengiriman</p>
                     </div>
                 </div>
 
-                <Link v-if="authUser" href="/dashboard" class="btn-secondary">
+                <Link v-if="authUser" href="/dashboard" class="btn-secondary text-xs sm:text-sm">
                     <i class="bi bi-speedometer2" />
-                    Dashboard
+                    <span class="hidden sm:inline">Dashboard</span>
                 </Link>
 
-                <Link v-else href="/login" class="btn-secondary">
+                <Link v-else href="/login" class="btn-secondary text-xs sm:text-sm">
                     <i class="bi bi-box-arrow-in-right" />
-                    Login Admin
+                    <span class="hidden sm:inline">Login Admin</span>
                 </Link>
             </div>
         </header>
 
-        <main class="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+        <main class="mx-auto w-full max-w-6xl px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
             <slot />
         </main>
     </div>

@@ -39,9 +39,19 @@ class DashboardController extends Controller
         $startMonth = now()->startOfMonth()->subMonths(5);
         $endMonth = now()->endOfMonth();
 
+        $isSqlite = DB::connection()->getDriverName() === 'sqlite';
+
+        $yearExpr = $isSqlite
+            ? "CAST(strftime('%Y', created_at) AS INTEGER)"
+            : 'YEAR(created_at)';
+
+        $monthExpr = $isSqlite
+            ? "CAST(strftime('%m', created_at) AS INTEGER)"
+            : 'MONTH(created_at)';
+
         $chartRows = Pengiriman::query()
-            ->selectRaw('YEAR(created_at) as tahun')
-            ->selectRaw('MONTH(created_at) as bulan')
+            ->selectRaw("{$yearExpr} as tahun")
+            ->selectRaw("{$monthExpr} as bulan")
             ->selectRaw('COUNT(*) as jumlah')
             ->selectRaw("
                 SUM(
@@ -53,8 +63,8 @@ class DashboardController extends Controller
                 ) as revenue
             ")
             ->whereBetween('created_at', [$startMonth, $endMonth])
-            ->groupByRaw('YEAR(created_at), MONTH(created_at)')
-            ->orderByRaw('YEAR(created_at), MONTH(created_at)')
+            ->groupByRaw("{$yearExpr}, {$monthExpr}")
+            ->orderByRaw("{$yearExpr}, {$monthExpr}")
             ->get()
             ->keyBy(fn($row) => $row->tahun . '-' . $row->bulan);
 

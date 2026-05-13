@@ -1,0 +1,1 @@
+function i(l){let t=null,o=null;return{showSuccess:r=>{!r||r===t||!window.Swal||(t=r,window.Swal.fire({icon:"success",title:"Berhasil",text:r,timer:2200,showConfirmButton:!1}))},showError:r=>{!r||r===o||!window.Swal||(o=r,window.Swal.fire({icon:"error",title:"Gagal",text:r}))}}}export{i as u};

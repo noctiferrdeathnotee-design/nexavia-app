@@ -20,19 +20,36 @@
 
 @layer components {
     .btn {
-        @apply inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer;
+        @apply inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-lg cursor-pointer select-none;
+        transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+    }
+
+    .btn:active:not(:disabled) {
+        transform: translateY(1px);
     }
 
     .btn-primary {
-        @apply btn bg-indigo-500 hover:bg-indigo-600 text-white;
+        @apply btn bg-indigo-500 text-white;
+    }
+
+    .btn-primary:hover {
+        @apply bg-indigo-600 shadow-sm;
     }
 
     .btn-secondary {
-        @apply btn bg-white border border-slate-200 text-slate-700 hover:bg-slate-50;
+        @apply btn bg-white border border-slate-200 text-slate-700;
+    }
+
+    .btn-secondary:hover {
+        @apply bg-slate-50 border-slate-300;
     }
 
     .btn-danger {
-        @apply btn bg-red-500 hover:bg-red-600 text-white;
+        @apply btn bg-red-500 text-white;
+    }
+
+    .btn-danger:hover {
+        @apply bg-red-600 shadow-sm;
     }
 
     .btn-sm {
@@ -41,14 +58,25 @@
 
     .card {
         @apply bg-white rounded-xl border border-slate-200;
+        transition: box-shadow 0.2s ease;
     }
 
     .form-input {
-        @apply block w-full px-3 py-2 text-sm rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none bg-white text-slate-800 placeholder-slate-400 transition-colors;
+        @apply block w-full px-3 py-2 text-sm rounded-lg border border-slate-200 outline-none bg-white text-slate-800 placeholder-slate-400;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-input:focus {
+        @apply border-indigo-500 ring-1 ring-indigo-500;
     }
 
     .form-select {
-        @apply block w-full px-3 py-2 text-sm rounded-lg border border-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none bg-white text-slate-800 transition-colors;
+        @apply block w-full px-3 py-2 text-sm rounded-lg border border-slate-200 outline-none bg-white text-slate-800;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-select:focus {
+        @apply border-indigo-500 ring-1 ring-indigo-500;
     }
 
     .form-label {
@@ -61,6 +89,7 @@
 
     .table-wrap {
         @apply w-full overflow-x-auto;
+        -webkit-overflow-scrolling: touch;
     }
 }
 

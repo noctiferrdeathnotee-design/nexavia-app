@@ -145,7 +145,7 @@ const resetForm = () => {
     <Head title="Cek Tarif" />
 
     <AppLayout>
-        <div class="space-y-5">
+        <div class="space-y-4 sm:space-y-5">
             <div>
                 <h2 class="text-lg font-semibold text-slate-800">Cek Tarif</h2>
                 <p class="text-sm text-slate-500">
@@ -153,9 +153,9 @@ const resetForm = () => {
                 </p>
             </div>
 
-            <div class="card p-4">
-                <form class="grid grid-cols-1 gap-3 xl:grid-cols-[1fr_1fr_160px_auto]" @submit.prevent="submit">
-                    <div class="max-w-xs">
+            <div class="card p-3 sm:p-4">
+                <form class="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-[1fr_1fr_140px_auto]" @submit.prevent="submit">
+                    <div class="col-span-1">
                         <label class="form-label">Kota Asal</label>
                         <select v-model="form.kota_asal_id" class="form-select">
                             <option value="" disabled>-- Pilih --</option>
@@ -165,7 +165,7 @@ const resetForm = () => {
                         </select>
                     </div>
 
-                    <div class="max-w-xs">
+                    <div class="col-span-1">
                         <label class="form-label">Kota Tujuan</label>
                         <select v-model="form.kota_tujuan_id" class="form-select">
                             <option value="" disabled>-- Pilih --</option>
@@ -175,12 +175,12 @@ const resetForm = () => {
                         </select>
                     </div>
 
-                    <div class="max-w-[160px]">
+                    <div class="col-span-1">
                         <label class="form-label">Berat (kg)</label>
                         <input v-model="form.berat_kg" type="number" min="0.1" step="0.1" class="form-input">
                     </div>
 
-                    <div class="flex items-end gap-2">
+                    <div class="col-span-1 flex items-end gap-2">
                         <button type="submit" class="btn-primary w-full justify-center xl:w-auto" :disabled="loading"
                             :class="{ 'cursor-not-allowed opacity-60': loading }">
                             <span v-if="loading" class="inline-flex items-center gap-2">
@@ -201,7 +201,7 @@ const resetForm = () => {
                 </form>
 
                 <div v-if="originCity && destinationCity && form.berat_kg"
-                    class="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600">
+                    class="mt-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600">
                     <span class="font-medium text-slate-700">{{ originCity.nama_kota }}</span>
                     →
                     <span class="font-medium text-slate-700">{{ destinationCity.nama_kota }}</span>
@@ -210,7 +210,7 @@ const resetForm = () => {
                 </div>
 
                 <div v-if="errorMessage"
-                    class="mt-4 rounded-lg border border-red-200 bg-red-50 px-3 py-3 text-sm text-red-600">
+                    class="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-3 text-sm text-red-600">
                     {{ errorMessage }}
                 </div>
             </div>
@@ -219,7 +219,7 @@ const resetForm = () => {
                 Sedang mengambil tarif layanan...
             </div>
 
-            <div v-else-if="tarifList.length" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <div v-else-if="tarifList.length" class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
                 <div v-for="item in tarifList" :key="item.jenis_layanan" class="card p-4">
                     <div class="mb-3 flex flex-wrap gap-1">
                         <span v-if="isFastest(item)" class="badge bg-amber-100 text-amber-700">
@@ -235,7 +235,7 @@ const resetForm = () => {
                         {{ formatService(item.jenis_layanan) }}
                     </h3>
 
-                    <p class="mt-3 text-2xl font-bold text-indigo-600">
+                    <p class="mt-3 text-xl font-bold text-indigo-600 sm:text-2xl">
                         {{ formatCurrency(item.total) }}
                     </p>
 

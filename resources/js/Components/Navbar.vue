@@ -127,16 +127,16 @@ onBeforeUnmount(() => {
 
 <template>
     <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
-        <div class="flex h-16 items-center justify-between gap-3 px-4 sm:px-5 lg:px-6">
+        <div class="flex h-14 items-center justify-between gap-3 px-3 sm:h-16 sm:px-5 lg:px-6">
             <div class="flex min-w-0 items-center gap-3">
                 <button type="button"
-                    class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 xl:hidden"
+                    class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 xl:hidden"
                     @click="$emit('toggle-sidebar')">
                     <i class="bi bi-list text-lg" />
                 </button>
 
                 <div class="min-w-0">
-                    <h1 class="truncate text-base font-semibold text-slate-800 sm:text-lg">
+                    <h1 class="truncate text-sm font-semibold text-slate-800 sm:text-base lg:text-lg">
                         {{ title }}
                     </h1>
                     <p class="hidden text-xs text-slate-500 sm:block">
@@ -145,18 +145,18 @@ onBeforeUnmount(() => {
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 sm:gap-3">
                 <div
-                    class="hidden rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600 lg:block">
+                    class="hidden rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-600 lg:block">
                     {{ currentTime }}
                 </div>
 
                 <div ref="dropdownRef" class="relative">
                     <button type="button"
-                        class="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2.5 py-2 hover:bg-slate-50"
+                        class="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2 py-1.5 hover:bg-slate-50 sm:px-2.5 sm:py-2"
                         @click="dropdownOpen = !dropdownOpen">
                         <div
-                            class="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 text-sm font-semibold text-indigo-600">
+                            class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-xs font-semibold text-indigo-600 sm:h-9 sm:w-9 sm:text-sm">
                             {{ initials }}
                         </div>
 

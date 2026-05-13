@@ -81,7 +81,7 @@ class PengirimanController extends Controller
                         AND status NOT IN ('terkirim', 'dibatalkan', 'gagal')
                         THEN 0
                         ELSE 1
-                    END ASC",
+                    END",
                     [$today->toDateString()]
                 )
                 ->latest();

@@ -73,8 +73,9 @@ const linkClass = (item) => {
 
 <template>
     <aside
-        class="fixed inset-y-0 left-0 z-40 flex w-60 flex-col border-r border-slate-200 bg-white transition-transform duration-200"
-        :class="open ? 'translate-x-0' : '-translate-x-full xl:translate-x-0'">
+        class="fixed inset-y-0 left-0 z-40 flex w-60 flex-col border-r border-slate-200 bg-white"
+        :class="open ? 'translate-x-0' : '-translate-x-full xl:translate-x-0'"
+        :style="{ transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)' }">
         <div class="flex h-16 items-center justify-between border-b border-slate-200 px-4">
             <div class="flex items-center gap-3">
                 <img src="/images/logo-brand.png" alt="Nexavia"
@@ -97,10 +98,11 @@ const linkClass = (item) => {
                 Menu Utama
             </p>
 
-            <nav class="space-y-1">
+            <nav class="space-y-0.5">
                 <Link v-for="item in menuUtama" :key="item.href" :href="item.href"
-                    class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors"
-                    :class="linkClass(item)" @click="$emit('close')">
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm"
+                    :class="linkClass(item)" @click="$emit('close')"
+                    :style="{ transition: 'background-color 0.15s ease, color 0.15s ease' }">
                     <i :class="['text-base', item.icon]" />
                     <span>{{ item.label }}</span>
                 </Link>
@@ -112,10 +114,11 @@ const linkClass = (item) => {
                 Laporan
             </p>
 
-            <nav class="space-y-1">
+            <nav class="space-y-0.5">
                 <Link v-for="item in menuLaporan" :key="item.href" :href="item.href"
-                    class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors"
-                    :class="linkClass(item)" @click="$emit('close')">
+                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm"
+                    :class="linkClass(item)" @click="$emit('close')"
+                    :style="{ transition: 'background-color 0.15s ease, color 0.15s ease' }">
                     <i :class="['text-base', item.icon]" />
                     <span>{{ item.label }}</span>
                 </Link>

@@ -89,19 +89,19 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="card p-4">
+    <div class="card p-3 sm:p-4">
         <div class="flex items-start justify-between gap-3">
             <div>
-                <p class="text-sm font-medium text-slate-500">
+                <p class="text-xs font-medium text-slate-500 sm:text-sm">
                     {{ title }}
                 </p>
-                <p class="mt-2 text-2xl font-bold text-slate-800">
+                <p class="mt-1.5 text-xl font-bold text-slate-800 sm:mt-2 sm:text-2xl">
                     {{ formattedValue }}
                 </p>
             </div>
 
-            <div class="flex h-11 w-11 items-center justify-center rounded-xl" :class="colorClass">
-                <i :class="['text-lg', icon]" />
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl sm:h-11 sm:w-11" :class="colorClass">
+                <i :class="['text-base sm:text-lg', icon]" />
             </div>
         </div>
     </div>

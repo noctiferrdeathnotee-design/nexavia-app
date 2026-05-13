@@ -246,41 +246,47 @@ const submitCancel = async () => {
     <Head title="Detail Pengiriman" />
 
     <AppLayout>
-        <div class="space-y-5">
-            <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+        <div class="space-y-4 sm:space-y-5">
+            <!-- Header -->
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                     <p class="text-sm text-slate-500">Nomor Resi</p>
-                    <h2 class="text-lg font-semibold text-slate-800">
+                    <h2 class="text-base font-semibold text-slate-800 sm:text-lg">
                         {{ pengiriman.nomor_resi || '-' }}
                     </h2>
                 </div>
 
                 <div class="flex flex-wrap gap-2">
-                    <a :href="route('resi.print', pengiriman.id)" target="_blank" rel="noopener" class="btn-secondary">
+                    <a :href="route('resi.print', pengiriman.id)" target="_blank" rel="noopener"
+                        class="btn-secondary text-xs sm:text-sm">
                         <i class="bi bi-printer" />
-                        Cetak Resi
+                        <span class="hidden sm:inline">Cetak</span> Resi
                     </a>
 
-                    <a :href="route('resi.pdf', pengiriman.id)" class="btn-secondary">
+                    <a :href="route('resi.pdf', pengiriman.id)"
+                        class="btn-secondary text-xs sm:text-sm">
                         <i class="bi bi-file-earmark-pdf" />
-                        Download PDF
+                        PDF
                     </a>
 
-                    <Link :href="route('pengiriman.index')" class="btn-secondary">
+                    <Link :href="route('pengiriman.index')"
+                        class="btn-secondary text-xs sm:text-sm">
                         <i class="bi bi-arrow-left" />
                         Kembali
                     </Link>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 gap-5 lg:grid-cols-5">
-                <div class="space-y-5 lg:col-span-3">
-                    <div class="card p-4">
-                        <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-5 sm:gap-5">
+                <!-- Left Column -->
+                <div class="space-y-4 sm:space-y-5 lg:col-span-3">
+                    <!-- Status Bar -->
+                    <div class="card p-3 sm:p-4">
+                        <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
                             <div class="flex items-center gap-2">
                                 <StatusBadge :status="pengiriman.status" />
-
-                                <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+                                <span
+                                    class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
                                     {{ formatService(pengiriman.jenis_layanan) }}
                                 </span>
                             </div>
@@ -294,26 +300,24 @@ const submitCancel = async () => {
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-4 xl:grid-cols-2">
-                        <div class="card p-4">
+                    <!-- Pengirim & Penerima -->
+                    <div class="grid grid-cols-1 gap-3 sm:gap-4 xl:grid-cols-2">
+                        <div class="card p-3 sm:p-4">
                             <h3 class="text-sm font-semibold text-slate-800">Pengirim</h3>
 
-                            <div class="mt-3 space-y-2 text-sm text-slate-600">
+                            <div class="mt-2.5 space-y-1.5 text-sm text-slate-600 sm:mt-3 sm:space-y-2">
                                 <p>
                                     <span class="font-medium text-slate-700">Nama:</span>
                                     {{ pengiriman.pengirim_nama || '-' }}
                                 </p>
-
                                 <p>
                                     <span class="font-medium text-slate-700">HP:</span>
                                     {{ pengiriman.pengirim_hp || '-' }}
                                 </p>
-
                                 <p class="whitespace-pre-line break-words">
                                     <span class="font-medium text-slate-700">Alamat:</span>
                                     {{ pengiriman.pengirim_alamat || '-' }}
                                 </p>
-
                                 <p>
                                     <span class="font-medium text-slate-700">Kota:</span>
                                     {{ pengiriman.pengirim_kota?.nama_kota || '-' }},
@@ -323,25 +327,22 @@ const submitCancel = async () => {
                             </div>
                         </div>
 
-                        <div class="card p-4">
+                        <div class="card p-3 sm:p-4">
                             <h3 class="text-sm font-semibold text-slate-800">Penerima</h3>
 
-                            <div class="mt-3 space-y-2 text-sm text-slate-600">
+                            <div class="mt-2.5 space-y-1.5 text-sm text-slate-600 sm:mt-3 sm:space-y-2">
                                 <p>
                                     <span class="font-medium text-slate-700">Nama:</span>
                                     {{ pengiriman.penerima_nama || '-' }}
                                 </p>
-
                                 <p>
                                     <span class="font-medium text-slate-700">HP:</span>
                                     {{ pengiriman.penerima_hp || '-' }}
                                 </p>
-
                                 <p class="whitespace-pre-line break-words">
                                     <span class="font-medium text-slate-700">Alamat:</span>
                                     {{ pengiriman.penerima_alamat || '-' }}
                                 </p>
-
                                 <p>
                                     <span class="font-medium text-slate-700">Kota:</span>
                                     {{ pengiriman.penerima_kota?.nama_kota || '-' }},
@@ -352,8 +353,9 @@ const submitCancel = async () => {
                         </div>
                     </div>
 
+                    <!-- Detail Barang -->
                     <div class="card overflow-hidden">
-                        <div class="border-b border-slate-200 px-4 py-3">
+                        <div class="border-b border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3">
                             <h3 class="text-sm font-semibold text-slate-800">Detail Barang</h3>
                         </div>
 
@@ -374,7 +376,7 @@ const submitCancel = async () => {
                                             B. Asli
                                         </th>
                                         <th
-                                            class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                            class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:table-cell">
                                             Volumetrik
                                         </th>
                                         <th
@@ -382,11 +384,11 @@ const submitCancel = async () => {
                                             Tagihan
                                         </th>
                                         <th
-                                            class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                            class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 md:table-cell">
                                             Dimensi
                                         </th>
                                         <th
-                                            class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                            class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 lg:table-cell">
                                             Ket
                                         </th>
                                     </tr>
@@ -396,17 +398,20 @@ const submitCancel = async () => {
                                     <tr v-for="(item, index) in barangList" :key="item.id">
                                         <td class="px-3 py-2 text-sm text-slate-600">{{ index + 1 }}</td>
                                         <td class="px-3 py-2 text-sm text-slate-700">{{ item.nama_barang || '-' }}</td>
-                                        <td class="px-3 py-2 text-sm text-slate-600">{{ formatWeight(item.berat_asli_kg)
-                                            }}</td>
-                                        <td class="px-3 py-2 text-sm text-slate-600">{{
-                                            formatWeight(item.berat_volumetrik_kg) }}</td>
-                                        <td class="px-3 py-2 text-sm font-medium text-indigo-600">{{
-                                            formatWeight(item.berat_tagihan_kg) }}</td>
-                                        <td class="px-3 py-2 text-sm text-slate-600">
-                                            {{ Number(item.panjang_cm || 0) }} × {{ Number(item.lebar_cm || 0) }} × {{
-                                            Number(item.tinggi_cm || 0) }} cm
+                                        <td class="px-3 py-2 text-sm text-slate-600">{{ formatWeight(item.berat_asli_kg) }}</td>
+                                        <td class="hidden px-3 py-2 text-sm text-slate-600 sm:table-cell">
+                                            {{ formatWeight(item.berat_volumetrik_kg) }}
                                         </td>
-                                        <td class="px-3 py-2 text-sm text-slate-600">{{ item.keterangan || '-' }}</td>
+                                        <td class="px-3 py-2 text-sm font-medium text-indigo-600">
+                                            {{ formatWeight(item.berat_tagihan_kg) }}
+                                        </td>
+                                        <td class="hidden px-3 py-2 text-sm text-slate-600 md:table-cell">
+                                            {{ Number(item.panjang_cm || 0) }} × {{ Number(item.lebar_cm || 0) }} ×
+                                            {{ Number(item.tinggi_cm || 0) }} cm
+                                        </td>
+                                        <td class="hidden px-3 py-2 text-sm text-slate-600 lg:table-cell">
+                                            {{ item.keterangan || '-' }}
+                                        </td>
                                     </tr>
 
                                     <tr class="bg-slate-50">
@@ -416,14 +421,14 @@ const submitCancel = async () => {
                                         <td class="px-3 py-2 text-sm font-semibold text-slate-700">
                                             {{ formatWeight(pengiriman.total_berat_asli) }}
                                         </td>
-                                        <td class="px-3 py-2 text-sm font-semibold text-slate-700">
+                                        <td class="hidden px-3 py-2 text-sm font-semibold text-slate-700 sm:table-cell">
                                             {{ formatWeight(pengiriman.total_berat_volumetrik) }}
                                         </td>
                                         <td class="px-3 py-2 text-sm font-semibold text-indigo-600">
                                             {{ formatWeight(pengiriman.total_berat_tagihan) }}
                                         </td>
-                                        <td class="px-3 py-2 text-sm text-slate-500">-</td>
-                                        <td class="px-3 py-2 text-sm text-slate-500">
+                                        <td class="hidden px-3 py-2 text-sm text-slate-500 md:table-cell">-</td>
+                                        <td class="hidden px-3 py-2 text-sm text-slate-500 lg:table-cell">
                                             {{ pengiriman.jumlah_barang || 0 }} barang
                                         </td>
                                     </tr>
@@ -438,45 +443,51 @@ const submitCancel = async () => {
                         </div>
                     </div>
 
-                    <div class="card p-4">
+                    <!-- Biaya -->
+                    <div class="card p-3 sm:p-4">
                         <h3 class="text-sm font-semibold text-slate-800">Biaya Pengiriman</h3>
 
-                        <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <div class="mt-3 grid grid-cols-1 gap-3 sm:mt-4 sm:gap-4 md:grid-cols-2">
                             <div class="space-y-2 text-sm text-slate-600">
                                 <div class="flex items-center justify-between gap-3">
                                     <span>Tarif per kg</span>
-                                    <span class="font-medium text-slate-800">{{ formatCurrency(pengiriman.tarif_per_kg)
-                                        }}</span>
+                                    <span class="font-medium text-slate-800">
+                                        {{ formatCurrency(pengiriman.tarif_per_kg) }}
+                                    </span>
                                 </div>
 
                                 <div class="flex items-center justify-between gap-3">
                                     <span>Ongkir</span>
-                                    <span class="font-medium text-slate-800">{{
-                                        formatCurrency(pengiriman.biaya_pengiriman) }}</span>
+                                    <span class="font-medium text-slate-800">
+                                        {{ formatCurrency(pengiriman.biaya_pengiriman) }}
+                                    </span>
                                 </div>
 
                                 <div class="flex items-center justify-between gap-3">
                                     <span>Asuransi</span>
-                                    <span class="font-medium text-slate-800">{{
-                                        formatCurrency(pengiriman.biaya_asuransi) }}</span>
+                                    <span class="font-medium text-slate-800">
+                                        {{ formatCurrency(pengiriman.biaya_asuransi) }}
+                                    </span>
                                 </div>
 
                                 <div class="flex items-center justify-between gap-3">
                                     <span>Tambahan</span>
-                                    <span class="font-medium text-slate-800">{{
-                                        formatCurrency(pengiriman.biaya_tambahan) }}</span>
+                                    <span class="font-medium text-slate-800">
+                                        {{ formatCurrency(pengiriman.biaya_tambahan) }}
+                                    </span>
                                 </div>
 
                                 <div class="border-t border-slate-200 pt-2" />
 
                                 <div class="flex items-center justify-between gap-3">
                                     <span class="font-semibold text-slate-800">Total</span>
-                                    <span class="text-lg font-bold text-indigo-600">{{
-                                        formatCurrency(pengiriman.biaya_total) }}</span>
+                                    <span class="text-base font-bold text-indigo-600 sm:text-lg">
+                                        {{ formatCurrency(pengiriman.biaya_total) }}
+                                    </span>
                                 </div>
                             </div>
 
-                            <div class="space-y-2 text-sm text-slate-600">
+                            <div class="space-y-1.5 text-sm text-slate-600 sm:space-y-2">
                                 <p>
                                     <span class="font-medium text-slate-700">Metode pembayaran:</span>
                                     {{ formatPayment(pengiriman.metode_pembayaran) }}
@@ -511,11 +522,13 @@ const submitCancel = async () => {
                     </div>
                 </div>
 
-                <div class="space-y-5 lg:col-span-2">
-                    <div class="card p-4">
+                <!-- Right Column -->
+                <div class="space-y-4 sm:space-y-5 lg:col-span-2">
+                    <!-- Update Status -->
+                    <div class="card p-3 sm:p-4">
                         <h3 class="text-sm font-semibold text-slate-800">Update Status</h3>
 
-                        <div v-if="canUpdateStatus" class="mt-4 space-y-4">
+                        <div v-if="canUpdateStatus" class="mt-3 space-y-3 sm:mt-4 sm:space-y-4">
                             <div>
                                 <label class="form-label">Status Baru</label>
 
@@ -566,15 +579,16 @@ const submitCancel = async () => {
                         </div>
 
                         <div v-else
-                            class="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-3 py-3 text-sm text-slate-500">
+                            class="mt-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-3 text-sm text-slate-500 sm:mt-4">
                             Pengiriman sudah berada pada status terminal dan tidak bisa diperbarui lagi.
                         </div>
                     </div>
 
-                    <div v-if="canCancel" class="card p-4">
+                    <!-- Batalkan -->
+                    <div v-if="canCancel" class="card p-3 sm:p-4">
                         <h3 class="text-sm font-semibold text-slate-800">Batalkan Pengiriman</h3>
 
-                        <div class="mt-4 space-y-4">
+                        <div class="mt-3 space-y-3 sm:mt-4 sm:space-y-4">
                             <div>
                                 <label class="form-label">Alasan Pembatalan</label>
                                 <textarea v-model="cancelForm.alasan_batal" rows="3" class="form-input"></textarea>
@@ -601,10 +615,11 @@ const submitCancel = async () => {
                         </div>
                     </div>
 
-                    <div class="card p-4">
+                    <!-- Timeline -->
+                    <div class="card p-3 sm:p-4">
                         <h3 class="text-sm font-semibold text-slate-800">Timeline Tracking</h3>
 
-                        <div v-if="trackingHistories.length" class="mt-4 space-y-4">
+                        <div v-if="trackingHistories.length" class="mt-3 space-y-3 sm:mt-4 sm:space-y-4">
                             <div v-for="(item, index) in trackingHistories" :key="item.id" class="relative pl-6">
                                 <div v-if="index !== trackingHistories.length - 1"
                                     class="absolute left-2 top-1 h-full w-px bg-slate-200"></div>
@@ -629,14 +644,14 @@ const submitCancel = async () => {
                                         <span v-if="item.admin_nama"> · {{ item.admin_nama }}</span>
                                     </p>
 
-                                    <p class="mt-2 text-sm text-slate-600">
+                                    <p class="mt-1.5 text-sm text-slate-600">
                                         {{ item.keterangan || '-' }}
                                     </p>
                                 </div>
                             </div>
                         </div>
 
-                        <div v-else class="mt-4 text-sm text-slate-500">
+                        <div v-else class="mt-3 text-sm text-slate-500 sm:mt-4">
                             Belum ada riwayat tracking.
                         </div>
                     </div>

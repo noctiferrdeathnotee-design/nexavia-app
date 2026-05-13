@@ -192,18 +192,18 @@ onBeforeUnmount(() => {
     <Head title="Dashboard" />
 
     <AppLayout>
-        <div class="space-y-5">
-            <div class="rounded-xl border border-indigo-100 bg-indigo-50 p-4">
-                <h2 class="text-base font-semibold text-slate-800">
+        <div class="space-y-4 sm:space-y-5">
+            <div class="rounded-xl border border-indigo-100 bg-indigo-50 p-3 sm:p-4">
+                <h2 class="text-sm font-semibold text-slate-800 sm:text-base">
                     Selamat datang, {{ userName }}
                 </h2>
-                <p class="mt-1 text-sm text-slate-600">
+                <p class="mt-0.5 text-xs text-slate-600 sm:mt-1 sm:text-sm">
                     Ringkasan aktivitas pengiriman, pendapatan, tren bulanan, dan data terbaru.
                 </p>
             </div>
 
-            <div v-if="terlambat_count > 0" class="rounded-xl border border-red-200 bg-red-50 px-4 py-3">
-                <div class="flex items-start gap-3">
+            <div v-if="terlambat_count > 0" class="rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 sm:px-4 sm:py-3">
+                <div class="flex items-start gap-2.5 sm:gap-3">
                     <div class="mt-0.5 text-red-500">
                         <i class="bi bi-exclamation-circle-fill" />
                     </div>
@@ -219,14 +219,14 @@ onBeforeUnmount(() => {
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                 <StatCard title="Total Pengiriman" :value="stats.total_pengiriman" icon="bi-box-seam" color="indigo" />
 
                 <StatCard title="Total Pendapatan" :value="stats.total_pendapatan" icon="bi-cash-stack" color="emerald"
                     prefix="Rp" />
             </div>
 
-            <div class="card p-4">
+            <div class="card p-3 sm:p-4">
                 <div class="mb-3 flex items-center justify-between gap-3">
                     <div>
                         <h2 class="text-sm font-semibold text-slate-800">
@@ -238,7 +238,7 @@ onBeforeUnmount(() => {
                     </div>
                 </div>
 
-                <div class="h-40 sm:h-44">
+                <div class="h-36 sm:h-40 md:h-44">
                     <canvas ref="chartCanvas" aria-label="Grafik tren pengiriman 6 bulan" />
                 </div>
 
@@ -249,7 +249,7 @@ onBeforeUnmount(() => {
             </div>
 
             <div class="card overflow-hidden">
-                <div class="flex items-center justify-between border-b border-slate-200 px-4 py-3">
+                <div class="flex items-center justify-between border-b border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3">
                     <div>
                         <h2 class="text-sm font-semibold text-slate-800">
                             10 Pengiriman Terbaru
@@ -293,8 +293,9 @@ onBeforeUnmount(() => {
 
                         <tbody class="divide-y divide-slate-100 bg-white">
                             <tr v-for="item in latestItems" :key="item.id"
-                                class="cursor-pointer transition-colors hover:bg-slate-50"
+                                class="cursor-pointer hover:bg-slate-50"
                                 :class="{ 'bg-red-50 hover:bg-red-50/80': item.is_terlambat }" tabindex="0"
+                                :style="{ transition: 'background-color 0.15s ease' }"
                                 @click="openDetail(item.id)" @keydown.enter.prevent="openDetail(item.id)"
                                 @keydown.space.prevent="openDetail(item.id)">
                                 <td class="px-3 py-2 text-sm font-medium text-slate-700">

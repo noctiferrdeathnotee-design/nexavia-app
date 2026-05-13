@@ -378,7 +378,7 @@ const submit = async () => {
     <Head title="Input Pengiriman" />
 
     <AppLayout>
-        <div class="space-y-5">
+        <div class="space-y-4 sm:space-y-5">
             <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h2 class="text-lg font-semibold text-slate-800">Input Pengiriman</h2>
@@ -393,10 +393,10 @@ const submit = async () => {
                 </Link>
             </div>
 
-            <div class="card p-4">
-                <div class="flex items-center justify-between gap-2 overflow-x-auto">
+            <div class="card p-3 sm:p-4">
+                <div class="flex items-center justify-between gap-1.5 overflow-x-auto sm:gap-2">
                     <div v-for="item in stepItems" :key="item.no" class="flex min-w-0 flex-1 items-center gap-2">
-                        <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold"
+                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold sm:h-9 sm:w-9 sm:text-sm"
                             :class="item.no < step
                                 ? 'bg-emerald-500 text-white'
                                 : item.no === step
@@ -422,13 +422,13 @@ const submit = async () => {
                 Ada validasi yang belum sesuai. Periksa kembali form Anda.
             </div>
 
-            <div v-if="step === 1" class="card p-4">
+            <div v-if="step === 1" class="card p-3 sm:p-4">
                 <div class="mb-4">
                     <h3 class="text-sm font-semibold text-slate-800">Step 1 — Data Pengirim</h3>
                     <p class="text-xs text-slate-500">Isi data pengirim dan pilih kota asal.</p>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4">
+                <div class="grid grid-cols-1 gap-3 sm:gap-4">
                     <div class="max-w-xs">
                         <label class="form-label">Nama Pengirim</label>
                         <input v-model="form.pengirim_nama" type="text" class="form-input">
@@ -472,21 +472,21 @@ const submit = async () => {
                     </div>
                 </div>
 
-                <div class="mt-5 flex justify-end">
-                    <button type="button" class="btn-primary" @click="goToStep(2)">
+                <div class="mt-4 flex justify-end sm:mt-5">
+                    <button type="button" class="btn-primary w-full justify-center sm:w-auto" @click="goToStep(2)">
                         Selanjutnya
                         <i class="bi bi-arrow-right" />
                     </button>
                 </div>
             </div>
 
-            <div v-else-if="step === 2" class="card p-4">
+            <div v-else-if="step === 2" class="card p-3 sm:p-4">
                 <div class="mb-4">
                     <h3 class="text-sm font-semibold text-slate-800">Step 2 — Data Penerima</h3>
                     <p class="text-xs text-slate-500">Isi data penerima dan pilih kota tujuan.</p>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4">
+                <div class="grid grid-cols-1 gap-3 sm:gap-4">
                     <div class="max-w-xs">
                         <label class="form-label">Nama Penerima</label>
                         <input v-model="form.penerima_nama" type="text" class="form-input">
@@ -543,7 +543,7 @@ const submit = async () => {
                 </div>
             </div>
 
-            <div v-else-if="step === 3" class="card p-4">
+            <div v-else-if="step === 3" class="card p-3 sm:p-4">
                 <div class="mb-4">
                     <h3 class="text-sm font-semibold text-slate-800">Step 3 — Detail Barang</h3>
                     <p class="text-xs text-slate-500">Isi seluruh barang dan dimensi untuk hitung volumetrik.</p>
@@ -551,7 +551,7 @@ const submit = async () => {
 
                 <div class="space-y-4">
                     <div v-for="(item, index) in form.barang" :key="index"
-                        class="rounded-xl border border-slate-200 p-4">
+                        class="rounded-xl border border-slate-200 p-3 sm:p-4">
                         <div class="mb-3 flex items-center justify-between gap-3">
                             <h4 class="text-sm font-semibold text-slate-700">
                                 Barang #{{ index + 1 }}
@@ -564,8 +564,8 @@ const submit = async () => {
                             </button>
                         </div>
 
-                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-6">
-                            <div class="max-w-xs xl:col-span-2">
+                        <div class="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-2 xl:grid-cols-6">
+                            <div class="col-span-2 max-w-xs xl:col-span-2">
                                 <label class="form-label">Nama Barang</label>
                                 <input v-model="item.nama_barang" type="text" class="form-input">
                                 <p v-if="form.errors[`barang.${index}.nama_barang`]" class="mt-1 text-xs text-red-500">
@@ -573,7 +573,7 @@ const submit = async () => {
                                 </p>
                             </div>
 
-                            <div class="max-w-[110px]">
+                            <div class="col-span-1">
                                 <label class="form-label">Berat Asli (kg)</label>
                                 <input v-model="item.berat_asli_kg" type="number" min="0.1" step="0.1"
                                     class="form-input">
@@ -583,22 +583,22 @@ const submit = async () => {
                                 </p>
                             </div>
 
-                            <div class="max-w-[90px]">
+                            <div class="col-span-1">
                                 <label class="form-label">P cm</label>
                                 <input v-model="item.panjang_cm" type="number" min="0" step="0.1" class="form-input">
                             </div>
 
-                            <div class="max-w-[90px]">
+                            <div class="col-span-1">
                                 <label class="form-label">L cm</label>
                                 <input v-model="item.lebar_cm" type="number" min="0" step="0.1" class="form-input">
                             </div>
 
-                            <div class="max-w-[90px]">
+                            <div class="col-span-1">
                                 <label class="form-label">T cm</label>
                                 <input v-model="item.tinggi_cm" type="number" min="0" step="0.1" class="form-input">
                             </div>
 
-                            <div class="w-full max-w-sm md:col-span-2 xl:col-span-3">
+                            <div class="col-span-2 w-full max-w-sm xl:col-span-3">
                                 <label class="form-label">Keterangan</label>
                                 <input v-model="item.keterangan" type="text" class="form-input">
                             </div>
@@ -625,7 +625,7 @@ const submit = async () => {
                         </button>
                     </div>
 
-                    <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                    <div class="rounded-xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
                         <div class="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
                             <div>
                                 <p class="text-xs text-slate-500">Jumlah Barang</p>
@@ -668,13 +668,13 @@ const submit = async () => {
                 </div>
             </div>
 
-            <div v-else class="card p-4">
+            <div v-else class="card p-3 sm:p-4">
                 <div class="mb-4">
                     <h3 class="text-sm font-semibold text-slate-800">Step 4 — Layanan & Pembayaran</h3>
                     <p class="text-xs text-slate-500">Pilih layanan, isi biaya tambahan, lalu simpan.</p>
                 </div>
 
-                <div class="mb-4 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+                <div class="mb-4 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-600 sm:p-4">
                     <div class="flex flex-col gap-1 lg:flex-row lg:flex-wrap lg:items-center lg:gap-3">
                         <span><b>Rute:</b> {{ kotaPengirim?.nama_kota || '-' }} → {{ kotaPenerima?.nama_kota || '-'
                             }}</span>
@@ -696,9 +696,10 @@ const submit = async () => {
                 <div v-else class="space-y-4">
                     <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
                         <button v-for="item in tarifList" :key="item.jenis_layanan" type="button"
-                            class="relative rounded-xl border p-4 text-left transition-colors" :class="item.jenis_layanan === form.jenis_layanan
+                            class="relative rounded-xl border p-3 text-left sm:p-4" :class="item.jenis_layanan === form.jenis_layanan
                                 ? 'border-2 border-indigo-500 bg-indigo-50'
                                 : 'border-slate-200 bg-white hover:border-indigo-200 hover:bg-slate-50'"
+                            :style="{ transition: 'border-color 0.2s ease, background-color 0.2s ease' }"
                             @click="form.jenis_layanan = item.jenis_layanan">
                             <div class="mb-2 flex flex-wrap gap-1">
                                 <span v-if="isFastest(item)" class="badge bg-amber-100 text-amber-700">
@@ -725,7 +726,7 @@ const submit = async () => {
                         </button>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div class="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-2">
                         <div>
                             <div class="mb-4 max-w-[160px]">
                                 <label class="form-label">Biaya Asuransi</label>
@@ -764,7 +765,7 @@ const submit = async () => {
                             </div>
                         </div>
 
-                        <div class="rounded-xl border border-indigo-100 bg-indigo-50 p-4">
+                        <div class="rounded-xl border border-indigo-100 bg-indigo-50 p-3 sm:p-4">
                             <h4 class="text-sm font-semibold text-slate-800">Ringkasan Biaya</h4>
 
                             <div class="mt-4 space-y-2 text-sm">

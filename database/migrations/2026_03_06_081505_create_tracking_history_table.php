@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('admin_id')->constrained('admins')->cascadeOnUpdate()->restrictOnDelete();
             $table->timestamp('created_at')->useCurrent();
 
-            $table->index('pengiriman_id', 'idx_pengiriman');
+            $table->index('pengiriman_id', 'idx_tracking_pengiriman');
         });
     }
 

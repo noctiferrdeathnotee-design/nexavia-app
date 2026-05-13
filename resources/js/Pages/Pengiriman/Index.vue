@@ -108,11 +108,11 @@ const formatService = (value) => {
     <Head title="Data Pengiriman" />
 
     <AppLayout>
-        <div class="space-y-5">
+        <div class="space-y-4 sm:space-y-5">
             <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h2 class="text-lg font-semibold text-slate-800">Data Pengiriman</h2>
-                    <p class="mt-1 text-sm text-slate-500">
+                    <p class="mt-0.5 text-sm text-slate-500">
                         Tabel pengiriman dengan filter, pencarian, dan pagination.
                     </p>
                 </div>
@@ -123,9 +123,10 @@ const formatService = (value) => {
                 </Link>
             </div>
 
-            <div class="card p-4">
-                <div class="flex gap-3 overflow-x-auto">
-                    <div class="min-w-[180px]">
+            <!-- Filter Section -->
+            <div class="card p-3 sm:p-4">
+                <div class="grid grid-cols-2 gap-2 sm:gap-3 lg:flex lg:flex-wrap">
+                    <div class="col-span-1">
                         <label class="form-label">Sort</label>
                         <select v-model="filterForm.sort" class="form-select" @change="applyFilters">
                             <option value="terbaru">Terbaru</option>
@@ -134,7 +135,7 @@ const formatService = (value) => {
                         </select>
                     </div>
 
-                    <div class="min-w-[180px]">
+                    <div class="col-span-1">
                         <label class="form-label">Status</label>
                         <select v-model="filterForm.status" class="form-select" @change="applyFilters">
                             <option value="">Semua</option>
@@ -149,7 +150,7 @@ const formatService = (value) => {
                         </select>
                     </div>
 
-                    <div class="min-w-[180px]">
+                    <div class="col-span-1">
                         <label class="form-label">Layanan</label>
                         <select v-model="filterForm.layanan" class="form-select" @change="applyFilters">
                             <option value="">Semua</option>
@@ -160,35 +161,36 @@ const formatService = (value) => {
                         </select>
                     </div>
 
-                    <div class="min-w-[160px]">
+                    <div class="col-span-1">
                         <label class="form-label">Dari</label>
                         <input v-model="filterForm.tanggal_mulai" type="date" class="form-input" @change="applyFilters">
                     </div>
 
-                    <div class="min-w-[160px]">
+                    <div class="col-span-1">
                         <label class="form-label">Sampai</label>
                         <input v-model="filterForm.tanggal_akhir" type="date" class="form-input" @change="applyFilters">
                     </div>
 
-                    <div class="min-w-[220px]">
+                    <div class="col-span-2 lg:col-span-1 lg:min-w-[200px]">
                         <label class="form-label">Cari</label>
                         <div class="flex gap-2">
-                            <input v-model="filterForm.search" type="text" class="form-input"
+                            <input v-model="filterForm.search" type="text" class="form-input min-w-0 flex-1"
                                 placeholder="No resi / pengirim / penerima" @keyup.enter="applyFilters">
-                            <button type="button" class="btn-secondary" @click="applyFilters">
+                            <button type="button" class="btn-secondary shrink-0" @click="applyFilters">
                                 <i class="bi bi-search" />
                             </button>
                         </div>
                     </div>
 
-                    <div v-if="hasActiveFilter" class="flex min-w-[110px] items-end">
-                        <button type="button" class="btn-secondary w-full justify-center" @click="resetFilters">
+                    <div v-if="hasActiveFilter" class="col-span-2 flex items-end lg:col-span-1">
+                        <button type="button" class="btn-secondary w-full justify-center lg:w-auto" @click="resetFilters">
                             Reset
                         </button>
                     </div>
                 </div>
             </div>
 
+            <!-- Table -->
             <div class="card overflow-hidden">
                 <div v-if="rows.length" class="table-wrap">
                     <table class="min-w-full divide-y divide-slate-200">
