@@ -7,11 +7,6 @@
 ini_set('display_errors', '0');
 error_reporting(E_ALL);
 
-// TEMP DEBUG
-$_ENV['APP_DEBUG'] = 'true';
-$_SERVER['APP_DEBUG'] = 'true';
-putenv('APP_DEBUG=true');
-
 // Force serverless-safe env overrides
 $_ENV['SESSION_ENCRYPT'] = 'false';
 $_SERVER['SESSION_ENCRYPT'] = 'false';

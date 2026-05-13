@@ -23,6 +23,8 @@ class PengirimanBarang extends Model
         'panjang_cm',
         'lebar_cm',
         'tinggi_cm',
+        'berat_volumetrik_kg',
+        'berat_tagihan_kg',
         'keterangan',
     ];
 
@@ -37,6 +39,21 @@ class PengirimanBarang extends Model
             'berat_tagihan_kg' => 'decimal:2',
             'created_at' => 'datetime',
         ];
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($barang) {
+            $barang->berat_volumetrik_kg = ($barang->panjang_cm * $barang->lebar_cm * $barang->tinggi_cm) / 6000;
+            $barang->berat_tagihan_kg = max($barang->berat_asli_kg, $barang->berat_volumetrik_kg);
+        });
+
+        static::updating(function ($barang) {
+            $barang->berat_volumetrik_kg = ($barang->panjang_cm * $barang->lebar_cm * $barang->tinggi_cm) / 6000;
+            $barang->berat_tagihan_kg = max($barang->berat_asli_kg, $barang->berat_volumetrik_kg);
+        });
     }
 
     public function pengiriman()
