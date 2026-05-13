@@ -16,6 +16,7 @@ try {
         '/tmp/storage/logs',
         '/tmp/storage/app/public',
         '/tmp/database',
+        '/tmp/bootstrap/cache',
     ];
 
     foreach ($tmpPaths as $path) {
@@ -32,14 +33,23 @@ try {
         copy($sourceSqlite, $targetSqlite);
     }
 
-    // 3. Autoload
+    // 3. Remove stale cache files that reference local paths
+    $cacheDir = __DIR__ . '/../bootstrap/cache';
+    foreach (['services.php', 'packages.php', 'config.php', 'routes-v7.php'] as $cacheFile) {
+        $filePath = $cacheDir . '/' . $cacheFile;
+        if (file_exists($filePath)) {
+            @unlink($filePath);
+        }
+    }
+
+    // 4. Autoload
     require __DIR__ . '/../vendor/autoload.php';
 
-    // 4. Bootstrap Laravel
+    // 5. Bootstrap Laravel
     $app = require_once __DIR__ . '/../bootstrap/app.php';
     $app->useStoragePath('/tmp/storage');
 
-    // 5. Handle request
+    // 6. Handle request
     $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
     $response = $kernel->handle(
         $request = Illuminate\Http\Request::capture()
@@ -48,15 +58,13 @@ try {
     $kernel->terminate($request, $response);
 
 } catch (\Throwable $e) {
-    // Output error for debugging (visible in Vercel function logs AND browser)
     http_response_code(500);
     header('Content-Type: text/plain');
     echo "=== VERCEL PHP ERROR ===\n\n";
     echo "Message: " . $e->getMessage() . "\n";
     echo "File: " . $e->getFile() . "\n";
     echo "Line: " . $e->getLine() . "\n\n";
-    echo "Stack Trace:\n" . $e->getTraceAsString() . "\n\n";
-    echo "PHP Version: " . phpversion() . "\n";
-    echo "Extensions: " . implode(', ', get_loaded_extensions()) . "\n";
+    echo "Trace:\n" . $e->getTraceAsString() . "\n\n";
+    echo "PHP: " . phpversion() . "\n";
     exit(1);
 }
