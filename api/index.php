@@ -4,13 +4,8 @@
  * Vercel Serverless PHP Entry Point (Laravel 12)
  */
 
-ini_set('display_errors', '1');
+ini_set('display_errors', '0');
 error_reporting(E_ALL);
-
-// TEMPORARY: Force debug mode to see actual error on Vercel
-$_ENV['APP_DEBUG'] = 'true';
-$_SERVER['APP_DEBUG'] = 'true';
-putenv('APP_DEBUG=true');
 
 try {
     // 1. Create writable directories in /tmp
@@ -51,7 +46,6 @@ try {
     );
     $response->send();
     $kernel->terminate($request, $response);
-
 } catch (\Throwable $e) {
     http_response_code(500);
     header('Content-Type: text/plain');
