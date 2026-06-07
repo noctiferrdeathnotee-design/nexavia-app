@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue'
 import KotaInfoBox from '@/Components/KotaInfoBox.vue'
+import SearchableSelect from '@/Components/SearchableSelect.vue' // [UBAH KHUSUS MOBILE & DESKTOP] Impor Dropdown Pencarian Pintar
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import axios from 'axios'
 import { computed, ref } from 'vue'
@@ -378,7 +379,8 @@ const submit = async () => {
     <Head title="Input Pengiriman" />
 
     <AppLayout>
-        <div class="space-y-4 sm:space-y-5">
+        <!-- [UBAH KHUSUS MOBILE] Padding bawah ekstra agar konten tidak tertutup oleh tombol sticky -->
+        <div class="space-y-4 sm:space-y-5 pb-28 sm:pb-0">
             <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h2 class="text-lg font-semibold text-slate-800">Input Pengiriman</h2>
@@ -454,14 +456,14 @@ const submit = async () => {
                         </p>
                     </div>
 
-                    <div class="max-w-xs">
-                        <label class="form-label">Kota Asal</label>
-                        <select v-model="form.pengirim_kota_id" class="form-select">
-                            <option value="" disabled>-- Pilih --</option>
-                            <option v-for="kota in kotaList" :key="kota.id" :value="String(kota.id)">
-                                {{ kota.nama_kota }}
-                            </option>
-                        </select>
+                    <div class="max-w-xs relative z-30">
+                        <label class="form-label font-medium tracking-tight">Kota Asal</label>
+                        <!-- [UBAH KHUSUS MOBILE & DESKTOP] Mengganti native select panjang yang merusak tampilan dengan Searchable Select pintar -->
+                        <SearchableSelect 
+                            v-model="form.pengirim_kota_id"
+                            :options="kotaList"
+                            placeholder="Ketik & Pilih Kota Asal"
+                        />
                         <p v-if="form.errors.pengirim_kota_id" class="mt-1 text-xs text-red-500">
                             {{ form.errors.pengirim_kota_id }}
                         </p>
@@ -472,8 +474,9 @@ const submit = async () => {
                     </div>
                 </div>
 
-                <div class="mt-4 flex justify-end sm:mt-5">
-                    <button type="button" class="btn-primary w-full justify-center sm:w-auto" @click="goToStep(2)">
+                <!-- [UBAH KHUSUS MOBILE] Memindahkan tombol Selanjutnya ke area bawah (Sticky Bottom Bar) agar mudah ditekan pakai 1 tangan -->
+                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-[0_-8px_30px_rgb(0,0,0,0.06)] z-40 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:flex sm:justify-end">
+                    <button type="button" class="btn-primary w-full justify-center rounded-xl sm:w-auto sm:rounded-lg" @click="goToStep(2)">
                         Selanjutnya
                         <i class="bi bi-arrow-right" />
                     </button>
@@ -512,14 +515,14 @@ const submit = async () => {
                         </p>
                     </div>
 
-                    <div class="max-w-xs">
-                        <label class="form-label">Kota Tujuan</label>
-                        <select v-model="form.penerima_kota_id" class="form-select">
-                            <option value="" disabled>-- Pilih --</option>
-                            <option v-for="kota in kotaList" :key="kota.id" :value="String(kota.id)">
-                                {{ kota.nama_kota }}
-                            </option>
-                        </select>
+                    <div class="max-w-xs relative z-30">
+                        <label class="form-label font-medium tracking-tight">Kota Tujuan</label>
+                        <!-- [UBAH KHUSUS MOBILE & DESKTOP] Searchable Select untuk Tujuan -->
+                        <SearchableSelect 
+                            v-model="form.penerima_kota_id"
+                            :options="kotaList"
+                            placeholder="Ketik & Pilih Kota Tujuan"
+                        />
                         <p v-if="form.errors.penerima_kota_id" class="mt-1 text-xs text-red-500">
                             {{ form.errors.penerima_kota_id }}
                         </p>
@@ -530,13 +533,14 @@ const submit = async () => {
                     </div>
                 </div>
 
-                <div class="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-between">
-                    <button type="button" class="btn-secondary justify-center" @click="step = 1">
+                <!-- [UBAH KHUSUS MOBILE] Bar Navigasi Lengkung dan Melayang -->
+                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-[0_-8px_30px_rgb(0,0,0,0.06)] z-40 flex gap-3 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-between">
+                    <button type="button" class="btn-secondary flex-1 justify-center rounded-xl sm:flex-none sm:rounded-lg" @click="step = 1">
                         <i class="bi bi-arrow-left" />
                         Kembali
                     </button>
 
-                    <button type="button" class="btn-primary justify-center" @click="goToStep(3)">
+                    <button type="button" class="btn-primary flex-1 justify-center rounded-xl sm:flex-none sm:rounded-lg" @click="goToStep(3)">
                         Selanjutnya
                         <i class="bi bi-arrow-right" />
                     </button>
@@ -655,13 +659,14 @@ const submit = async () => {
                     </div>
                 </div>
 
-                <div class="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-between">
-                    <button type="button" class="btn-secondary justify-center" @click="step = 2">
+                <!-- [UBAH KHUSUS MOBILE] Bar Navigasi Lengkung dan Melayang -->
+                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-[0_-8px_30px_rgb(0,0,0,0.06)] z-40 flex gap-3 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-between">
+                    <button type="button" class="btn-secondary flex-1 justify-center rounded-xl sm:flex-none sm:rounded-lg" @click="step = 2">
                         <i class="bi bi-arrow-left" />
                         Kembali
                     </button>
 
-                    <button type="button" class="btn-primary justify-center" @click="goToStep(4)">
+                    <button type="button" class="btn-primary flex-1 justify-center rounded-xl sm:flex-none sm:rounded-lg" @click="goToStep(4)">
                         Selanjutnya
                         <i class="bi bi-arrow-right" />
                     </button>
@@ -803,13 +808,14 @@ const submit = async () => {
                     </div>
                 </div>
 
-                <div class="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-between">
-                    <button type="button" class="btn-secondary justify-center" @click="step = 3">
+                <!-- [UBAH KHUSUS MOBILE] Bar Navigasi Lengkung dan Melayang untuk Simpan Data -->
+                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-[0_-8px_30px_rgb(0,0,0,0.06)] z-40 flex gap-3 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-between">
+                    <button type="button" class="btn-secondary flex-1 justify-center rounded-xl sm:flex-none sm:rounded-lg" @click="step = 3">
                         <i class="bi bi-arrow-left" />
                         Kembali
                     </button>
 
-                    <button type="button" class="btn-primary justify-center"
+                    <button type="button" class="btn-primary flex-1 justify-center rounded-xl sm:flex-none sm:rounded-lg"
                         :disabled="form.processing || !selectedTarif"
                         :class="{ 'opacity-60 cursor-not-allowed': form.processing || !selectedTarif }" @click="submit">
                         <span v-if="form.processing" class="inline-flex items-center gap-2">
