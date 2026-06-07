@@ -67,37 +67,47 @@ const isMobileNavActive = (match, exact) => {
             </main>
         </div>
 
-        <!-- [UPDATE: FASE 4 PERBAIKAN BUG VISUAL MOBILE] 
-             Fungsi: Menggantikan Sidebar Desktop. Menu utama ini selalu berada di bawah layar saat dibuka di Mobile.
-             Perbaikan UI/UX: Membesarkan ukuran Ikon dari text-[22px] menjadi text-[24px] agar lebih proporsional dengan layar HP modern. -->
+        <!-- [UPDATE: FASE 5 THE GOLDEN 5 BOTTOM NAVIGATION] 
+             Fungsi: Memuat semua 5 menu Sidebar ke dalam Bottom Navigation di Mobile tanpa merusak UI.
+             Perbaikan UI/UX: 
+             1. Metode "Flex-1 Fluidity": Kelas 'w-16' dihapus dan diganti 'flex-1' agar ke-5 menu membelah layar rata (20% per menu).
+             2. Ikon distabilkan di text-[22px] agar ada ruang bernapas untuk 5 tombol.
+             3. Menu "Tracking" ditambahkan di tengah dengan alias "Lacak" agar teks tidak terpotong. -->
         <nav class="fixed bottom-0 left-0 z-50 flex h-[68px] w-full items-center justify-around border-t border-slate-200/60 bg-white/95 px-1 pb-safe backdrop-blur-xl xl:hidden shadow-[0_-8px_30px_rgb(0,0,0,0.04)]">
             
-            <!-- Beranda (Icon Aktif: Xaviera Gold) -->
-            <Link href="/dashboard" class="group relative flex flex-col items-center justify-center w-16 gap-1" :class="isMobileNavActive('/dashboard', true) ? 'text-[#B8860B]' : 'text-slate-400 hover:text-slate-600'">
-                <i class="bi bi-speedometer2 text-[24px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/dashboard', true) }" />
+            <!-- 1. Beranda (Icon Aktif: Xaviera Gold) -->
+            <Link href="/dashboard" class="group relative flex flex-col items-center justify-center flex-1 gap-1" :class="isMobileNavActive('/dashboard', true) ? 'text-[#B8860B]' : 'text-slate-400 hover:text-slate-600'">
+                <i class="bi bi-speedometer2 text-[22px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/dashboard', true) }" />
                 <span class="text-[10px] font-semibold tracking-wide" :class="{ 'opacity-100': isMobileNavActive('/dashboard', true), 'opacity-80': !isMobileNavActive('/dashboard', true) }">Beranda</span>
                 <div v-if="isMobileNavActive('/dashboard', true)" class="absolute -bottom-2 h-1 w-1 rounded-full bg-[#B8860B] shadow-[0_0_8px_rgba(184,134,11,0.6)]"></div>
             </Link>
 
-            <!-- Paket (Icon Aktif: Xaviera Blue) -->
-            <Link href="/pengiriman" class="group relative flex flex-col items-center justify-center w-16 gap-1" :class="isMobileNavActive('/pengiriman', false) ? 'text-[#0B132B]' : 'text-slate-400 hover:text-slate-600'">
-                <i class="bi bi-box-seam text-[24px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/pengiriman', false) }" />
+            <!-- 2. Paket / Pengiriman (Icon Aktif: Xaviera Blue) -->
+            <Link href="/pengiriman" class="group relative flex flex-col items-center justify-center flex-1 gap-1" :class="isMobileNavActive('/pengiriman', false) ? 'text-[#0B132B]' : 'text-slate-400 hover:text-slate-600'">
+                <i class="bi bi-box-seam text-[22px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/pengiriman', false) }" />
                 <span class="text-[10px] font-semibold tracking-wide" :class="{ 'opacity-100': isMobileNavActive('/pengiriman', false), 'opacity-80': !isMobileNavActive('/pengiriman', false) }">Paket</span>
                 <div v-if="isMobileNavActive('/pengiriman', false)" class="absolute -bottom-2 h-1 w-1 rounded-full bg-[#0B132B] shadow-[0_0_8px_rgba(11,19,43,0.6)]"></div>
             </Link>
 
-            <!-- Tarif (Icon Aktif: Xaviera Gold) -->
-            <Link href="/tarif" class="group relative flex flex-col items-center justify-center w-16 gap-1" :class="isMobileNavActive('/tarif', false) ? 'text-[#B8860B]' : 'text-slate-400 hover:text-slate-600'">
-                <i class="bi bi-calculator text-[24px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/tarif', false) }" />
-                <span class="text-[10px] font-semibold tracking-wide" :class="{ 'opacity-100': isMobileNavActive('/tarif', false), 'opacity-80': !isMobileNavActive('/tarif', false) }">Tarif</span>
-                <div v-if="isMobileNavActive('/tarif', false)" class="absolute -bottom-2 h-1 w-1 rounded-full bg-[#B8860B] shadow-[0_0_8px_rgba(184,134,11,0.6)]"></div>
+            <!-- 3. Lacak / Tracking (Icon Aktif: Xaviera Gold) -->
+            <Link href="/tracking" class="group relative flex flex-col items-center justify-center flex-1 gap-1" :class="isMobileNavActive('/tracking', false) ? 'text-[#B8860B]' : 'text-slate-400 hover:text-slate-600'">
+                <i class="bi bi-geo-alt text-[22px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/tracking', false) }" />
+                <span class="text-[10px] font-semibold tracking-wide" :class="{ 'opacity-100': isMobileNavActive('/tracking', false), 'opacity-80': !isMobileNavActive('/tracking', false) }">Lacak</span>
+                <div v-if="isMobileNavActive('/tracking', false)" class="absolute -bottom-2 h-1 w-1 rounded-full bg-[#B8860B] shadow-[0_0_8px_rgba(184,134,11,0.6)]"></div>
             </Link>
 
-            <!-- Laporan (Icon Aktif: Xaviera Blue) -->
-            <Link href="/laporan" class="group relative flex flex-col items-center justify-center w-16 gap-1" :class="isMobileNavActive('/laporan', false) ? 'text-[#0B132B]' : 'text-slate-400 hover:text-slate-600'">
-                <i class="bi bi-file-earmark-bar-graph text-[24px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/laporan', false) }" />
+            <!-- 4. Tarif (Icon Aktif: Xaviera Blue) -->
+            <Link href="/tarif" class="group relative flex flex-col items-center justify-center flex-1 gap-1" :class="isMobileNavActive('/tarif', false) ? 'text-[#0B132B]' : 'text-slate-400 hover:text-slate-600'">
+                <i class="bi bi-calculator text-[22px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/tarif', false) }" />
+                <span class="text-[10px] font-semibold tracking-wide" :class="{ 'opacity-100': isMobileNavActive('/tarif', false), 'opacity-80': !isMobileNavActive('/tarif', false) }">Tarif</span>
+                <div v-if="isMobileNavActive('/tarif', false)" class="absolute -bottom-2 h-1 w-1 rounded-full bg-[#0B132B] shadow-[0_0_8px_rgba(11,19,43,0.6)]"></div>
+            </Link>
+
+            <!-- 5. Laporan (Icon Aktif: Xaviera Gold) -->
+            <Link href="/laporan" class="group relative flex flex-col items-center justify-center flex-1 gap-1" :class="isMobileNavActive('/laporan', false) ? 'text-[#B8860B]' : 'text-slate-400 hover:text-slate-600'">
+                <i class="bi bi-file-earmark-bar-graph text-[22px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/laporan', false) }" />
                 <span class="text-[10px] font-semibold tracking-wide" :class="{ 'opacity-100': isMobileNavActive('/laporan', false), 'opacity-80': !isMobileNavActive('/laporan', false) }">Laporan</span>
-                <div v-if="isMobileNavActive('/laporan', false)" class="absolute -bottom-2 h-1 w-1 rounded-full bg-[#0B132B] shadow-[0_0_8px_rgba(11,19,43,0.6)]"></div>
+                <div v-if="isMobileNavActive('/laporan', false)" class="absolute -bottom-2 h-1 w-1 rounded-full bg-[#B8860B] shadow-[0_0_8px_rgba(184,134,11,0.6)]"></div>
             </Link>
         </nav>
     </div>
