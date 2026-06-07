@@ -587,8 +587,9 @@ const submit = async () => {
                 </div>
 
                 <div class="space-y-4">
+                    <!-- [UPDATE: FASE 8] Premium Glass Card untuk item barang di Mobile. Di desktop kembali ke border-slate-200 biasa -->
                     <div v-for="(item, index) in form.barang" :key="index"
-                        class="rounded-xl border border-slate-200 p-3 sm:p-4">
+                        class="bg-white/80 backdrop-blur-md border border-white rounded-[20px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] p-4 sm:bg-transparent sm:border-slate-200 sm:rounded-xl sm:shadow-none sm:p-4">
                         <div class="mb-3 flex items-center justify-between gap-3">
                             <h4 class="text-sm font-semibold text-slate-700">
                                 Barang #{{ index + 1 }}
@@ -601,8 +602,9 @@ const submit = async () => {
                             </button>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-2 xl:grid-cols-6">
-                            <div class="col-span-2 w-full sm:max-w-xs xl:col-span-2">
+                        <!-- [UPDATE: FASE 8] Smart Grid. P,L,T digabung ke dalam 1 sub-grid (grid-cols-3) khusus di mobile agar hemat tinggi layar -->
+                        <div class="grid grid-cols-3 gap-3 sm:gap-4 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-6">
+                            <div class="col-span-3 w-full sm:col-span-2 sm:max-w-xs xl:col-span-2">
                                 <label class="form-label">Nama Barang</label>
                                 <input v-model="item.nama_barang" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
                                 <p v-if="form.errors[`barang.${index}.nama_barang`]" class="mt-1 text-xs text-red-500">
@@ -610,10 +612,10 @@ const submit = async () => {
                                 </p>
                             </div>
 
-                            <div class="col-span-1">
+                            <div class="col-span-3 sm:col-span-1">
                                 <label class="form-label">Berat Asli (kg)</label>
                                 <input v-model="item.berat_asli_kg" type="number" min="0.1" step="0.1"
-                                    class="form-input">
+                                    class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
                                 <p v-if="form.errors[`barang.${index}.berat_asli_kg`]"
                                     class="mt-1 text-xs text-red-500">
                                     {{ form.errors[`barang.${index}.berat_asli_kg`] }}
@@ -622,22 +624,22 @@ const submit = async () => {
 
                             <div class="col-span-1">
                                 <label class="form-label">P cm</label>
-                                <input v-model="item.panjang_cm" type="number" min="0" step="0.1" class="form-input">
+                                <input v-model="item.panjang_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left">
                             </div>
 
                             <div class="col-span-1">
                                 <label class="form-label">L cm</label>
-                                <input v-model="item.lebar_cm" type="number" min="0" step="0.1" class="form-input">
+                                <input v-model="item.lebar_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left">
                             </div>
 
                             <div class="col-span-1">
                                 <label class="form-label">T cm</label>
-                                <input v-model="item.tinggi_cm" type="number" min="0" step="0.1" class="form-input">
+                                <input v-model="item.tinggi_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left">
                             </div>
 
-                            <div class="col-span-2 w-full max-w-sm xl:col-span-3">
+                            <div class="col-span-3 w-full sm:col-span-2 sm:max-w-sm xl:col-span-3">
                                 <label class="form-label">Keterangan</label>
-                                <input v-model="item.keterangan" type="text" class="form-input">
+                                <input v-model="item.keterangan" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
                             </div>
                         </div>
 
@@ -655,37 +657,45 @@ const submit = async () => {
                         </div>
                     </div>
 
+                    <!-- [UPDATE: FASE 8] Tombol Tambah Barang bergaya Dashed Gold di Mobile, kembali normal di Desktop -->
                     <div class="flex justify-start">
-                        <button type="button" class="btn-secondary" @click="addBarang">
+                        <!-- Desktop -->
+                        <button type="button" class="hidden sm:inline-flex btn-secondary" @click="addBarang">
                             <i class="bi bi-plus-lg" />
                             Tambah Barang
                         </button>
+                        <!-- Mobile -->
+                        <button type="button" class="flex sm:hidden w-full items-center justify-center gap-2 rounded-[16px] border-2 border-dashed border-[#D4AF37]/60 px-4 py-3.5 text-[14px] font-bold tracking-wide text-[#B8860B] transition-transform hover:bg-[#D4AF37]/5 active:scale-95" @click="addBarang">
+                            <i class="bi bi-plus-lg text-lg" />
+                            Tambah Barang Lainnya
+                        </button>
                     </div>
 
-                    <div class="rounded-xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
-                        <div class="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+                    <!-- [UPDATE: FASE 8] Mini Dashboard Midnight Blue di Mobile, kembali normal di Desktop -->
+                    <div class="rounded-[24px] bg-[#0B132B] p-4 shadow-[0_8px_30px_rgba(11,19,43,0.15)] sm:rounded-xl sm:border sm:border-slate-200 sm:bg-slate-50 sm:p-4 sm:shadow-none">
+                        <div class="grid grid-cols-2 gap-4 text-sm sm:gap-3 sm:grid-cols-4">
                             <div>
-                                <p class="text-xs text-slate-500">Jumlah Barang</p>
-                                <p class="font-semibold text-slate-800">{{ jumlahBarang }}</p>
+                                <p class="text-xs text-slate-400 sm:text-slate-500">Jumlah Barang</p>
+                                <p class="font-semibold text-white sm:text-slate-800">{{ jumlahBarang }}</p>
                             </div>
                             <div>
-                                <p class="text-xs text-slate-500">Total Berat Asli</p>
-                                <p class="font-semibold text-slate-800">{{ formatWeight(totalBeratAsli) }}</p>
+                                <p class="text-xs text-slate-400 sm:text-slate-500">Total Berat Asli</p>
+                                <p class="font-semibold text-white sm:text-slate-800">{{ formatWeight(totalBeratAsli) }}</p>
                             </div>
                             <div>
-                                <p class="text-xs text-slate-500">Total Volumetrik</p>
-                                <p class="font-semibold text-slate-800">{{ formatWeight(totalBeratVolumetrik) }}</p>
+                                <p class="text-xs text-slate-400 sm:text-slate-500">Total Volumetrik</p>
+                                <p class="font-semibold text-white sm:text-slate-800">{{ formatWeight(totalBeratVolumetrik) }}</p>
                             </div>
                             <div>
-                                <p class="text-xs text-slate-500">Total Tagihan</p>
-                                <p class="font-semibold text-indigo-600">{{ formatWeight(totalBeratTagihan) }}</p>
+                                <p class="text-xs text-slate-400 sm:text-slate-500">Total Tagihan</p>
+                                <p class="font-bold text-[#D4AF37] sm:font-semibold sm:text-indigo-600">{{ formatWeight(totalBeratTagihan) }}</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="w-full max-w-lg">
                         <label class="form-label">Catatan</label>
-                        <textarea v-model="form.catatan" rows="2" class="form-input"></textarea>
+                        <textarea v-model="form.catatan" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0"></textarea>
                         <p v-if="form.errors.catatan" class="mt-1 text-xs text-red-500">
                             {{ form.errors.catatan }}
                         </p>
