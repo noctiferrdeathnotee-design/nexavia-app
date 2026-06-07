@@ -69,12 +69,15 @@ const submit = () => {
     <AuthLayout title="Login">
         <Head title="Login" />
 
-        <div class="w-full rounded-2xl bg-white p-6 shadow-xl sm:p-8">
+        <!-- Kontainer Form (Mobile: Premium shadow & padding | Desktop: tetap aslinya) -->
+        <div class="w-full rounded-[24px] bg-white p-7 shadow-[0_8px_30px_rgb(0,0,0,0.08)] sm:rounded-2xl sm:p-8 sm:shadow-xl">
             
-            <!-- Mobile Branding (Only visible on small screens since AuthLayout handles desktop) -->
-            <div class="mb-8 flex items-center justify-center gap-3 lg:hidden">
-                <img src="/images/logo-brand.png" alt="Nexavia" class="h-8 w-8 object-contain">
-                <span class="text-sm font-semibold tracking-wide text-slate-800">Nexavia Admin</span>
+            <!-- Mobile Branding (Dioptimalkan untuk mobile: tampilan premium dan spacing presisi) -->
+            <div class="mb-10 flex flex-col items-center justify-center gap-3 lg:hidden">
+                <div class="rounded-2xl bg-slate-50 p-3 shadow-sm ring-1 ring-slate-100">
+                    <img src="/images/logo-brand.png" alt="Nexavia" class="h-10 w-10 object-contain drop-shadow-sm">
+                </div>
+                <span class="text-[15px] font-bold tracking-wide text-slate-800">Nexavia Admin</span>
             </div>
 
             <!-- Flash Messages (Like in the image) -->
@@ -85,73 +88,79 @@ const submit = () => {
                 {{ page.props.flash.error }}
             </div>
 
-            <!-- Header -->
-            <div class="mb-6">
-                <p class="mb-1 text-[11px] font-semibold uppercase tracking-wider text-[#1E5D7B]">
+            <!-- Header (Dioptimalkan typography untuk mobile, desktop dipertahankan text-left aslinya) -->
+            <div class="mb-8 text-center sm:mb-6 sm:text-left">
+                <p class="mb-1.5 text-[12px] font-bold uppercase tracking-widest text-[#1E5D7B] sm:mb-1 sm:text-[11px] sm:font-semibold sm:tracking-wider">
                     Admin Access
                 </p>
-                <h1 class="text-2xl font-bold text-slate-900">
+                <h1 class="text-[26px] font-extrabold tracking-tight text-slate-900 sm:text-2xl sm:font-bold">
                     Login Admin
                 </h1>
-                <p class="mt-1 text-[13px] text-slate-600">
+                <p class="mt-2 text-[14px] font-medium text-slate-500 sm:mt-1 sm:text-[13px] sm:text-slate-600">
                     Gunakan akun admin untuk masuk ke dashboard.
                 </p>
             </div>
 
             <form @submit.prevent="submit" class="space-y-4">
-                <!-- Email Field -->
+                <!-- Email Field (Input Mobile Premium, Accessibility 100%, Anti-CLS) -->
                 <div class="group relative">
                     <!-- Envelope Icon -->
-                    <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within:text-[#1E5D7B]">
+                    <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within:text-[#1E5D7B] sm:left-3.5">
                         <i class="bi bi-envelope"></i>
                     </div>
 
-                    <input id="email" v-model="form.email" type="email" autocomplete="username"
+                    <input id="email" v-model="form.email" type="email" autocomplete="username" aria-label="Masukan Email Admin"
                         @focus="isEmailFocused = true" @blur="isEmailFocused = false"
-                        class="block w-full rounded-lg border border-slate-300 bg-white pl-10 pr-4 pb-2 pt-5 text-[13px] font-medium text-slate-900 shadow-sm transition-all duration-300 focus:border-[#1E5D7B] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#1E5D7B]"
-                        :class="{ 'border-red-300 focus:border-red-500 focus:ring-red-500/10': emailError }" />
+                        class="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-11 pr-4 pb-2.5 pt-6 text-[14px] font-medium text-slate-900 shadow-sm transition-all duration-300 focus:border-[#1E5D7B] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1E5D7B]/20 sm:rounded-lg sm:border-slate-300 sm:bg-white sm:pl-10 sm:pb-2 sm:pt-5 sm:text-[13px] sm:focus:ring-1 sm:focus:ring-[#1E5D7B]"
+                        :class="{ 'border-red-300 focus:border-red-500 focus:ring-red-500/20 sm:focus:ring-red-500/10': emailError }" />
                     
                     <label for="email"
-                        class="pointer-events-none absolute left-10 z-10 origin-left transition-all duration-300"
-                        :class="[form.email || isEmailFocused ? 'top-1.5 text-[10px] font-semibold text-[#1E5D7B]' : 'top-1/2 -translate-y-1/2 text-[13px] text-slate-500', emailError && (form.email || isEmailFocused) ? 'text-red-500' : '']"
+                        class="pointer-events-none absolute left-11 z-10 origin-left transition-all duration-300 sm:left-10"
+                        :class="[form.email || isEmailFocused ? 'top-1.5 text-[10px] font-bold text-[#1E5D7B] sm:font-semibold' : 'top-1/2 -translate-y-1/2 text-[14px] text-slate-500 sm:text-[13px]', emailError && (form.email || isEmailFocused) ? 'text-red-500' : '']"
                     >
                         Masukan Email Admin
                     </label>
                     
-                    <p v-if="emailError" class="mt-1 flex items-center gap-1 text-[11px] font-medium text-red-500">
-                        <i class="bi bi-exclamation-circle-fill"></i> {{ emailError }}
-                    </p>
+                    <!-- Kontainer Error Fixed Min-Height Mencegah CLS (Layout Bergeser) -->
+                    <div class="min-h-[20px] mt-1">
+                        <p v-show="emailError" class="flex items-center gap-1 text-[11px] font-semibold text-red-500 sm:font-medium">
+                            <i class="bi bi-exclamation-circle-fill"></i> {{ emailError }}
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Password Field -->
+                <!-- Password Field (Input Mobile Premium, Accessibility 100%, Anti-CLS) -->
                 <div class="group relative">
                     <!-- Lock Icon -->
-                    <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within:text-[#1E5D7B]">
+                    <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within:text-[#1E5D7B] sm:left-3.5">
                         <i class="bi bi-lock"></i>
                     </div>
 
                     <input id="password" v-model="form.password" :type="showPassword ? 'text' : 'password'"
-                        autocomplete="current-password"
+                        autocomplete="current-password" aria-label="Masukkan password"
                         @focus="isPasswordFocused = true" @blur="isPasswordFocused = false"
-                        class="block w-full rounded-lg border border-slate-300 bg-white pl-10 pr-10 pb-2 pt-5 text-[13px] font-medium text-slate-900 shadow-sm transition-all duration-300 focus:border-[#1E5D7B] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#1E5D7B]"
-                        :class="{ 'border-red-300 focus:border-red-500 focus:ring-red-500/10': passwordError }" />
+                        class="block w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-11 pr-10 pb-2.5 pt-6 text-[14px] font-medium text-slate-900 shadow-sm transition-all duration-300 focus:border-[#1E5D7B] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1E5D7B]/20 sm:rounded-lg sm:border-slate-300 sm:bg-white sm:pl-10 sm:pb-2 sm:pt-5 sm:text-[13px] sm:focus:ring-1 sm:focus:ring-[#1E5D7B]"
+                        :class="{ 'border-red-300 focus:border-red-500 focus:ring-red-500/20 sm:focus:ring-red-500/10': passwordError }" />
                     
                     <label for="password"
-                        class="pointer-events-none absolute left-10 z-10 origin-left transition-all duration-300"
-                        :class="[form.password || isPasswordFocused ? 'top-1.5 text-[10px] font-semibold text-[#1E5D7B]' : 'top-1/2 -translate-y-1/2 text-[13px] text-slate-500', passwordError && (form.password || isPasswordFocused) ? 'text-red-500' : '']"
+                        class="pointer-events-none absolute left-11 z-10 origin-left transition-all duration-300 sm:left-10"
+                        :class="[form.password || isPasswordFocused ? 'top-1.5 text-[10px] font-bold text-[#1E5D7B] sm:font-semibold' : 'top-1/2 -translate-y-1/2 text-[14px] text-slate-500 sm:text-[13px]', passwordError && (form.password || isPasswordFocused) ? 'text-red-500' : '']"
                     >
                         Masukkan password
                     </label>
 
-                    <button type="button"
-                        class="absolute inset-y-0 right-1 flex h-full w-8 items-center justify-center text-slate-400 transition-colors hover:text-[#1E5D7B]"
+                    <button type="button" aria-label="Tampilkan atau sembunyikan password"
+                        class="absolute inset-y-0 right-1 flex h-full w-10 sm:w-8 items-center justify-center text-slate-400 transition-colors hover:text-[#1E5D7B]"
                         @click="showPassword = !showPassword">
                         <i :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
                     </button>
 
-                    <p v-if="passwordError" class="mt-1 flex items-center gap-1 text-[11px] font-medium text-red-500">
-                        <i class="bi bi-exclamation-circle-fill"></i> {{ passwordError }}
-                    </p>
+                    <!-- Kontainer Error Fixed Min-Height Mencegah CLS (Layout Bergeser) -->
+                    <div class="min-h-[20px] mt-1">
+                        <p v-show="passwordError" class="flex items-center gap-1 text-[11px] font-semibold text-red-500 sm:font-medium">
+                            <i class="bi bi-exclamation-circle-fill"></i> {{ passwordError }}
+                        </p>
+                    </div>
                 </div>
 
                 <!-- Options -->
@@ -171,9 +180,9 @@ const submit = () => {
                     </div>
                 </div>
 
-                <!-- Submit Button -->
+                <!-- Submit Button (Ditingkatkan responsivitas dan efek hover mobile) -->
                 <button type="submit" :disabled="form.processing"
-                    class="w-full rounded-lg bg-[#1E5D7B] px-4 py-2.5 text-[13px] font-semibold text-white shadow-sm transition-all hover:bg-[#16465c] hover:shadow-md active:translate-y-px disabled:cursor-not-allowed disabled:opacity-70">
+                    class="w-full rounded-xl sm:rounded-lg bg-[#1E5D7B] px-4 py-3 sm:py-2.5 text-[14px] sm:text-[13px] font-bold sm:font-semibold tracking-wide text-white shadow-md sm:shadow-sm transition-all duration-300 hover:bg-[#16465c] hover:shadow-lg sm:hover:shadow-md active:scale-[0.98] sm:active:scale-100 sm:active:translate-y-px disabled:cursor-not-allowed disabled:opacity-70 disabled:active:scale-100">
                     Masuk ke Dashboard
                 </button>
             </form>

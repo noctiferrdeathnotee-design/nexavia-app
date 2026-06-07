@@ -30,9 +30,9 @@ watch(flashError, (value) => {
     <Head :title="title" />
 
     <div class="relative flex min-h-screen items-center justify-center bg-[#0F172A] p-4 sm:p-6 lg:p-8 overflow-hidden font-sans">
-        <!-- Abstract Background Elements -->
-        <div class="absolute left-0 top-0 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-900/30 blur-[120px] pointer-events-none"></div>
-        <div class="absolute bottom-0 right-0 h-[400px] w-[400px] translate-x-1/3 translate-y-1/3 rounded-full bg-teal-900/20 blur-[100px] pointer-events-none"></div>
+        <!-- Abstract Background Elements (Sembunyikan di mobile agar sangat ringan 100% performance, tampilkan hanya di Desktop lg:block) -->
+        <div class="absolute left-0 top-0 hidden h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-900/30 blur-[120px] pointer-events-none lg:block"></div>
+        <div class="absolute bottom-0 right-0 hidden h-[400px] w-[400px] translate-x-1/3 translate-y-1/3 rounded-full bg-teal-900/20 blur-[100px] pointer-events-none lg:block"></div>
 
         <div class="relative z-10 mx-auto flex w-full max-w-[1100px] flex-col gap-6 lg:flex-row lg:items-stretch lg:gap-8 lg:min-h-[600px]">
             
