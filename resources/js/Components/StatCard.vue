@@ -105,12 +105,15 @@ onBeforeUnmount(() => {
 
         <div class="relative z-10 flex items-start justify-between gap-3">
             <div>
-                <!-- [UBAH KHUSUS MOBILE] Font teks label: Uppercase, huruf direnggangkan (tracking-widest) -->
-                <p class="text-[11px] font-black uppercase tracking-widest text-[#B8860B] sm:text-xs sm:font-bold">
+                <!-- [UPDATE: FASE 2 TIPOGRAFI MOBILE]
+                     Perbaikan: Label menggunakan text-[10px] di HP agar tidak kebesaran. -->
+                <p class="text-[10px] font-black uppercase tracking-widest text-[#B8860B] sm:text-xs sm:font-bold">
                     {{ title }}
                 </p>
-                <!-- [UBAH KHUSUS MOBILE] Font teks angka: Lebih besar, sangat tebal, rapat (tracking-tight) -->
-                <p class="mt-1.5 text-[26px] font-extrabold tracking-tight text-[#0B132B] sm:mt-2 sm:text-2xl sm:font-bold font-['Cinzel']">
+                <!-- [UPDATE: FASE 2 TIPOGRAFI MOBILE]
+                     Perbaikan: Angka nominal dikecilkan di HP menjadi text-[20px] dari sebelumnya text-[26px] 
+                     yang memakan terlalu banyak memori vertikal, desktop dipertahankan. -->
+                <p class="mt-1 text-[20px] font-black tracking-tight text-[#0B132B] sm:mt-2 sm:text-2xl font-['Cinzel']">
                     {{ formattedValue }}
                 </p>
             </div>

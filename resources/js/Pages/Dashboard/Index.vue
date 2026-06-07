@@ -240,46 +240,77 @@ const chartSeries = computed(() => ([
                     </div>
                 </div>
 
-                <!-- [UBAH KHUSUS MOBILE] Wrapper Horizontal Scroll Tanpa Scrollbar agar elegan -->
-                <div v-if="latestItems.length > 0" class="w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                <!-- [UPDATE: FASE 2 STACKED CARDS KHUSUS MOBILE] 
+                     Fungsi: Menghindari tabel yang terlalu lebar di HP dengan mengubahnya menjadi kartu bertumpuk. 
+                     Perbaikan: 'block sm:hidden' membuat ini hanya muncul di HP. -->
+                <div v-if="latestItems.length > 0" class="block sm:hidden divide-y divide-slate-100/80">
+                    <div v-for="item in latestItems" :key="'mob-'+item.id" 
+                        class="p-4 flex flex-col gap-3 cursor-pointer hover:bg-slate-50 transition-colors" 
+                        :class="item.is_terlambat ? 'bg-red-50/30' : 'bg-transparent'"
+                        @click="openDetail(item.id)">
+                        
+                        <div class="flex items-start justify-between">
+                            <div class="flex flex-col gap-0.5">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">No. Resi</span>
+                                <span class="text-[14px] font-bold tracking-tight text-[#0B132B]">{{ item.nomor_resi }}</span>
+                            </div>
+                            <StatusBadge :status="item.status" />
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 bg-slate-50/50 p-3 rounded-xl border border-slate-100">
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Pengirim</span>
+                                <span class="block text-[12px] font-semibold text-slate-700 truncate mt-0.5">{{ item.pengirim_nama || '-' }}</span>
+                            </div>
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Tujuan</span>
+                                <span class="block text-[12px] font-semibold text-slate-700 truncate mt-0.5">{{ item.tujuan_kota || '-' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- [UPDATE: FASE 2 TABEL KHUSUS DESKTOP] 
+                     Fungsi: Mempertahankan tabel renggang nan kokoh untuk layar besar.
+                     Perbaikan: 'hidden sm:block' memastikan tabel ini tidak merusak HP. -->
+                <div v-if="latestItems.length > 0" class="hidden sm:block w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                     <table class="min-w-full divide-y divide-slate-100 sm:divide-slate-200">
-                        <!-- [UBAH KHUSUS MOBILE & DESKTOP] Kepala Tabel (Thead) bergaya kokoh dan renggang -->
                         <thead class="bg-slate-50/80 backdrop-blur-sm border-b border-slate-100">
                             <tr>
                                 <th scope="col"
-                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
+                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
                                     No Resi
                                 </th>
                                 <th scope="col"
-                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
+                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
                                     Pengirim
                                 </th>
                                 <th scope="col"
-                                    class="hidden px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:table-cell whitespace-nowrap">
+                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
                                     Kota Tujuan
                                 </th>
                                 <th scope="col"
-                                    class="hidden px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500 md:table-cell whitespace-nowrap">
+                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
                                     Layanan
                                 </th>
                                 <th scope="col"
-                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
+                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
                                     Status
                                 </th>
                                 <th scope="col"
-                                    class="hidden px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500 lg:table-cell whitespace-nowrap">
+                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
                                     Estimasi
                                 </th>
                             </tr>
                         </thead>
 
                         <tbody class="bg-white">
-                            <tr v-for="item in latestItems" :key="item.id"
+                            <tr v-for="item in latestItems" :key="'desk-'+item.id"
                                 class="cursor-pointer hover:bg-slate-50/80 transition-colors duration-200"
                                 :class="{ 'bg-red-50/50 hover:bg-red-50': item.is_terlambat }" tabindex="0"
                                 @click="openDetail(item.id)" @keydown.enter.prevent="openDetail(item.id)"
                                 @keydown.space.prevent="openDetail(item.id)">
-                                <td class="px-4 py-3 sm:py-3.5 text-[13px] font-bold tracking-tight text-slate-800 whitespace-nowrap border-b border-slate-50">
+                                <td class="px-4 py-3 sm:py-3.5 text-[13px] font-bold tracking-tight text-[#0B132B] whitespace-nowrap border-b border-slate-50">
                                     <div class="flex flex-col gap-1">
                                         <span>{{ item.nomor_resi }}</span>
 
@@ -294,11 +325,11 @@ const chartSeries = computed(() => ([
                                     {{ item.pengirim_nama || '-' }}
                                 </td>
 
-                                <td class="hidden px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 sm:table-cell whitespace-nowrap border-b border-slate-50">
+                                <td class="px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 whitespace-nowrap border-b border-slate-50">
                                     {{ item.tujuan_kota || '-' }}
                                 </td>
 
-                                <td class="hidden px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 md:table-cell whitespace-nowrap border-b border-slate-50">
+                                <td class="px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 whitespace-nowrap border-b border-slate-50">
                                     {{ formatLayanan(item.layanan) }}
                                 </td>
 
@@ -306,7 +337,7 @@ const chartSeries = computed(() => ([
                                     <StatusBadge :status="item.status" />
                                 </td>
 
-                                <td class="hidden px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 lg:table-cell whitespace-nowrap border-b border-slate-50">
+                                <td class="px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 whitespace-nowrap border-b border-slate-50">
                                     {{ formatDate(item.estimasi_tiba) }}
                                 </td>
                             </tr>

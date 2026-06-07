@@ -457,9 +457,11 @@ const submitCancel = async () => {
                         @click="showUpdateSheet = false; showCancelSheet = false"
                     ></div>
 
-                    <!-- BOTTOM SHEET: UPDATE STATUS (Di Desktop menjadi Kotak Card biasa) -->
+                    <!-- [UPDATE: FASE 3 BOTTOM SHEET STATUS]
+                         Perbaikan: Ditambahkan 'max-h-[85vh] overflow-y-auto' khusus Mobile 
+                         agar kotak ini tidak menelan layar penuh dan bisa di-scroll jika isinya banyak. -->
                     <div 
-                        class="fixed inset-x-0 bottom-0 z-[70] rounded-t-[32px] bg-white p-5 shadow-[0_-10px_40px_rgb(0,0,0,0.1)] transition-transform duration-300 ease-out lg:static lg:block lg:translate-y-0 lg:rounded-[20px] lg:p-4 lg:shadow-[0_8px_30px_rgb(0,0,0,0.04)] lg:border lg:border-slate-100"
+                        class="fixed inset-x-0 bottom-0 z-[70] max-h-[85vh] overflow-y-auto rounded-t-[32px] bg-white p-5 shadow-[0_-10px_40px_rgb(0,0,0,0.1)] transition-transform duration-300 ease-out lg:static lg:block lg:max-h-none lg:overflow-visible lg:translate-y-0 lg:rounded-[20px] lg:p-4 lg:shadow-[0_8px_30px_rgb(0,0,0,0.04)] lg:border lg:border-slate-100"
                         :class="showUpdateSheet ? 'translate-y-0' : 'translate-y-full lg:translate-y-0'"
                     >
                         <!-- Handle tarik (Visual untuk Mobile) -->
@@ -497,10 +499,11 @@ const submitCancel = async () => {
                         </div>
                     </div>
 
-                    <!-- BOTTOM SHEET: PEMBATALAN (Di Desktop menjadi Kotak Card biasa) -->
+                    <!-- [UPDATE: FASE 3 BOTTOM SHEET PEMBATALAN]
+                         Perbaikan: Ditambahkan 'max-h-[85vh] overflow-y-auto' khusus Mobile. -->
                     <div 
                         v-if="canCancel"
-                        class="fixed inset-x-0 bottom-0 z-[70] rounded-t-[32px] bg-white p-5 shadow-[0_-10px_40px_rgb(0,0,0,0.1)] transition-transform duration-300 ease-out lg:static lg:block lg:translate-y-0 lg:rounded-[20px] lg:p-4 lg:shadow-[0_8px_30px_rgb(0,0,0,0.04)] lg:border lg:border-slate-100"
+                        class="fixed inset-x-0 bottom-0 z-[70] max-h-[85vh] overflow-y-auto rounded-t-[32px] bg-white p-5 shadow-[0_-10px_40px_rgb(0,0,0,0.1)] transition-transform duration-300 ease-out lg:static lg:block lg:max-h-none lg:overflow-visible lg:translate-y-0 lg:rounded-[20px] lg:p-4 lg:shadow-[0_8px_30px_rgb(0,0,0,0.04)] lg:border lg:border-slate-100"
                         :class="showCancelSheet ? 'translate-y-0' : 'translate-y-full lg:translate-y-0'"
                     >
                         <div class="mb-5 flex justify-center lg:hidden"><div class="h-1.5 w-12 rounded-full bg-slate-200"></div></div>

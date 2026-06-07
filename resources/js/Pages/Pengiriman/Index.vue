@@ -186,32 +186,34 @@ const formatService = (value) => {
             <!-- [UBAH KHUSUS MOBILE] Kotak Tabel Premium: glassmorphism, shadow tipis, border tipis -->
             <div class="card overflow-hidden rounded-[20px] border border-slate-100/60 bg-white/95 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm sm:rounded-xl sm:border sm:border-slate-200 sm:bg-white sm:shadow-sm sm:backdrop-blur-none">
                 
-                <!-- [UBAH KHUSUS MOBILE] Mobile Card View (Hanya muncul di Layar HP < sm) -->
+                <!-- [UPDATE: FASE 2 STACKED CARDS KHUSUS MOBILE]
+                     Perbaikan: Padding dikurangi dari p-4 menjadi p-3.5 agar tidak memakan layar.
+                     Tipografi dikompresi (text-[13px] & text-[12px]) agar rapi di HP kecil. -->
                 <div v-if="rows.length" class="block sm:hidden divide-y divide-slate-100/80">
-                    <div v-for="item in rows" :key="'mob-'+item.id" class="p-4 flex flex-col gap-3" :class="item.is_terlambat ? 'bg-red-50/30' : 'bg-transparent'">
+                    <div v-for="item in rows" :key="'mob-'+item.id" class="p-3.5 flex flex-col gap-2.5" :class="item.is_terlambat ? 'bg-red-50/30' : 'bg-transparent'">
                         <!-- Resi & Status -->
                         <div class="flex items-start justify-between">
                             <div class="flex flex-col gap-0.5">
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">No. Resi</span>
-                                <span class="text-[15px] font-bold tracking-tight text-[#0B132B]">{{ item.nomor_resi || '-' }}</span>
+                                <span class="text-[9px] font-bold uppercase tracking-widest text-slate-400">No. Resi</span>
+                                <span class="text-[13px] font-bold tracking-tight text-[#0B132B]">{{ item.nomor_resi || '-' }}</span>
                             </div>
                             <StatusBadge :status="item.status" />
                         </div>
 
                         <!-- Pengirim & Tujuan -->
-                        <div class="grid grid-cols-2 gap-3 bg-slate-50/50 p-3 rounded-xl border border-slate-100">
+                        <div class="grid grid-cols-2 gap-2.5 bg-slate-50/50 p-2.5 rounded-[14px] border border-slate-100">
                             <div>
-                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Pengirim</span>
-                                <span class="block text-[13px] font-semibold text-slate-700 truncate mt-0.5">{{ item.pengirim_nama || '-' }}</span>
+                                <span class="block text-[9px] font-bold uppercase tracking-wider text-slate-400">Pengirim</span>
+                                <span class="block text-[12px] font-semibold text-slate-700 truncate mt-0.5">{{ item.pengirim_nama || '-' }}</span>
                             </div>
                             <div>
-                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Tujuan</span>
-                                <span class="block text-[13px] font-semibold text-slate-700 truncate mt-0.5">{{ item.tujuan_kota || '-' }}</span>
+                                <span class="block text-[9px] font-bold uppercase tracking-wider text-slate-400">Tujuan</span>
+                                <span class="block text-[12px] font-semibold text-slate-700 truncate mt-0.5">{{ item.tujuan_kota || '-' }}</span>
                             </div>
                         </div>
 
                         <!-- Layanan, Estimasi & Aksi -->
-                        <div class="flex items-center justify-between mt-1">
+                        <div class="flex items-center justify-between mt-0.5">
                             <div class="flex items-center gap-2">
                                 <span class="inline-flex items-center rounded-md bg-[#b8860b]/10 px-2 py-1 text-[11px] font-semibold text-[#b8860b]">
                                     {{ formatService(item.layanan) }}

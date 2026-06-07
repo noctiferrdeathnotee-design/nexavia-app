@@ -75,12 +75,15 @@ const submit = () => {
         <!-- Kontainer Form (Mobile: Premium shadow & padding | Desktop: tetap aslinya) -->
         <div class="w-full rounded-[24px] bg-white p-7 shadow-[0_8px_30px_rgb(0,0,0,0.08)] sm:rounded-2xl sm:p-8 sm:shadow-xl">
             
-            <!-- [UPDATE] Menampilkan Logo Xaviera Raksasa -->
+            <!-- [UPDATE: FASE 1 MOBILE HEADER & LOGO]
+                 Perbaikan: Background/padding (bg-slate-50) DIHAPUS agar logo raksasa menyatu mulus dengan layar putih.
+                 Proporsi Logo: Menggunakan 'w-full max-w-[140px]' agar besar tapi tidak pecah (HD).
+                 Khusus Mobile: Padding kontainer tetap 'p-7 sm:p-8' sebagai pengaman agar tidak melebar. -->
             <div class="mb-8 flex flex-col items-center justify-center gap-3">
-                <div class="rounded-2xl bg-slate-50 p-4 shadow-sm ring-1 ring-slate-100 flex items-center justify-center">
-                    <img src="/images/logo-xaviera.jpg" alt="Xaviera" class="w-full max-w-[140px] object-contain drop-shadow-md">
+                <div class="flex items-center justify-center bg-transparent">
+                    <img src="/images/logo-xaviera.jpg" alt="Xaviera" class="w-full max-w-[140px] object-contain drop-shadow-md mix-blend-multiply bg-transparent">
                 </div>
-                <span class="text-[15px] font-black tracking-widest text-[#0B132B] font-['Cinzel']">XAVIERA ADMIN</span>
+                <span class="text-[14px] sm:text-[15px] font-black tracking-widest text-[#0B132B] font-['Cinzel']">XAVIERA ADMIN</span>
             </div>
 
             <!-- Flash Messages (Like in the image) -->
@@ -91,16 +94,17 @@ const submit = () => {
                 {{ page.props.flash.error }}
             </div>
 
-            <!-- [UBAH] Header Terpusat (Tipografi Premium) -->
+            <!-- [UPDATE: FASE 2 TIPOGRAFI MOBILE]
+                 Perbaikan: Font H1 dikecilkan di HP (text-[22px]) namun tetap besar di Desktop (sm:text-2xl) agar tidak kepanjangan. -->
             <div class="mb-8 text-center">
-                <p class="mb-1.5 text-[12px] font-black uppercase tracking-widest text-[#B8860B] sm:mb-1 sm:text-[11px]">
+                <p class="mb-1.5 text-[11px] font-black uppercase tracking-widest text-[#B8860B] sm:mb-1">
                     Admin Access
                 </p>
-                <h1 class="text-[26px] font-black tracking-tight text-[#0B132B] sm:text-2xl font-['Cinzel']">
+                <h1 class="text-[22px] font-black tracking-tight text-[#0B132B] sm:text-2xl font-['Cinzel']">
                     Login Admin
                 </h1>
-                <p class="mt-2 text-[14px] font-medium text-slate-500 sm:mt-1 sm:text-[13px] sm:text-slate-600">
-                    Gunakan akun admin untuk masuk ke dashboard.
+                <p class="mt-2 text-[13px] font-medium text-slate-500 sm:mt-1 sm:text-slate-600">
+                    Masuk ke sistem manajemen pengiriman
                 </p>
             </div>
 
