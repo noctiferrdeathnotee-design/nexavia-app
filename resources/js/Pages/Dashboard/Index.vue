@@ -164,13 +164,23 @@ const chartSeries = computed(() => ([
 
     <AppLayout>
         <div class="space-y-4 sm:space-y-5">
-            <div class="rounded-xl border border-indigo-100 bg-indigo-50 p-3 sm:p-4">
-                <h2 class="text-sm font-semibold text-slate-800 sm:text-base">
-                    Selamat datang, {{ userName }}
-                </h2>
-                <p class="mt-0.5 text-xs text-slate-600 sm:mt-1 sm:text-sm">
-                    Ringkasan aktivitas pengiriman, pendapatan, tren bulanan, dan data terbaru.
-                </p>
+            <!-- [UBAH KHUSUS MOBILE & DESKTOP] Welcome Banner Premium dengan Soft Mesh Gradient -->
+            <div class="relative overflow-hidden rounded-[20px] sm:rounded-xl border border-indigo-100/80 bg-gradient-to-r from-indigo-50 via-white to-blue-50/30 p-4 sm:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.02)]">
+                <!-- Aksen pendar cahaya halus -->
+                <div class="absolute -left-10 -top-10 h-32 w-32 rounded-full bg-indigo-500/10 blur-[40px] pointer-events-none"></div>
+                <div class="relative z-10 flex items-center gap-3 sm:gap-4">
+                    <div class="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-2xl sm:rounded-xl bg-white shadow-sm ring-1 ring-slate-100/80">
+                        <span class="text-lg sm:text-xl text-indigo-600">👋</span>
+                    </div>
+                    <div>
+                        <h2 class="text-[15px] sm:text-[17px] font-extrabold tracking-tight text-slate-800">
+                            Selamat datang, <span class="text-indigo-600">{{ userName }}</span>
+                        </h2>
+                        <p class="mt-0.5 text-[11px] sm:text-[13px] font-medium text-slate-500">
+                            Ringkasan aktivitas pengiriman, pendapatan, tren bulanan, dan data terbaru.
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <div v-if="terlambat_count > 0" class="rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 sm:px-4 sm:py-3">
@@ -222,9 +232,14 @@ const chartSeries = computed(() => ([
                     />
                 </div>
 
+                <!-- [UBAH KHUSUS MOBILE & DESKTOP] Empty State Grafik Premium Kelas SaaS -->
                 <div v-if="!hasChartData"
-                    class="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center text-xs font-medium text-slate-500 sm:rounded-lg sm:py-2">
-                    Belum ada data pengiriman pada 6 bulan terakhir.
+                    class="mt-4 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200/80 bg-slate-50/50 p-6 text-center transition-all hover:bg-slate-50">
+                    <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+                        <i class="bi bi-graph-up text-lg"></i>
+                    </div>
+                    <p class="text-[13px] font-semibold tracking-tight text-slate-700">Belum Ada Data Grafik</p>
+                    <p class="mt-1 text-[11px] font-medium text-slate-500 max-w-[200px]">Data pengiriman 6 bulan terakhir akan muncul di sini.</p>
                 </div>
             </div>
 
@@ -244,70 +259,70 @@ const chartSeries = computed(() => ([
                 <!-- [UBAH KHUSUS MOBILE] Wrapper Horizontal Scroll Tanpa Scrollbar agar elegan -->
                 <div v-if="latestItems.length > 0" class="w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                     <table class="min-w-full divide-y divide-slate-100 sm:divide-slate-200">
-                        <thead class="bg-slate-50">
+                        <!-- [UBAH KHUSUS MOBILE & DESKTOP] Kepala Tabel (Thead) bergaya kokoh dan renggang -->
+                        <thead class="bg-slate-50/80 backdrop-blur-sm border-b border-slate-100">
                             <tr>
                                 <th scope="col"
-                                    class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
                                     No Resi
                                 </th>
                                 <th scope="col"
-                                    class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
                                     Pengirim
                                 </th>
                                 <th scope="col"
-                                    class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:table-cell">
+                                    class="hidden px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:table-cell whitespace-nowrap">
                                     Kota Tujuan
                                 </th>
                                 <th scope="col"
-                                    class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 md:table-cell">
+                                    class="hidden px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500 md:table-cell whitespace-nowrap">
                                     Layanan
                                 </th>
                                 <th scope="col"
-                                    class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
                                     Status
                                 </th>
                                 <th scope="col"
-                                    class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 lg:table-cell">
+                                    class="hidden px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500 lg:table-cell whitespace-nowrap">
                                     Estimasi
                                 </th>
                             </tr>
                         </thead>
 
-                        <tbody class="divide-y divide-slate-100 bg-white">
+                        <tbody class="bg-white">
                             <tr v-for="item in latestItems" :key="item.id"
-                                class="cursor-pointer hover:bg-slate-50"
-                                :class="{ 'bg-red-50 hover:bg-red-50/80': item.is_terlambat }" tabindex="0"
-                                :style="{ transition: 'background-color 0.15s ease' }"
+                                class="cursor-pointer hover:bg-slate-50/80 transition-colors duration-200"
+                                :class="{ 'bg-red-50/50 hover:bg-red-50': item.is_terlambat }" tabindex="0"
                                 @click="openDetail(item.id)" @keydown.enter.prevent="openDetail(item.id)"
                                 @keydown.space.prevent="openDetail(item.id)">
-                                <td class="px-3 py-2 text-sm font-medium text-slate-700">
+                                <td class="px-4 py-3 sm:py-3.5 text-[13px] font-bold tracking-tight text-slate-800 whitespace-nowrap border-b border-slate-50">
                                     <div class="flex flex-col gap-1">
                                         <span>{{ item.nomor_resi }}</span>
 
                                         <span v-if="item.is_terlambat"
-                                            class="inline-flex w-fit items-center rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-semibold text-red-600">
+                                            class="inline-flex w-fit items-center rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold tracking-wide text-red-600">
                                             Terlambat
                                         </span>
                                     </div>
                                 </td>
 
-                                <td class="px-3 py-2 text-sm text-slate-600">
+                                <td class="px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 whitespace-nowrap border-b border-slate-50">
                                     {{ item.pengirim_nama || '-' }}
                                 </td>
 
-                                <td class="hidden px-3 py-2 text-sm text-slate-600 sm:table-cell">
+                                <td class="hidden px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 sm:table-cell whitespace-nowrap border-b border-slate-50">
                                     {{ item.tujuan_kota || '-' }}
                                 </td>
 
-                                <td class="hidden px-3 py-2 text-sm text-slate-600 md:table-cell">
+                                <td class="hidden px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 md:table-cell whitespace-nowrap border-b border-slate-50">
                                     {{ formatLayanan(item.layanan) }}
                                 </td>
 
-                                <td class="px-3 py-2 text-sm">
+                                <td class="px-4 py-3 sm:py-3.5 text-[13px] border-b border-slate-50 whitespace-nowrap">
                                     <StatusBadge :status="item.status" />
                                 </td>
 
-                                <td class="hidden px-3 py-2 text-sm text-slate-600 lg:table-cell">
+                                <td class="hidden px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 lg:table-cell whitespace-nowrap border-b border-slate-50">
                                     {{ formatDate(item.estimasi_tiba) }}
                                 </td>
                             </tr>
@@ -315,8 +330,13 @@ const chartSeries = computed(() => ([
                     </table>
                 </div>
 
-                <div v-else class="px-4 py-8 text-center text-sm text-slate-500">
-                    Belum ada data pengiriman terbaru.
+                <!-- [UBAH KHUSUS MOBILE & DESKTOP] Empty State Tabel Kelas SaaS -->
+                <div v-else class="mx-4 my-6 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200/80 bg-slate-50/50 p-8 text-center">
+                    <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+                        <i class="bi bi-inbox text-lg"></i>
+                    </div>
+                    <p class="text-[13px] font-semibold tracking-tight text-slate-700">Tidak Ada Pengiriman</p>
+                    <p class="mt-1 text-[11px] font-medium text-slate-500">Belum ada data pengiriman terbaru saat ini.</p>
                 </div>
             </div>
         </div>
