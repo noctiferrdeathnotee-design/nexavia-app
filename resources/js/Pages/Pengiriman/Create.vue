@@ -466,7 +466,7 @@ const submit = async () => {
 
                     <div class="w-full">
                         <label class="form-label">Alamat Lengkap</label>
-                        <textarea v-model="form.pengirim_alamat" rows="2" class="form-input"></textarea>
+                        <textarea v-model="form.pengirim_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0"></textarea>
                         <p v-if="form.errors.pengirim_alamat" class="mt-1 text-xs text-red-500">
                             {{ form.errors.pengirim_alamat }}
                         </p>
@@ -490,15 +490,15 @@ const submit = async () => {
                     </div>
                 </div>
 
-                <!-- [UPDATE: FASE 7] The Royal Action Bar (Sticky Bottom Nav Khusus Mobile) -->
-                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-40 flex sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-end">
+                <!-- [UPDATE: FASE 7.1] The Royal Action Bar (Static Flow di Mobile agar tidak bentrok / menutupi dropdown) -->
+                <div class="mt-6 flex flex-col gap-3 sm:mt-5 sm:flex-row sm:justify-end">
                     <!-- Desktop -->
                     <button type="button" class="hidden sm:inline-flex btn-primary w-auto rounded-lg" @click="goToStep(2)">
                         Selanjutnya
                         <i class="bi bi-arrow-right" />
                     </button>
                     <!-- Mobile -->
-                    <button type="button" class="flex sm:hidden w-full items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-[15px] font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.3)] transition-transform hover:scale-[0.98] active:scale-95" @click="goToStep(2)">
+                    <button type="button" class="flex sm:hidden w-full items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-[15px] font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.2)] transition-transform hover:scale-[0.98] active:scale-95" @click="goToStep(2)">
                         Selanjutnya
                         <i class="bi bi-arrow-right font-bold text-lg" />
                     </button>
@@ -531,7 +531,7 @@ const submit = async () => {
 
                     <div class="w-full">
                         <label class="form-label">Alamat Lengkap</label>
-                        <textarea v-model="form.penerima_alamat" rows="2" class="form-input"></textarea>
+                        <textarea v-model="form.penerima_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0"></textarea>
                         <p v-if="form.errors.penerima_alamat" class="mt-1 text-xs text-red-500">
                             {{ form.errors.penerima_alamat }}
                         </p>
@@ -555,8 +555,8 @@ const submit = async () => {
                     </div>
                 </div>
 
-                <!-- [UPDATE: FASE 7] The Royal Action Bar (Sticky Bottom Nav Khusus Mobile) -->
-                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-40 flex gap-3 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-between">
+                <!-- [UPDATE: FASE 7.1] The Royal Action Bar (Static Flow di Mobile) -->
+                <div class="mt-6 flex flex-col gap-3 sm:mt-5 sm:flex-row sm:justify-between">
                     <!-- Desktop -->
                     <button type="button" class="hidden sm:inline-flex btn-secondary w-auto justify-center rounded-lg" @click="step = 1">
                         <i class="bi bi-arrow-left" />
@@ -568,13 +568,15 @@ const submit = async () => {
                     </button>
 
                     <!-- Mobile -->
-                    <button type="button" class="flex sm:hidden flex-1 items-center justify-center gap-2 rounded-[16px] bg-slate-100 px-4 py-3.5 text-[15px] font-bold tracking-wide text-slate-600 transition-transform active:scale-95" @click="step = 1">
-                        Kembali
-                    </button>
-                    <button type="button" class="flex sm:hidden flex-[2] items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-[15px] font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.3)] transition-transform hover:scale-[0.98] active:scale-95" @click="goToStep(3)">
-                        Selanjutnya
-                        <i class="bi bi-arrow-right font-bold text-lg" />
-                    </button>
+                    <div class="flex sm:hidden gap-3 w-full">
+                        <button type="button" class="flex-1 items-center justify-center gap-2 rounded-[16px] bg-slate-100 px-4 py-3.5 text-[15px] font-bold tracking-wide text-slate-600 transition-transform active:scale-95" @click="step = 1">
+                            Kembali
+                        </button>
+                        <button type="button" class="flex-[2] items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-[15px] font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.2)] transition-transform hover:scale-[0.98] active:scale-95" @click="goToStep(3)">
+                            Selanjutnya
+                            <i class="bi bi-arrow-right font-bold text-lg" />
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -690,8 +692,8 @@ const submit = async () => {
                     </div>
                 </div>
 
-                <!-- [UPDATE: FASE 7] The Royal Action Bar (Sticky Bottom Nav Khusus Mobile) -->
-                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-40 flex gap-3 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-between">
+                <!-- [UPDATE: FASE 7.1] The Royal Action Bar (Static Flow di Mobile) -->
+                <div class="mt-6 flex flex-col gap-3 sm:mt-5 sm:flex-row sm:justify-between">
                     <!-- Desktop -->
                     <button type="button" class="hidden sm:inline-flex btn-secondary w-auto justify-center rounded-lg" @click="step = 2">
                         <i class="bi bi-arrow-left" />
@@ -703,13 +705,15 @@ const submit = async () => {
                     </button>
 
                     <!-- Mobile -->
-                    <button type="button" class="flex sm:hidden flex-1 items-center justify-center gap-2 rounded-[16px] bg-slate-100 px-4 py-3.5 text-[15px] font-bold tracking-wide text-slate-600 transition-transform active:scale-95" @click="step = 2">
-                        Kembali
-                    </button>
-                    <button type="button" class="flex sm:hidden flex-[2] items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-[15px] font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.3)] transition-transform hover:scale-[0.98] active:scale-95" @click="goToStep(4)">
-                        Selanjutnya
-                        <i class="bi bi-arrow-right font-bold text-lg" />
-                    </button>
+                    <div class="flex sm:hidden gap-3 w-full">
+                        <button type="button" class="flex-1 items-center justify-center gap-2 rounded-[16px] bg-slate-100 px-4 py-3.5 text-[15px] font-bold tracking-wide text-slate-600 transition-transform active:scale-95" @click="step = 2">
+                            Kembali
+                        </button>
+                        <button type="button" class="flex-[2] items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-[15px] font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.2)] transition-transform hover:scale-[0.98] active:scale-95" @click="goToStep(4)">
+                            Selanjutnya
+                            <i class="bi bi-arrow-right font-bold text-lg" />
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -848,8 +852,8 @@ const submit = async () => {
                     </div>
                 </div>
 
-                <!-- [UPDATE: FASE 7] The Royal Action Bar (Sticky Bottom Nav Khusus Mobile) -->
-                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-40 flex gap-3 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-between">
+                <!-- [UPDATE: FASE 7.1] The Royal Action Bar (Static Flow di Mobile untuk Simpan Data) -->
+                <div class="mt-6 flex flex-col gap-3 sm:mt-5 sm:flex-row sm:justify-between">
                     <!-- Desktop -->
                     <button type="button" class="hidden sm:inline-flex btn-secondary w-auto justify-center rounded-lg" @click="step = 3">
                         <i class="bi bi-arrow-left" />
@@ -869,21 +873,23 @@ const submit = async () => {
                     </button>
 
                     <!-- Mobile -->
-                    <button type="button" class="flex sm:hidden flex-1 items-center justify-center gap-2 rounded-[16px] bg-slate-100 px-4 py-3.5 text-[15px] font-bold tracking-wide text-slate-600 transition-transform active:scale-95" @click="step = 3">
-                        Kembali
-                    </button>
-                    <button type="button" class="flex sm:hidden flex-[2] items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-[15px] font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.3)] transition-transform hover:scale-[0.98] active:scale-95"
-                        :disabled="form.processing || !selectedTarif"
-                        :class="{ 'opacity-60 cursor-not-allowed': form.processing || !selectedTarif }" @click="submit">
-                        <span v-if="form.processing" class="inline-flex items-center gap-2">
-                            <i class="bi bi-arrow-repeat animate-spin text-lg" />
-                            Tunggu...
-                        </span>
-                        <span v-else class="inline-flex items-center gap-2">
-                            Simpan Data
-                            <i class="bi bi-check2-circle font-bold text-lg" />
-                        </span>
-                    </button>
+                    <div class="flex sm:hidden gap-3 w-full">
+                        <button type="button" class="flex-1 items-center justify-center gap-2 rounded-[16px] bg-slate-100 px-4 py-3.5 text-[15px] font-bold tracking-wide text-slate-600 transition-transform active:scale-95" @click="step = 3">
+                            Kembali
+                        </button>
+                        <button type="button" class="flex-[2] items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-[15px] font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.2)] transition-transform hover:scale-[0.98] active:scale-95"
+                            :disabled="form.processing || !selectedTarif"
+                            :class="{ 'opacity-60 cursor-not-allowed': form.processing || !selectedTarif }" @click="submit">
+                            <span v-if="form.processing" class="inline-flex items-center gap-2">
+                                <i class="bi bi-arrow-repeat animate-spin text-lg" />
+                                Tunggu...
+                            </span>
+                            <span v-else class="inline-flex items-center gap-2">
+                                Simpan Data
+                                <i class="bi bi-check2-circle font-bold text-lg" />
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -62,11 +62,11 @@ onUnmounted(() => document.removeEventListener('click', closeDropdown))
 
 <template>
     <div class="relative w-full" ref="wrapperRef">
-        <!-- [UBAH KHUSUS MOBILE & DESKTOP] Tombol Pemicu Dropdown bergaya modern, dengan border berubah warna ketika aktif -->
+        <!-- [UBAH KHUSUS MOBILE & DESKTOP] Tombol Pemicu Dropdown bergaya modern, seragam dengan input premium lainnya -->
         <div 
             @click="toggle"
-            class="flex items-center justify-between w-full form-input cursor-pointer bg-white sm:hover:border-indigo-400 transition-colors"
-            :class="{ 'ring-2 ring-indigo-500/20 border-indigo-500': isOpen }"
+            class="flex items-center justify-between w-full form-input cursor-pointer transition-colors w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] sm:hover:border-indigo-400 sm:rounded-md sm:bg-white sm:border-slate-300 sm:min-h-0"
+            :class="{ 'ring-2 ring-indigo-500/20 border-indigo-500 bg-white': isOpen }"
         >
             <span class="truncate font-medium tracking-tight" :class="selectedOption ? 'text-slate-800' : 'text-slate-500'">
                 {{ selectedOption ? selectedOption.nama_kota : placeholder }}
