@@ -6,10 +6,11 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createApp, h } from "vue";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 
-const appName = "SoftSend";
+const appName = "xaviera";
 
 createInertiaApp({
-    title: (title) => (title ? `${title} — ${appName}` : appName),
+    // [UBAH KHUSUS DESKTOP & MOBILE] Title tab Chrome dipaksa tunggal "xaviera" tanpa embel-embel nama halaman
+    title: () => "xaviera",
 
     resolve: (name) =>
         resolvePageComponent(

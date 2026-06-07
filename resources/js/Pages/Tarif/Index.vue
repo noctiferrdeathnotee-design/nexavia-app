@@ -153,64 +153,70 @@ const resetForm = () => {
                 </p>
             </div>
 
-            <div class="card p-3 sm:p-4">
-                <form class="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-[1fr_1fr_140px_auto]" @submit.prevent="submit">
-                    <div class="col-span-1">
-                        <label class="form-label">Kota Asal</label>
-                        <select v-model="form.kota_asal_id" class="form-select">
-                            <option value="" disabled>-- Pilih --</option>
+            <div class="card p-5 sm:p-6 rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-100">
+                <form class="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-[1fr_1fr_120px_auto] items-end" @submit.prevent="submit">
+                    <div>
+                        <label class="form-label text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-1.5 block">Kota Asal</label>
+                        <select v-model="form.kota_asal_id" class="form-select bg-slate-50/50 border-slate-200/80 focus:border-[#1a365d] focus:ring-[#1a365d] rounded-xl text-sm font-medium py-2.5">
+                            <option value="" disabled>-- Pilih Kota Asal --</option>
                             <option v-for="kota in kotaList" :key="kota.id" :value="String(kota.id)">
                                 {{ kota.nama_kota }}
                             </option>
                         </select>
                     </div>
 
-                    <div class="col-span-1">
-                        <label class="form-label">Kota Tujuan</label>
-                        <select v-model="form.kota_tujuan_id" class="form-select">
-                            <option value="" disabled>-- Pilih --</option>
+                    <div>
+                        <label class="form-label text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-1.5 block">Kota Tujuan</label>
+                        <select v-model="form.kota_tujuan_id" class="form-select bg-slate-50/50 border-slate-200/80 focus:border-[#1a365d] focus:ring-[#1a365d] rounded-xl text-sm font-medium py-2.5">
+                            <option value="" disabled>-- Pilih Kota Tujuan --</option>
                             <option v-for="kota in kotaList" :key="kota.id" :value="String(kota.id)">
                                 {{ kota.nama_kota }}
                             </option>
                         </select>
                     </div>
 
-                    <div class="col-span-1">
-                        <label class="form-label">Berat (kg)</label>
-                        <input v-model="form.berat_kg" type="number" min="0.1" step="0.1" class="form-input">
+                    <div>
+                        <label class="form-label text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-1.5 block">Berat (kg)</label>
+                        <input v-model="form.berat_kg" type="number" min="0.1" step="0.1" class="form-input bg-slate-50/50 border-slate-200/80 focus:border-[#1a365d] focus:ring-[#1a365d] rounded-xl text-sm font-medium py-2.5 text-center">
                     </div>
 
-                    <div class="col-span-1 flex items-end gap-2">
-                        <button type="submit" class="btn-primary w-full justify-center xl:w-auto" :disabled="loading"
+                    <div class="flex items-center gap-2 mt-2 md:mt-0">
+                        <button type="submit" class="btn-primary w-full justify-center md:w-auto h-[42px] px-6 !rounded-xl !bg-[#1a365d] shadow-[0_4px_15px_rgb(26,54,93,0.3)] transition-all active:scale-95" :disabled="loading"
                             :class="{ 'cursor-not-allowed opacity-60': loading }">
-                            <span v-if="loading" class="inline-flex items-center gap-2">
-                                <i class="bi bi-arrow-repeat animate-spin" />
-                                Cek...
+                            <span v-if="loading" class="inline-flex items-center gap-2 font-semibold">
+                                <i class="bi bi-arrow-repeat animate-spin text-lg" />
+                                <span class="hidden sm:inline">Memproses...</span>
                             </span>
 
-                            <span v-else class="inline-flex items-center gap-2">
+                            <span v-else class="inline-flex items-center gap-2 font-bold tracking-wide">
                                 <i class="bi bi-search" />
-                                Cek
+                                Cek Tarif
                             </span>
                         </button>
 
-                        <button v-if="hasChecked" type="button" class="btn-secondary justify-center" @click="resetForm">
-                            Reset
+                        <button v-if="hasChecked" type="button" class="btn-secondary justify-center h-[42px] w-[42px] !p-0 !rounded-xl" @click="resetForm" title="Reset">
+                            <i class="bi bi-arrow-counterclockwise text-lg"></i>
                         </button>
                     </div>
                 </form>
 
                 <div v-if="originCity && destinationCity && form.berat_kg"
-                    class="mt-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600">
-                    <span class="font-medium text-slate-700">{{ originCity.nama_kota }}</span>
-                    →
-                    <span class="font-medium text-slate-700">{{ destinationCity.nama_kota }}</span>
-                    · Berat:
-                    <span class="font-medium text-slate-700">{{ beratPreview }} kg</span>
+                    class="mt-5 rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4 flex flex-col sm:flex-row items-center justify-center gap-3 text-sm text-indigo-900 transition-all">
+                    <div class="flex items-center gap-3">
+                        <span class="font-bold bg-white px-3 py-1.5 rounded-lg shadow-sm border border-indigo-50">{{ originCity.nama_kota }}</span>
+                        <i class="bi bi-arrow-right text-indigo-400"></i>
+                        <span class="font-bold bg-white px-3 py-1.5 rounded-lg shadow-sm border border-indigo-50">{{ destinationCity.nama_kota }}</span>
+                    </div>
+                    <div class="hidden sm:block h-6 w-px bg-indigo-200"></div>
+                    <div class="flex items-center gap-2 font-medium bg-white px-3 py-1.5 rounded-lg shadow-sm border border-indigo-50 text-slate-600">
+                        <i class="bi bi-box-seam text-indigo-400"></i>
+                        {{ beratPreview }} kg
+                    </div>
                 </div>
 
                 <div v-if="errorMessage"
-                    class="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-3 text-sm text-red-600">
+                    class="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-600 flex items-center gap-2">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
                     {{ errorMessage }}
                 </div>
             </div>
@@ -219,39 +225,53 @@ const resetForm = () => {
                 Sedang mengambil tarif layanan...
             </div>
 
-            <div v-else-if="tarifList.length" class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
-                <div v-for="item in tarifList" :key="item.jenis_layanan" class="card p-4">
-                    <div class="mb-3 flex flex-wrap gap-1">
-                        <span v-if="isFastest(item)" class="badge bg-amber-100 text-amber-700">
-                            TERCEPAT
-                        </span>
-
-                        <span v-if="isCheapest(item)" class="badge bg-emerald-100 text-emerald-700">
-                            TERHEMAT
-                        </span>
+            <div v-else-if="tarifList.length" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div v-for="item in tarifList" :key="item.jenis_layanan" class="card relative p-5 sm:p-6 rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_15px_40px_rgb(0,0,0,0.08)] transition-all duration-300 border border-slate-100 hover:border-indigo-100 flex flex-col group bg-white">
+                    
+                    <div class="absolute -top-3 left-0 right-0 flex justify-center z-10" v-if="isFastest(item) || isCheapest(item)">
+                        <div class="flex gap-1">
+                            <span v-if="isFastest(item)" class="badge bg-amber-500 text-white font-bold tracking-widest text-[10px] px-3 py-1 shadow-md border-2 border-white rounded-full">
+                                <i class="bi bi-lightning-charge-fill mr-1"></i> TERCEPAT
+                            </span>
+                            <span v-if="isCheapest(item)" class="badge bg-emerald-500 text-white font-bold tracking-widest text-[10px] px-3 py-1 shadow-md border-2 border-white rounded-full">
+                                <i class="bi bi-tag-fill mr-1"></i> TERHEMAT
+                            </span>
+                        </div>
                     </div>
 
-                    <h3 class="text-base font-semibold text-slate-800">
-                        {{ formatService(item.jenis_layanan) }}
-                    </h3>
+                    <div class="flex flex-col items-center text-center mt-2 flex-1">
+                        <h3 class="text-[13px] font-black uppercase tracking-widest text-[#1a365d] mb-4">
+                            {{ formatService(item.jenis_layanan) }}
+                        </h3>
 
-                    <p class="mt-3 text-xl font-bold text-indigo-600 sm:text-2xl">
-                        {{ formatCurrency(item.total) }}
-                    </p>
+                        <div class="flex items-baseline justify-center gap-1 mb-6">
+                            <span class="text-sm font-bold text-slate-400">Rp</span>
+                            <p class="text-3xl font-black tracking-tighter text-slate-800">
+                                {{ new Intl.NumberFormat('id-ID').format(Math.round(Number(item.total || 0))) }}
+                            </p>
+                        </div>
 
-                    <div class="mt-3 space-y-1 text-sm text-slate-500">
-                        <p>Estimasi: {{ item.estimasi_hari }} hari</p>
-                        <p>Tarif: {{ formatCurrency(item.per_kg) }}/kg</p>
+                        <div class="w-full bg-slate-50 rounded-xl p-3 mb-6 border border-slate-100 flex justify-around">
+                            <div class="text-center">
+                                <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Estimasi</span>
+                                <span class="block text-sm font-black text-slate-700 mt-0.5">{{ item.estimasi_hari }} <span class="text-[10px] text-slate-500 font-medium">Hari</span></span>
+                            </div>
+                            <div class="w-px h-full bg-slate-200"></div>
+                            <div class="text-center">
+                                <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tarif/kg</span>
+                                <span class="block text-sm font-black text-slate-700 mt-0.5">{{ formatCurrency(item.per_kg) }}</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mt-4">
+                    <div class="mt-auto">
                         <Link :href="route('pengiriman.create', {
                             asal_id: form.kota_asal_id,
                             tujuan_id: form.kota_tujuan_id,
                             layanan: item.jenis_layanan,
                             berat: form.berat_kg,
-                        })" class="btn-primary w-full justify-center">
-                            Pilih Ini
+                        })" class="btn-primary w-full justify-center !rounded-xl font-bold tracking-wide !bg-[#b8860b] hover:!bg-[#986f09] border-0 shadow-[0_4px_15px_rgb(184,134,11,0.3)] h-[44px]">
+                            Pilih Layanan Ini
                         </Link>
                     </div>
                 </div>

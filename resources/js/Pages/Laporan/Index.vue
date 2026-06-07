@@ -239,35 +239,35 @@ const setTab = (tab) => {
                 </a>
             </div>
 
-            <!-- Period Selector -->
-            <div class="card p-3 sm:p-4">
-                <div class="flex flex-wrap gap-1.5 sm:gap-2">
-                    <button type="button" class="btn-secondary btn-sm"
-                        :class="{ '!border-indigo-500 !bg-indigo-50 !text-indigo-600': period === 'hari_ini' }"
+            <!-- Period Selector (Horizontal Scroll di Mobile) -->
+            <div class="card p-3 sm:p-4 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                <div class="flex w-full overflow-x-auto pb-1 gap-2 sm:gap-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                    <button type="button" class="btn-secondary btn-sm whitespace-nowrap !rounded-full shrink-0"
+                        :class="{ '!border-[#1a365d] !bg-[#1a365d] !text-white shadow-md': period === 'hari_ini' }"
                         @click="applyPeriod('hari_ini')">
                         Hari Ini
                     </button>
 
-                    <button type="button" class="btn-secondary btn-sm"
-                        :class="{ '!border-indigo-500 !bg-indigo-50 !text-indigo-600': period === 'minggu_ini' }"
+                    <button type="button" class="btn-secondary btn-sm whitespace-nowrap !rounded-full shrink-0"
+                        :class="{ '!border-[#1a365d] !bg-[#1a365d] !text-white shadow-md': period === 'minggu_ini' }"
                         @click="applyPeriod('minggu_ini')">
                         Minggu Ini
                     </button>
 
-                    <button type="button" class="btn-secondary btn-sm"
-                        :class="{ '!border-indigo-500 !bg-indigo-50 !text-indigo-600': period === 'bulan_ini' }"
+                    <button type="button" class="btn-secondary btn-sm whitespace-nowrap !rounded-full shrink-0"
+                        :class="{ '!border-[#1a365d] !bg-[#1a365d] !text-white shadow-md': period === 'bulan_ini' }"
                         @click="applyPeriod('bulan_ini')">
                         Bulan Ini
                     </button>
 
-                    <button type="button" class="btn-secondary btn-sm"
-                        :class="{ '!border-indigo-500 !bg-indigo-50 !text-indigo-600': period === 'bulan_lalu' }"
+                    <button type="button" class="btn-secondary btn-sm whitespace-nowrap !rounded-full shrink-0"
+                        :class="{ '!border-[#1a365d] !bg-[#1a365d] !text-white shadow-md': period === 'bulan_lalu' }"
                         @click="applyPeriod('bulan_lalu')">
                         Bulan Lalu
                     </button>
 
-                    <button type="button" class="btn-secondary btn-sm"
-                        :class="{ '!border-indigo-500 !bg-indigo-50 !text-indigo-600': period === 'tahun_ini' }"
+                    <button type="button" class="btn-secondary btn-sm whitespace-nowrap !rounded-full shrink-0"
+                        :class="{ '!border-[#1a365d] !bg-[#1a365d] !text-white shadow-md': period === 'tahun_ini' }"
                         @click="applyPeriod('tahun_ini')">
                         Tahun Ini
                     </button>
@@ -293,23 +293,23 @@ const setTab = (tab) => {
                 </div>
             </div>
 
-            <!-- Tab Selector -->
-            <div class="card p-2">
-                <div class="flex flex-wrap gap-1.5 sm:gap-2">
-                    <button type="button" class="btn-secondary btn-sm"
-                        :class="{ '!border-indigo-500 !bg-indigo-50 !text-indigo-600': tab === 'rekap' }"
+            <!-- Tab Selector (Horizontal Scroll di Mobile) -->
+            <div class="card p-2 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-slate-50 border border-slate-100">
+                <div class="flex w-full overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                    <button type="button" class="btn-secondary btn-sm whitespace-nowrap !rounded-xl flex-1 justify-center border-0 bg-transparent"
+                        :class="{ '!bg-white shadow-sm font-bold !text-[#1a365d]': tab === 'rekap', 'text-slate-500 hover:bg-slate-100': tab !== 'rekap' }"
                         @click="setTab('rekap')">
                         Rekap Umum
                     </button>
 
-                    <button type="button" class="btn-secondary btn-sm"
-                        :class="{ '!border-indigo-500 !bg-indigo-50 !text-indigo-600': tab === 'detail' }"
+                    <button type="button" class="btn-secondary btn-sm whitespace-nowrap !rounded-xl flex-1 justify-center border-0 bg-transparent"
+                        :class="{ '!bg-white shadow-sm font-bold !text-[#1a365d]': tab === 'detail', 'text-slate-500 hover:bg-slate-100': tab !== 'detail' }"
                         @click="setTab('detail')">
                         Detail Pengiriman
                     </button>
 
-                    <button type="button" class="btn-secondary btn-sm"
-                        :class="{ '!border-indigo-500 !bg-indigo-50 !text-indigo-600': tab === 'keuangan' }"
+                    <button type="button" class="btn-secondary btn-sm whitespace-nowrap !rounded-xl flex-1 justify-center border-0 bg-transparent"
+                        :class="{ '!bg-white shadow-sm font-bold !text-[#1a365d]': tab === 'keuangan', 'text-slate-500 hover:bg-slate-100': tab !== 'keuangan' }"
                         @click="setTab('keuangan')">
                         Keuangan
                     </button>
@@ -469,64 +469,102 @@ const setTab = (tab) => {
                     </div>
                 </div>
 
-                <div class="card overflow-hidden">
-                    <div v-if="detailRows.length" class="table-wrap">
+                <div class="card overflow-hidden rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
+                    
+                    <!-- Mobile Card View -->
+                    <div v-if="detailRows.length" class="block sm:hidden divide-y divide-slate-100/80 bg-white">
+                        <div v-for="item in detailRows" :key="'mob-'+item.id" class="p-4 flex flex-col gap-3">
+                            <div class="flex items-start justify-between">
+                                <div class="flex flex-col gap-0.5">
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">No. Resi</span>
+                                    <Link :href="route('pengiriman.show', item.id)" class="text-[14px] font-bold tracking-tight text-[#1a365d]">
+                                        {{ item.nomor_resi }}
+                                    </Link>
+                                    <span class="text-[10px] text-slate-500 mt-0.5">{{ formatDate(item.tanggal, true) }}</span>
+                                </div>
+                                <StatusBadge :status="item.status" />
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3 bg-slate-50/50 p-3 rounded-xl border border-slate-100">
+                                <div>
+                                    <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Rute</span>
+                                    <span class="block text-[12px] font-semibold text-slate-700 truncate mt-0.5">{{ item.kota_asal || '-' }} &rarr; {{ item.tujuan || '-' }}</span>
+                                </div>
+                                <div>
+                                    <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Layanan</span>
+                                    <span class="block text-[12px] font-semibold text-[#b8860b] truncate mt-0.5">{{ formatService(item.layanan) }}</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between border-t border-slate-100/60 pt-2">
+                                <div class="text-[11px] text-slate-500">
+                                    {{ formatWeight(item.berat_tagihan) }} Tagihan
+                                </div>
+                                <div class="text-[13px] font-black text-indigo-600">
+                                    {{ formatCurrency(item.biaya) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Table View -->
+                    <div v-if="detailRows.length" class="hidden sm:block table-wrap">
                         <table class="min-w-full divide-y divide-slate-200">
                             <thead class="bg-slate-50">
                                 <tr>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         No Resi</th>
                                     <th
-                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:table-cell">
+                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         Tanggal</th>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         Pengirim</th>
                                     <th
-                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 md:table-cell">
+                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         Tujuan</th>
                                     <th
-                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 lg:table-cell">
+                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         Layanan</th>
                                     <th
-                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 lg:table-cell">
+                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         B. Asli</th>
                                     <th
-                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 lg:table-cell">
+                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         B. Tagihan</th>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         Status</th>
                                     <th
-                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:table-cell">
+                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         Biaya</th>
                                 </tr>
                             </thead>
 
                             <tbody class="divide-y divide-slate-100 bg-white">
-                                <tr v-for="item in detailRows" :key="item.id">
-                                    <td class="px-3 py-2 text-sm font-medium text-slate-700">
-                                        <Link :href="route('pengiriman.show', item.id)" class="hover:text-indigo-600">
+                                <tr v-for="item in detailRows" :key="'dt-'+item.id" class="hover:bg-slate-50/50">
+                                    <td class="px-3 py-2 text-sm font-bold text-[#1a365d]">
+                                        <Link :href="route('pengiriman.show', item.id)" class="hover:text-[#b8860b]">
                                             {{ item.nomor_resi }}
                                         </Link>
                                     </td>
-                                    <td class="hidden px-3 py-2 text-sm text-slate-600 sm:table-cell">{{
+                                    <td class="px-3 py-2 text-sm text-slate-600">{{
                                         formatDate(item.tanggal, true) }}</td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{ item.pengirim }}</td>
-                                    <td class="hidden px-3 py-2 text-sm text-slate-600 md:table-cell">
-                                        {{ item.kota_asal || '-' }} → {{ item.tujuan || '-' }}
+                                    <td class="px-3 py-2 text-sm font-medium text-slate-700">{{ item.pengirim }}</td>
+                                    <td class="px-3 py-2 text-sm text-slate-600">
+                                        {{ item.kota_asal || '-' }} &rarr; {{ item.tujuan || '-' }}
                                     </td>
-                                    <td class="hidden px-3 py-2 text-sm text-slate-600 lg:table-cell">{{
+                                    <td class="px-3 py-2 text-sm text-slate-600">{{
                                         formatService(item.layanan) }}</td>
-                                    <td class="hidden px-3 py-2 text-sm text-slate-600 lg:table-cell">{{
+                                    <td class="px-3 py-2 text-sm text-slate-600">{{
                                         formatWeight(item.berat_asli) }}</td>
-                                    <td class="hidden px-3 py-2 text-sm text-slate-600 lg:table-cell">{{
+                                    <td class="px-3 py-2 text-sm text-slate-600">{{
                                         formatWeight(item.berat_tagihan) }}</td>
                                     <td class="px-3 py-2 text-sm">
                                         <StatusBadge :status="item.status" />
                                     </td>
-                                    <td class="hidden px-3 py-2 text-sm text-slate-600 sm:table-cell">{{
+                                    <td class="px-3 py-2 text-sm font-bold text-indigo-600">{{
                                         formatCurrency(item.biaya) }}</td>
                                 </tr>
                             </tbody>
@@ -557,39 +595,54 @@ const setTab = (tab) => {
                     </div>
                 </div>
 
-                <div class="card overflow-hidden">
-                    <div class="border-b border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3">
-                        <h3 class="text-sm font-semibold text-slate-800">Breakdown Per Layanan</h3>
+                <div class="card overflow-hidden rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
+                    <div class="border-b border-slate-100/60 bg-slate-50/50 px-4 py-3">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-[#1a365d]">Breakdown Per Layanan</h3>
                     </div>
 
-                    <div class="table-wrap">
+                    <!-- Mobile View -->
+                    <div class="block sm:hidden divide-y divide-slate-100/80 bg-white">
+                        <div v-for="item in breakdownLayanan" :key="'mob-keu-'+item.jenis_layanan" class="p-4 flex items-center justify-between">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-sm font-bold text-slate-800">{{ formatService(item.jenis_layanan) }}</span>
+                                <span class="text-[11px] font-semibold text-slate-500">{{ formatNumber(item.jumlah_pengiriman) }} Paket</span>
+                            </div>
+                            <div class="flex flex-col gap-1 text-right">
+                                <span class="text-sm font-black text-indigo-600">{{ formatCurrency(item.total_pendapatan) }}</span>
+                                <span class="text-[10px] text-slate-400">Rata: {{ formatCurrency(item.rata_rata) }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Desktop View -->
+                    <div class="hidden sm:block table-wrap">
                         <table class="min-w-full divide-y divide-slate-200">
                             <thead class="bg-slate-50">
                                 <tr>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         Layanan</th>
                                     <th
-                                        class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         Jumlah</th>
                                     <th
-                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:table-cell">
+                                        class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         Total Pendapatan</th>
                                     <th
-                                        class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:table-cell">
+                                        class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
                                         Rata-rata</th>
                                 </tr>
                             </thead>
 
                             <tbody class="divide-y divide-slate-100 bg-white">
-                                <tr v-for="item in breakdownLayanan" :key="item.jenis_layanan">
-                                    <td class="px-3 py-2 text-sm text-slate-700">{{ formatService(item.jenis_layanan) }}
+                                <tr v-for="item in breakdownLayanan" :key="'desk-keu-'+item.jenis_layanan">
+                                    <td class="px-4 py-3 text-sm font-bold text-slate-700">{{ formatService(item.jenis_layanan) }}
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{ formatNumber(item.jumlah_pengiriman)
+                                    <td class="px-4 py-3 text-sm text-slate-600">{{ formatNumber(item.jumlah_pengiriman)
                                         }}</td>
-                                    <td class="hidden px-3 py-2 text-sm text-slate-600 sm:table-cell">{{
+                                    <td class="px-4 py-3 text-sm font-bold text-indigo-600">{{
                                         formatCurrency(item.total_pendapatan) }}</td>
-                                    <td class="hidden px-3 py-2 text-sm text-slate-600 sm:table-cell">{{
+                                    <td class="px-4 py-3 text-sm text-slate-500">{{
                                         formatCurrency(item.rata_rata) }}</td>
                                 </tr>
                             </tbody>

@@ -2,7 +2,10 @@
 import AppLayout from '@/Layouts/AppLayout.vue'
 import StatusBadge from '@/Components/StatusBadge.vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
-import { computed, watch } from 'vue'
+import { computed, watch, ref } from 'vue'
+
+const showUpdateSheet = ref(false)
+const showCancelSheet = ref(false)
 
 const props = defineProps({
     pengiriman: {
@@ -207,6 +210,7 @@ const submitStatus = async () => {
         preserveScroll: true,
         onSuccess: () => {
             statusForm.reset('keterangan')
+            showUpdateSheet.value = false // Tutup bottom sheet di mobile
         },
     })
 }
@@ -237,6 +241,9 @@ const submitCancel = async () => {
 
     cancelForm.post(route('pengiriman.batal', props.pengiriman.id), {
         preserveScroll: true,
+        onSuccess: () => {
+            showCancelSheet.value = false // Tutup bottom sheet di mobile
+        }
     })
 }
 </script>
@@ -277,23 +284,23 @@ const submitCancel = async () => {
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 gap-4 lg:grid-cols-5 sm:gap-5">
-                <!-- Left Column -->
-                <div class="space-y-4 sm:space-y-5 lg:col-span-3">
+            <div class="flex flex-col gap-4 sm:gap-5 lg:grid lg:grid-cols-5 lg:items-start pb-24 lg:pb-0">
+                <!-- INFO PAKET (Kolom Kiri di Desktop, Bawah di Mobile) -->
+                <div class="order-2 space-y-4 sm:space-y-5 lg:order-1 lg:col-span-3">
                     <!-- Status Bar -->
-                    <div class="card p-3 sm:p-4">
+                    <div class="card p-3 sm:p-4 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                         <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
                             <div class="flex items-center gap-2">
                                 <StatusBadge :status="pengiriman.status" />
                                 <span
-                                    class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+                                    class="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-bold tracking-wide uppercase text-slate-500">
                                     {{ formatService(pengiriman.jenis_layanan) }}
                                 </span>
                             </div>
 
-                            <div class="text-sm text-slate-600">
+                            <div class="text-[13px] font-medium text-slate-500">
                                 Estimasi tiba:
-                                <span class="font-medium text-slate-800">
+                                <span class="font-bold text-[#1a365d]">
                                     {{ formatDate(pengiriman.estimasi_tiba) }}
                                 </span>
                             </div>
@@ -302,359 +309,216 @@ const submitCancel = async () => {
 
                     <!-- Pengirim & Penerima -->
                     <div class="grid grid-cols-1 gap-3 sm:gap-4 xl:grid-cols-2">
-                        <div class="card p-3 sm:p-4">
-                            <h3 class="text-sm font-semibold text-slate-800">Pengirim</h3>
+                        <div class="card p-4 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-[#1a365d]">Pengirim</h3>
 
-                            <div class="mt-2.5 space-y-1.5 text-sm text-slate-600 sm:mt-3 sm:space-y-2">
-                                <p>
-                                    <span class="font-medium text-slate-700">Nama:</span>
-                                    {{ pengiriman.pengirim_nama || '-' }}
-                                </p>
-                                <p>
-                                    <span class="font-medium text-slate-700">HP:</span>
-                                    {{ pengiriman.pengirim_hp || '-' }}
-                                </p>
-                                <p class="whitespace-pre-line break-words">
-                                    <span class="font-medium text-slate-700">Alamat:</span>
-                                    {{ pengiriman.pengirim_alamat || '-' }}
-                                </p>
-                                <p>
-                                    <span class="font-medium text-slate-700">Kota:</span>
-                                    {{ pengiriman.pengirim_kota?.nama_kota || '-' }},
-                                    {{ pengiriman.pengirim_kota?.provinsi || '-' }}
-                                    ({{ pengiriman.pengirim_kota?.kode_pos || '-' }})
-                                </p>
+                            <div class="mt-3 space-y-2 text-sm text-slate-600">
+                                <p><span class="inline-block w-16 font-semibold text-slate-400">Nama</span> <span class="font-semibold text-slate-800">{{ pengiriman.pengirim_nama || '-' }}</span></p>
+                                <p><span class="inline-block w-16 font-semibold text-slate-400">HP</span> <span class="font-medium text-slate-800">{{ pengiriman.pengirim_hp || '-' }}</span></p>
+                                <p><span class="block font-semibold text-slate-400 mb-1">Alamat</span> <span class="text-slate-700 whitespace-pre-line">{{ pengiriman.pengirim_alamat || '-' }}</span></p>
+                                <p class="pt-2"><span class="font-semibold text-[#b8860b]">{{ pengiriman.pengirim_kota?.nama_kota || '-' }}, {{ pengiriman.pengirim_kota?.provinsi || '-' }}</span></p>
                             </div>
                         </div>
 
-                        <div class="card p-3 sm:p-4">
-                            <h3 class="text-sm font-semibold text-slate-800">Penerima</h3>
+                        <div class="card p-4 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-[#1a365d]">Penerima</h3>
 
-                            <div class="mt-2.5 space-y-1.5 text-sm text-slate-600 sm:mt-3 sm:space-y-2">
-                                <p>
-                                    <span class="font-medium text-slate-700">Nama:</span>
-                                    {{ pengiriman.penerima_nama || '-' }}
-                                </p>
-                                <p>
-                                    <span class="font-medium text-slate-700">HP:</span>
-                                    {{ pengiriman.penerima_hp || '-' }}
-                                </p>
-                                <p class="whitespace-pre-line break-words">
-                                    <span class="font-medium text-slate-700">Alamat:</span>
-                                    {{ pengiriman.penerima_alamat || '-' }}
-                                </p>
-                                <p>
-                                    <span class="font-medium text-slate-700">Kota:</span>
-                                    {{ pengiriman.penerima_kota?.nama_kota || '-' }},
-                                    {{ pengiriman.penerima_kota?.provinsi || '-' }}
-                                    ({{ pengiriman.penerima_kota?.kode_pos || '-' }})
-                                </p>
+                            <div class="mt-3 space-y-2 text-sm text-slate-600">
+                                <p><span class="inline-block w-16 font-semibold text-slate-400">Nama</span> <span class="font-semibold text-slate-800">{{ pengiriman.penerima_nama || '-' }}</span></p>
+                                <p><span class="inline-block w-16 font-semibold text-slate-400">HP</span> <span class="font-medium text-slate-800">{{ pengiriman.penerima_hp || '-' }}</span></p>
+                                <p><span class="block font-semibold text-slate-400 mb-1">Alamat</span> <span class="text-slate-700 whitespace-pre-line">{{ pengiriman.penerima_alamat || '-' }}</span></p>
+                                <p class="pt-2"><span class="font-semibold text-[#b8860b]">{{ pengiriman.penerima_kota?.nama_kota || '-' }}, {{ pengiriman.penerima_kota?.provinsi || '-' }}</span></p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Detail Barang -->
-                    <div class="card overflow-hidden">
-                        <div class="border-b border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3">
-                            <h3 class="text-sm font-semibold text-slate-800">Detail Barang</h3>
+                    <!-- Detail Barang (Mobile Stacked Card View) -->
+                    <div class="card overflow-hidden rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                        <div class="border-b border-slate-100/60 bg-slate-50/50 px-4 py-3">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-[#1a365d]">Detail Barang</h3>
                         </div>
 
-                        <div class="table-wrap">
-                            <table class="min-w-full divide-y divide-slate-200">
-                                <thead class="bg-slate-50">
+                        <!-- Mobile View -->
+                        <div v-if="barangList.length" class="block sm:hidden divide-y divide-slate-100/80">
+                            <div v-for="(item, index) in barangList" :key="'mob-brg-'+item.id" class="p-4 bg-white">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-bold text-slate-800">{{ index + 1 }}. {{ item.nama_barang || '-' }}</span>
+                                    <span class="text-[11px] font-bold text-indigo-600">{{ formatWeight(item.berat_tagihan_kg) }} Tagihan</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-500">
+                                    <p>Asli: <span class="font-semibold text-slate-700">{{ formatWeight(item.berat_asli_kg) }}</span></p>
+                                    <p>Vol: <span class="font-semibold text-slate-700">{{ formatWeight(item.berat_volumetrik_kg) }}</span></p>
+                                    <p class="col-span-2">Dimensi: {{ Number(item.panjang_cm||0) }}x{{ Number(item.lebar_cm||0) }}x{{ Number(item.tinggi_cm||0) }} cm</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Desktop View -->
+                        <div v-if="barangList.length" class="hidden sm:block overflow-x-auto">
+                            <table class="min-w-full divide-y divide-slate-100">
+                                <thead class="bg-slate-50/50">
                                     <tr>
-                                        <th
-                                            class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                            #
-                                        </th>
-                                        <th
-                                            class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                            Nama
-                                        </th>
-                                        <th
-                                            class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                            B. Asli
-                                        </th>
-                                        <th
-                                            class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:table-cell">
-                                            Volumetrik
-                                        </th>
-                                        <th
-                                            class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                            Tagihan
-                                        </th>
-                                        <th
-                                            class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 md:table-cell">
-                                            Dimensi
-                                        </th>
-                                        <th
-                                            class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 lg:table-cell">
-                                            Ket
-                                        </th>
+                                        <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">#</th>
+                                        <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">Nama</th>
+                                        <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">Asli</th>
+                                        <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">Vol</th>
+                                        <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-indigo-600">Tagihan</th>
+                                        <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">Dimensi</th>
                                     </tr>
                                 </thead>
-
                                 <tbody class="divide-y divide-slate-100 bg-white">
-                                    <tr v-for="(item, index) in barangList" :key="item.id">
-                                        <td class="px-3 py-2 text-sm text-slate-600">{{ index + 1 }}</td>
-                                        <td class="px-3 py-2 text-sm text-slate-700">{{ item.nama_barang || '-' }}</td>
-                                        <td class="px-3 py-2 text-sm text-slate-600">{{ formatWeight(item.berat_asli_kg) }}</td>
-                                        <td class="hidden px-3 py-2 text-sm text-slate-600 sm:table-cell">
-                                            {{ formatWeight(item.berat_volumetrik_kg) }}
-                                        </td>
-                                        <td class="px-3 py-2 text-sm font-medium text-indigo-600">
-                                            {{ formatWeight(item.berat_tagihan_kg) }}
-                                        </td>
-                                        <td class="hidden px-3 py-2 text-sm text-slate-600 md:table-cell">
-                                            {{ Number(item.panjang_cm || 0) }} × {{ Number(item.lebar_cm || 0) }} ×
-                                            {{ Number(item.tinggi_cm || 0) }} cm
-                                        </td>
-                                        <td class="hidden px-3 py-2 text-sm text-slate-600 lg:table-cell">
-                                            {{ item.keterangan || '-' }}
-                                        </td>
-                                    </tr>
-
-                                    <tr class="bg-slate-50">
-                                        <td colspan="2" class="px-3 py-2 text-sm font-semibold text-slate-700">
-                                            Total
-                                        </td>
-                                        <td class="px-3 py-2 text-sm font-semibold text-slate-700">
-                                            {{ formatWeight(pengiriman.total_berat_asli) }}
-                                        </td>
-                                        <td class="hidden px-3 py-2 text-sm font-semibold text-slate-700 sm:table-cell">
-                                            {{ formatWeight(pengiriman.total_berat_volumetrik) }}
-                                        </td>
-                                        <td class="px-3 py-2 text-sm font-semibold text-indigo-600">
-                                            {{ formatWeight(pengiriman.total_berat_tagihan) }}
-                                        </td>
-                                        <td class="hidden px-3 py-2 text-sm text-slate-500 md:table-cell">-</td>
-                                        <td class="hidden px-3 py-2 text-sm text-slate-500 lg:table-cell">
-                                            {{ pengiriman.jumlah_barang || 0 }} barang
-                                        </td>
-                                    </tr>
-
-                                    <tr v-if="!barangList.length">
-                                        <td colspan="7" class="px-3 py-6 text-center text-sm text-slate-500">
-                                            Belum ada data barang.
-                                        </td>
+                                    <tr v-for="(item, index) in barangList" :key="'desk-brg-'+item.id">
+                                        <td class="px-4 py-3 text-sm text-slate-600">{{ index + 1 }}</td>
+                                        <td class="px-4 py-3 text-sm font-semibold text-slate-700">{{ item.nama_barang || '-' }}</td>
+                                        <td class="px-4 py-3 text-sm text-slate-600">{{ formatWeight(item.berat_asli_kg) }}</td>
+                                        <td class="px-4 py-3 text-sm text-slate-600">{{ formatWeight(item.berat_volumetrik_kg) }}</td>
+                                        <td class="px-4 py-3 text-sm font-bold text-indigo-600">{{ formatWeight(item.berat_tagihan_kg) }}</td>
+                                        <td class="px-4 py-3 text-sm text-slate-500">{{ Number(item.panjang_cm||0) }}×{{ Number(item.lebar_cm||0) }}×{{ Number(item.tinggi_cm||0) }} cm</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- Summary Bawah Barang -->
+                        <div class="bg-slate-50/80 px-4 py-3 flex flex-wrap justify-between items-center text-sm border-t border-slate-100">
+                            <span class="font-bold text-[#1a365d]">Total Tagihan:</span>
+                            <span class="font-black text-indigo-600 text-base">{{ formatWeight(pengiriman.total_berat_tagihan) }}</span>
+                        </div>
+                        <div v-if="!barangList.length" class="px-4 py-8 text-center text-sm text-slate-500">Belum ada data barang.</div>
                     </div>
 
                     <!-- Biaya -->
-                    <div class="card p-3 sm:p-4">
-                        <h3 class="text-sm font-semibold text-slate-800">Biaya Pengiriman</h3>
+                    <div class="card p-4 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-[#1a365d] mb-4">Biaya & Informasi</h3>
 
-                        <div class="mt-3 grid grid-cols-1 gap-3 sm:mt-4 sm:gap-4 md:grid-cols-2">
-                            <div class="space-y-2 text-sm text-slate-600">
-                                <div class="flex items-center justify-between gap-3">
-                                    <span>Tarif per kg</span>
-                                    <span class="font-medium text-slate-800">
-                                        {{ formatCurrency(pengiriman.tarif_per_kg) }}
-                                    </span>
-                                </div>
-
-                                <div class="flex items-center justify-between gap-3">
-                                    <span>Ongkir</span>
-                                    <span class="font-medium text-slate-800">
-                                        {{ formatCurrency(pengiriman.biaya_pengiriman) }}
-                                    </span>
-                                </div>
-
-                                <div class="flex items-center justify-between gap-3">
-                                    <span>Asuransi</span>
-                                    <span class="font-medium text-slate-800">
-                                        {{ formatCurrency(pengiriman.biaya_asuransi) }}
-                                    </span>
-                                </div>
-
-                                <div class="flex items-center justify-between gap-3">
-                                    <span>Tambahan</span>
-                                    <span class="font-medium text-slate-800">
-                                        {{ formatCurrency(pengiriman.biaya_tambahan) }}
-                                    </span>
-                                </div>
-
-                                <div class="border-t border-slate-200 pt-2" />
-
-                                <div class="flex items-center justify-between gap-3">
-                                    <span class="font-semibold text-slate-800">Total</span>
-                                    <span class="text-base font-bold text-indigo-600 sm:text-lg">
-                                        {{ formatCurrency(pengiriman.biaya_total) }}
-                                    </span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-3 text-sm text-slate-600">
+                                <div class="flex justify-between border-b border-slate-100/60 pb-2"><span>Tarif per kg</span><span class="font-semibold text-slate-800">{{ formatCurrency(pengiriman.tarif_per_kg) }}</span></div>
+                                <div class="flex justify-between border-b border-slate-100/60 pb-2"><span>Ongkir</span><span class="font-semibold text-slate-800">{{ formatCurrency(pengiriman.biaya_pengiriman) }}</span></div>
+                                <div class="flex justify-between border-b border-slate-100/60 pb-2"><span>Asuransi</span><span class="font-semibold text-slate-800">{{ formatCurrency(pengiriman.biaya_asuransi) }}</span></div>
+                                <div class="flex justify-between border-b border-slate-100/60 pb-2"><span>Tambahan</span><span class="font-semibold text-slate-800">{{ formatCurrency(pengiriman.biaya_tambahan) }}</span></div>
+                                
+                                <div class="flex justify-between pt-2">
+                                    <span class="font-bold text-slate-800 uppercase tracking-widest">Total Biaya</span>
+                                    <span class="text-lg font-black text-indigo-600">{{ formatCurrency(pengiriman.biaya_total) }}</span>
                                 </div>
                             </div>
-
-                            <div class="space-y-1.5 text-sm text-slate-600 sm:space-y-2">
-                                <p>
-                                    <span class="font-medium text-slate-700">Metode pembayaran:</span>
-                                    {{ formatPayment(pengiriman.metode_pembayaran) }}
-                                </p>
-
-                                <p>
-                                    <span class="font-medium text-slate-700">Dibuat:</span>
-                                    {{ formatDate(pengiriman.created_at, true) }}
-                                </p>
-
-                                <p v-if="pengiriman.tanggal_terkirim">
-                                    <span class="font-medium text-slate-700">Tanggal terkirim:</span>
-                                    {{ formatDate(pengiriman.tanggal_terkirim, true) }}
-                                </p>
-
-                                <p>
-                                    <span class="font-medium text-slate-700">Admin:</span>
-                                    {{ pengiriman.admin?.nama || '-' }}
-                                </p>
-
-                                <p>
-                                    <span class="font-medium text-slate-700">Catatan:</span>
-                                    {{ pengiriman.catatan || '-' }}
-                                </p>
-
-                                <p v-if="pengiriman.alasan_batal">
-                                    <span class="font-medium text-slate-700">Alasan batal:</span>
-                                    {{ pengiriman.alasan_batal }}
-                                </p>
+                            <div class="space-y-3 text-[13px] text-slate-500 bg-slate-50/50 p-3 rounded-xl border border-slate-100/60">
+                                <p><span class="block font-bold text-slate-400 uppercase tracking-widest text-[10px]">Metode</span> <span class="font-semibold text-[#1a365d]">{{ formatPayment(pengiriman.metode_pembayaran) }}</span></p>
+                                <p><span class="block font-bold text-slate-400 uppercase tracking-widest text-[10px]">Dibuat</span> <span class="font-semibold text-slate-700">{{ formatDate(pengiriman.created_at, true) }}</span></p>
+                                <p v-if="pengiriman.alasan_batal"><span class="block font-bold text-red-400 uppercase tracking-widest text-[10px]">Alasan Batal</span> <span class="font-semibold text-red-600">{{ pengiriman.alasan_batal }}</span></p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Column -->
-                <div class="space-y-4 sm:space-y-5 lg:col-span-2">
-                    <!-- Update Status -->
-                    <div class="card p-3 sm:p-4">
-                        <h3 class="text-sm font-semibold text-slate-800">Update Status</h3>
+                <!-- RIGHT COLUMN (Timeline & Bottom Sheet Action di Mobile) -->
+                <div class="order-1 flex flex-col gap-4 sm:gap-5 lg:order-2 lg:col-span-2">
+                    
+                    <!-- Timeline (Berada Paling Atas di Mobile!) -->
+                    <div class="card p-4 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-gradient-to-b from-[#1a365d] to-slate-900 text-white relative overflow-hidden">
+                        <!-- Dekorasi sayap Xaviera pudar -->
+                        <div class="absolute -right-10 -top-10 opacity-10 blur-sm pointer-events-none w-48 h-48 bg-white rounded-full"></div>
+                        <div class="relative z-10">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-[#b8860b] mb-5">Timeline Tracking</h3>
 
-                        <div v-if="canUpdateStatus" class="mt-3 space-y-3 sm:mt-4 sm:space-y-4">
-                            <div>
-                                <label class="form-label">Status Baru</label>
+                            <div v-if="trackingHistories.length" class="space-y-4">
+                                <div v-for="(item, index) in trackingHistories" :key="item.id" class="relative pl-6">
+                                    <div v-if="index !== trackingHistories.length - 1" class="absolute left-1.5 top-2 h-full w-0.5 bg-slate-700/50"></div>
+                                    <div class="absolute left-0 top-1.5 h-3.5 w-3.5 rounded-full border-2 border-[#1a365d] bg-[#b8860b] shadow-[0_0_8px_rgba(184,134,11,0.8)]"></div>
 
-                                <select v-model="statusForm.status_baru" class="form-select">
-                                    <option value="" disabled>-- Pilih --</option>
-                                    <option v-for="item in nextStatusOptions" :key="item.value" :value="item.value">
-                                        {{ item.label }}
-                                    </option>
-                                </select>
-
-                                <p v-if="statusForm.errors.status_baru" class="mt-1 text-xs text-red-500">
-                                    {{ statusForm.errors.status_baru }}
-                                </p>
-                            </div>
-
-                            <div>
-                                <label class="form-label">Lokasi</label>
-                                <input v-model="statusForm.lokasi" type="text" class="form-input">
-
-                                <p v-if="statusForm.errors.lokasi" class="mt-1 text-xs text-red-500">
-                                    {{ statusForm.errors.lokasi }}
-                                </p>
-                            </div>
-
-                            <div>
-                                <label class="form-label">Keterangan</label>
-                                <textarea v-model="statusForm.keterangan" rows="3" class="form-input"></textarea>
-
-                                <p v-if="statusForm.errors.keterangan" class="mt-1 text-xs text-red-500">
-                                    {{ statusForm.errors.keterangan }}
-                                </p>
-                            </div>
-
-                            <button type="button" class="btn-primary w-full justify-center"
-                                :disabled="statusForm.processing"
-                                :class="{ 'cursor-not-allowed opacity-60': statusForm.processing }"
-                                @click="submitStatus">
-                                <span v-if="statusForm.processing" class="inline-flex items-center gap-2">
-                                    <i class="bi bi-arrow-repeat animate-spin" />
-                                    Menyimpan...
-                                </span>
-
-                                <span v-else class="inline-flex items-center gap-2">
-                                    <i class="bi bi-check2-circle" />
-                                    Update Status
-                                </span>
-                            </button>
-                        </div>
-
-                        <div v-else
-                            class="mt-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-3 text-sm text-slate-500 sm:mt-4">
-                            Pengiriman sudah berada pada status terminal dan tidak bisa diperbarui lagi.
-                        </div>
-                    </div>
-
-                    <!-- Batalkan -->
-                    <div v-if="canCancel" class="card p-3 sm:p-4">
-                        <h3 class="text-sm font-semibold text-slate-800">Batalkan Pengiriman</h3>
-
-                        <div class="mt-3 space-y-3 sm:mt-4 sm:space-y-4">
-                            <div>
-                                <label class="form-label">Alasan Pembatalan</label>
-                                <textarea v-model="cancelForm.alasan_batal" rows="3" class="form-input"></textarea>
-
-                                <p v-if="cancelForm.errors.alasan_batal" class="mt-1 text-xs text-red-500">
-                                    {{ cancelForm.errors.alasan_batal }}
-                                </p>
-                            </div>
-
-                            <button type="button" class="btn-danger w-full justify-center"
-                                :disabled="cancelForm.processing"
-                                :class="{ 'cursor-not-allowed opacity-60': cancelForm.processing }"
-                                @click="submitCancel">
-                                <span v-if="cancelForm.processing" class="inline-flex items-center gap-2">
-                                    <i class="bi bi-arrow-repeat animate-spin" />
-                                    Memproses...
-                                </span>
-
-                                <span v-else class="inline-flex items-center gap-2">
-                                    <i class="bi bi-x-circle" />
-                                    Batalkan Pengiriman
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Timeline -->
-                    <div class="card p-3 sm:p-4">
-                        <h3 class="text-sm font-semibold text-slate-800">Timeline Tracking</h3>
-
-                        <div v-if="trackingHistories.length" class="mt-3 space-y-3 sm:mt-4 sm:space-y-4">
-                            <div v-for="(item, index) in trackingHistories" :key="item.id" class="relative pl-6">
-                                <div v-if="index !== trackingHistories.length - 1"
-                                    class="absolute left-2 top-1 h-full w-px bg-slate-200"></div>
-
-                                <div
-                                    class="absolute left-0 top-1.5 h-4 w-4 rounded-full border-2 border-white bg-indigo-500 shadow">
-                                </div>
-
-                                <div class="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-                                    <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                                        <p class="text-sm font-semibold text-slate-800">
-                                            {{ statusLabel(item.status_baru) }}
-                                        </p>
-
-                                        <p class="text-xs text-slate-500">
-                                            {{ formatDate(item.created_at, true) }}
-                                        </p>
+                                    <div class="flex flex-col gap-0.5">
+                                        <p class="text-sm font-bold text-white">{{ statusLabel(item.status_baru) }}</p>
+                                        <p class="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">{{ formatDate(item.created_at, true) }}</p>
+                                        <p class="text-xs text-slate-300 mt-1 font-medium"><i class="bi bi-geo-alt-fill text-[#b8860b] mr-1"></i>{{ item.lokasi || '-' }}</p>
+                                        <p class="text-[11px] text-slate-400 italic mt-0.5">{{ item.keterangan || '-' }}</p>
                                     </div>
-
-                                    <p class="mt-1 text-xs text-slate-500">
-                                        {{ item.lokasi || '-' }}
-                                        <span v-if="item.admin_nama"> · {{ item.admin_nama }}</span>
-                                    </p>
-
-                                    <p class="mt-1.5 text-sm text-slate-600">
-                                        {{ item.keterangan || '-' }}
-                                    </p>
                                 </div>
                             </div>
-                        </div>
-
-                        <div v-else class="mt-3 text-sm text-slate-500 sm:mt-4">
-                            Belum ada riwayat tracking.
+                            <div v-else class="text-sm text-slate-400">Belum ada riwayat.</div>
                         </div>
                     </div>
+
+                    <!-- MOBILE ACTION BAR (Fix di Bawah Layar, Muncul HANYA di HP) -->
+                    <!-- Sengaja ditaruh di bottom-[68px] agar tidak menimpa Bottom Nav -->
+                    <div class="fixed bottom-[68px] left-0 z-40 flex w-full gap-3 border-t border-slate-100 bg-white/95 px-4 py-3 shadow-[0_-10px_30px_rgb(0,0,0,0.06)] backdrop-blur-md lg:hidden">
+                        <button v-if="canUpdateStatus" type="button" class="btn-primary flex-1 justify-center rounded-xl py-3 text-sm tracking-wide font-bold" @click="showUpdateSheet = true">
+                            Update Status
+                        </button>
+                        <button v-if="canCancel" type="button" class="btn-danger flex-1 justify-center rounded-xl py-3 text-sm tracking-wide font-bold" @click="showCancelSheet = true">
+                            Batalkan
+                        </button>
+                    </div>
+
+                    <!-- OVERLAY UNTUK BOTTOM SHEET -->
+                    <div 
+                        class="fixed inset-0 z-[60] bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300 lg:hidden"
+                        :class="showUpdateSheet || showCancelSheet ? 'opacity-100' : 'opacity-0 pointer-events-none'"
+                        @click="showUpdateSheet = false; showCancelSheet = false"
+                    ></div>
+
+                    <!-- BOTTOM SHEET: UPDATE STATUS (Di Desktop menjadi Kotak Card biasa) -->
+                    <div 
+                        class="fixed inset-x-0 bottom-0 z-[70] rounded-t-[32px] bg-white p-5 shadow-[0_-10px_40px_rgb(0,0,0,0.1)] transition-transform duration-300 ease-out lg:static lg:block lg:translate-y-0 lg:rounded-[20px] lg:p-4 lg:shadow-[0_8px_30px_rgb(0,0,0,0.04)] lg:border lg:border-slate-100"
+                        :class="showUpdateSheet ? 'translate-y-0' : 'translate-y-full lg:translate-y-0'"
+                    >
+                        <!-- Handle tarik (Visual untuk Mobile) -->
+                        <div class="mb-5 flex justify-center lg:hidden">
+                            <div class="h-1.5 w-12 rounded-full bg-slate-200"></div>
+                        </div>
+                        
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-[#1a365d] mb-4">Update Status</h3>
+                        
+                        <div v-if="canUpdateStatus" class="space-y-4">
+                            <div>
+                                <label class="form-label text-xs font-bold text-slate-500 uppercase tracking-wider">Status Baru</label>
+                                <select v-model="statusForm.status_baru" class="form-select bg-slate-50/50 rounded-xl h-11 border-slate-200">
+                                    <option value="" disabled>-- Pilih Status --</option>
+                                    <option v-for="item in nextStatusOptions" :key="item.value" :value="item.value">{{ item.label }}</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label text-xs font-bold text-slate-500 uppercase tracking-wider">Lokasi</label>
+                                <input v-model="statusForm.lokasi" type="text" class="form-input bg-slate-50/50 rounded-xl h-11 border-slate-200">
+                            </div>
+                            <div>
+                                <label class="form-label text-xs font-bold text-slate-500 uppercase tracking-wider">Keterangan Tambahan</label>
+                                <textarea v-model="statusForm.keterangan" rows="2" class="form-input bg-slate-50/50 rounded-xl border-slate-200"></textarea>
+                            </div>
+                            
+                            <button type="button" class="btn-primary w-full justify-center rounded-xl py-3 mt-2"
+                                :disabled="statusForm.processing" @click="submitStatus">
+                                <span v-if="statusForm.processing" class="inline-flex items-center gap-2"><i class="bi bi-arrow-repeat animate-spin" /> Menyimpan...</span>
+                                <span v-else class="inline-flex items-center gap-2 font-bold tracking-wide"><i class="bi bi-check2-circle" /> Simpan Status Baru</span>
+                            </button>
+                        </div>
+                        <div v-else class="rounded-xl border border-slate-100 bg-slate-50 p-4 text-sm font-medium text-slate-500 text-center">
+                            Pengiriman sudah berada pada status akhir (Terminal).
+                        </div>
+                    </div>
+
+                    <!-- BOTTOM SHEET: PEMBATALAN (Di Desktop menjadi Kotak Card biasa) -->
+                    <div 
+                        v-if="canCancel"
+                        class="fixed inset-x-0 bottom-0 z-[70] rounded-t-[32px] bg-white p-5 shadow-[0_-10px_40px_rgb(0,0,0,0.1)] transition-transform duration-300 ease-out lg:static lg:block lg:translate-y-0 lg:rounded-[20px] lg:p-4 lg:shadow-[0_8px_30px_rgb(0,0,0,0.04)] lg:border lg:border-slate-100"
+                        :class="showCancelSheet ? 'translate-y-0' : 'translate-y-full lg:translate-y-0'"
+                    >
+                        <div class="mb-5 flex justify-center lg:hidden"><div class="h-1.5 w-12 rounded-full bg-slate-200"></div></div>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-red-600 mb-4">Batalkan Pengiriman</h3>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="form-label text-xs font-bold text-slate-500 uppercase tracking-wider">Alasan Batal</label>
+                                <textarea v-model="cancelForm.alasan_batal" rows="2" class="form-input bg-red-50/30 border-red-100 focus:border-red-300 focus:ring-red-500 rounded-xl"></textarea>
+                            </div>
+                            <button type="button" class="btn-danger w-full justify-center rounded-xl py-3 mt-2"
+                                :disabled="cancelForm.processing" @click="submitCancel">
+                                <span v-if="cancelForm.processing" class="inline-flex items-center gap-2"><i class="bi bi-arrow-repeat animate-spin" /> Membatalkan...</span>
+                                <span v-else class="inline-flex items-center gap-2 font-bold tracking-wide"><i class="bi bi-x-circle" /> Konfirmasi Batal</span>
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

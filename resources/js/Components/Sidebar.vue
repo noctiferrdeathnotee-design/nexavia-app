@@ -72,25 +72,15 @@ const linkClass = (item) => {
 </script>
 
 <template>
+    <!-- [UBAH KHUSUS DESKTOP] Sidebar hanya muncul di Desktop (xl:flex), di Mobile disembunyikan total -->
+    <!-- Desain Glassmorphism premium: bg-white/80 backdrop-blur-xl -->
     <aside
-        class="fixed inset-y-0 left-0 z-40 flex w-60 flex-col border-r border-slate-200 bg-white"
-        :class="open ? 'translate-x-0' : '-translate-x-full xl:translate-x-0'"
-        :style="{ transition: 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)' }">
-        <div class="flex h-16 items-center justify-between border-b border-slate-200 px-4">
-            <div class="flex items-center gap-3">
-                <img src="/images/logo-brand.png" alt="Nexavia"
-                    class="h-10 w-10 rounded-xl border border-slate-200 object-contain p-1">
-                <div>
-                    <p class="text-sm font-semibold text-slate-800">Nexavia</p>
-                    <p class="text-[11px] text-slate-500">Manajemen Pengiriman</p>
-                </div>
-            </div>
-
-            <button type="button"
-                class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 xl:hidden"
-                @click="$emit('close')">
-                <i class="bi bi-x-lg" />
-            </button>
+        class="fixed inset-y-0 left-0 z-40 hidden w-[280px] flex-col border-r border-slate-100 bg-white/80 backdrop-blur-xl xl:flex shadow-[4px_0_24px_rgb(0,0,0,0.02)]">
+        
+        <!-- [UBAH KHUSUS DESKTOP] Header Sidebar: Logo Xaviera Raksasa -->
+        <div class="flex items-center justify-center border-b border-slate-100/60 p-6">
+            <img src="/images/logo-brand.png" alt="Xaviera"
+                class="w-full h-auto max-h-24 object-contain drop-shadow-md">
         </div>
 
         <div class="flex-1 overflow-y-auto px-3 py-4">
@@ -125,8 +115,8 @@ const linkClass = (item) => {
             </nav>
         </div>
 
-        <div class="border-t border-slate-200 px-4 py-3">
-            <p class="text-xs text-slate-400">© 2025 SoftSend</p>
+        <div class="border-t border-slate-100/60 px-6 py-4">
+            <p class="text-[11px] font-medium text-slate-400">© 2026 Xaviera Delivery</p>
         </div>
     </aside>
 </template>

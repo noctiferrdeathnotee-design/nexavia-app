@@ -4,6 +4,7 @@ import Pagination from '@/Components/Pagination.vue'
 import StatusBadge from '@/Components/StatusBadge.vue'
 import { Head, Link, router } from '@inertiajs/vue3'
 import { computed, reactive } from 'vue'
+import ToggleSwitch from '@/Components/ToggleSwitch.vue'
 
 const props = defineProps({
     pengiriman: {
@@ -25,6 +26,7 @@ const filterForm = reactive({
     status: props.filters.status || '',
     tanggal_mulai: props.filters.tanggal_mulai || '',
     tanggal_akhir: props.filters.tanggal_akhir || '',
+    only_late: props.filters.only_late === 'true' || props.filters.only_late === true || false,
 })
 
 const rows = computed(() => props.pengiriman?.data ?? [])
@@ -48,6 +50,7 @@ const cleanedFilters = computed(() => {
     if (filterForm.status) payload.status = filterForm.status
     if (filterForm.tanggal_mulai) payload.tanggal_mulai = filterForm.tanggal_mulai
     if (filterForm.tanggal_akhir) payload.tanggal_akhir = filterForm.tanggal_akhir
+    if (filterForm.only_late) payload.only_late = filterForm.only_late
 
     return payload
 })
@@ -66,6 +69,7 @@ const resetFilters = () => {
     filterForm.status = ''
     filterForm.tanggal_mulai = ''
     filterForm.tanggal_akhir = ''
+    filterForm.only_late = false
 
     applyFilters()
 }
@@ -165,7 +169,12 @@ const formatService = (value) => {
                         </div>
                     </div>
 
-                    <div v-if="hasActiveFilter" class="col-span-2 flex items-end lg:col-span-1">
+                    <!-- [UBAH KHUSUS MOBILE & DESKTOP] Premium Toggle Switch untuk Filter 'Hanya Terlambat' -->
+                    <div class="col-span-2 flex items-center justify-between lg:col-span-1 p-2 bg-slate-50/50 rounded-lg border border-slate-100/50">
+                        <ToggleSwitch v-model="filterForm.only_late" label="Hanya Terlambat" @change="applyFilters" />
+                    </div>
+
+                    <div v-if="hasActiveFilter || filterForm.only_late" class="col-span-2 flex items-end lg:col-span-1">
                         <button type="button" class="btn-secondary w-full justify-center lg:w-auto" @click="resetFilters">
                             Reset
                         </button>
@@ -176,72 +185,113 @@ const formatService = (value) => {
             <!-- Table Section -->
             <!-- [UBAH KHUSUS MOBILE] Kotak Tabel Premium: glassmorphism, shadow tipis, border tipis -->
             <div class="card overflow-hidden rounded-[20px] border border-slate-100/60 bg-white/95 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm sm:rounded-xl sm:border sm:border-slate-200 sm:bg-white sm:shadow-sm sm:backdrop-blur-none">
-                <!-- [UBAH KHUSUS MOBILE] Wrapper Horizontal Scroll tanpa Scrollbar (smooth swipe) -->
-                <div v-if="rows.length" class="w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                
+                <!-- [UBAH KHUSUS MOBILE] Mobile Card View (Hanya muncul di Layar HP < sm) -->
+                <div v-if="rows.length" class="block sm:hidden divide-y divide-slate-100/80">
+                    <div v-for="item in rows" :key="'mob-'+item.id" class="p-4 flex flex-col gap-3" :class="item.is_terlambat ? 'bg-red-50/30' : 'bg-transparent'">
+                        <!-- Resi & Status -->
+                        <div class="flex items-start justify-between">
+                            <div class="flex flex-col gap-0.5">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">No. Resi</span>
+                                <span class="text-[15px] font-bold tracking-tight text-[#1a365d]">{{ item.nomor_resi || '-' }}</span>
+                            </div>
+                            <StatusBadge :status="item.status" />
+                        </div>
+
+                        <!-- Pengirim & Tujuan -->
+                        <div class="grid grid-cols-2 gap-3 bg-slate-50/50 p-3 rounded-xl border border-slate-100">
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Pengirim</span>
+                                <span class="block text-[13px] font-semibold text-slate-700 truncate mt-0.5">{{ item.pengirim_nama || '-' }}</span>
+                            </div>
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Tujuan</span>
+                                <span class="block text-[13px] font-semibold text-slate-700 truncate mt-0.5">{{ item.tujuan_kota || '-' }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Layanan, Estimasi & Aksi -->
+                        <div class="flex items-center justify-between mt-1">
+                            <div class="flex items-center gap-2">
+                                <span class="inline-flex items-center rounded-md bg-[#b8860b]/10 px-2 py-1 text-[11px] font-semibold text-[#b8860b]">
+                                    {{ formatService(item.layanan) }}
+                                </span>
+                                <span v-if="item.is_terlambat" class="inline-flex rounded-md bg-red-100 px-2 py-1 text-[11px] font-bold text-red-600">
+                                    Telat
+                                </span>
+                            </div>
+                            <Link :href="route('pengiriman.show', item.id)" class="btn-secondary btn-sm !rounded-full px-4 border-slate-200 shadow-sm text-[#1a365d] hover:bg-slate-50">
+                                Detail
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- [UBAH KHUSUS DESKTOP] Table View (Hanya muncul di Layar >= sm) -->
+                <div v-if="rows.length" class="hidden sm:block w-full overflow-x-auto">
                     <table class="min-w-full divide-y divide-slate-100 sm:divide-slate-200">
-                        <thead class="bg-slate-50/50 sm:bg-slate-50">
+                        <thead class="bg-slate-50">
                             <tr>
-                                <!-- [UBAH KHUSUS MOBILE] Font label uppercase dengan tracking lebar (tracking-widest) -->
-                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
+                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                                     No Resi
                                 </th>
-                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
+                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                                     Pengirim
                                 </th>
-                                <th class="hidden px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:table-cell sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
+                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                                     Tujuan
                                 </th>
-                                <th class="hidden px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 md:table-cell sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
+                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                                     Layanan
                                 </th>
-                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
+                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                                     Status
                                 </th>
-                                <th class="hidden px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 lg:table-cell sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
+                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                                     Estimasi
                                 </th>
-                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
+                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                                     Aksi
                                 </th>
                             </tr>
                         </thead>
 
-                        <tbody class="divide-y divide-slate-100 bg-transparent sm:bg-white">
-                            <tr v-for="item in rows" :key="item.id" :class="item.is_terlambat ? 'bg-red-50/50 sm:bg-red-50' : 'hover:bg-slate-50/50 sm:hover:bg-slate-50'">
-                                <!-- [UBAH KHUSUS MOBILE] Font isi tabel lebih solid (tracking-tight) khusus Mobile -->
-                                <td class="px-4 py-3 text-sm font-semibold tracking-tight text-slate-800 sm:px-3 py-2 sm:font-medium sm:tracking-normal sm:text-slate-700">
+                        <tbody class="divide-y divide-slate-100 bg-white">
+                            <tr v-for="item in rows" :key="item.id" :class="item.is_terlambat ? 'bg-red-50/80 hover:bg-red-50' : 'hover:bg-slate-50/80 transition-colors duration-150'">
+                                <td class="px-3 py-3 text-sm font-semibold text-[#1a365d]">
                                     <div class="flex flex-col gap-1">
                                         <span>{{ item.nomor_resi || '-' }}</span>
                                         <span v-if="item.is_terlambat"
-                                            class="inline-flex w-fit rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-semibold text-red-600">
-                                            Terlambat
+                                            class="inline-flex w-fit rounded-md bg-red-100 px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-red-600">
+                                            TERLAMBAT
                                         </span>
                                     </div>
                                 </td>
 
-                                <td class="px-4 py-3 text-sm font-medium tracking-tight text-slate-700 sm:px-3 sm:py-2 sm:font-normal sm:tracking-normal sm:text-slate-600">
+                                <td class="px-3 py-3 text-sm font-medium text-slate-700">
                                     {{ item.pengirim_nama || '-' }}
                                 </td>
 
-                                <td class="hidden px-4 py-3 text-sm font-medium tracking-tight text-slate-700 sm:table-cell sm:px-3 sm:py-2 sm:font-normal sm:tracking-normal sm:text-slate-600">
+                                <td class="px-3 py-3 text-sm text-slate-600">
                                     {{ item.tujuan_kota || '-' }}
                                 </td>
 
-                                <td class="hidden px-4 py-3 text-sm font-medium tracking-tight text-slate-700 md:table-cell sm:px-3 sm:py-2 sm:font-normal sm:tracking-normal sm:text-slate-600">
-                                    {{ formatService(item.layanan) }}
+                                <td class="px-3 py-3 text-sm text-slate-600">
+                                    <span class="inline-flex items-center rounded-md bg-[#b8860b]/10 px-2.5 py-1 text-xs font-semibold text-[#b8860b]">
+                                        {{ formatService(item.layanan) }}
+                                    </span>
                                 </td>
 
-                                <td class="px-4 py-3 text-sm sm:px-3 sm:py-2">
+                                <td class="px-3 py-3 text-sm">
                                     <StatusBadge :status="item.status" />
                                 </td>
 
-                                <td class="hidden px-4 py-3 text-sm font-medium tracking-tight text-slate-700 lg:table-cell sm:px-3 sm:py-2 sm:font-normal sm:tracking-normal sm:text-slate-600">
+                                <td class="px-3 py-3 text-sm text-slate-600">
                                     {{ formatDate(item.estimasi_tiba) }}
                                 </td>
 
-                                <td class="px-4 py-3 text-sm sm:px-3 sm:py-2">
-                                    <!-- [UBAH KHUSUS MOBILE] Tombol Aksi lengkung penuh khusus Mobile -->
-                                    <Link :href="route('pengiriman.show', item.id)" class="btn-secondary btn-sm rounded-full sm:rounded-md">
+                                <td class="px-3 py-3 text-sm">
+                                    <Link :href="route('pengiriman.show', item.id)" class="btn-secondary btn-sm rounded-lg hover:border-[#b8860b] hover:text-[#b8860b] transition-colors">
                                         Detail
                                     </Link>
                                 </td>

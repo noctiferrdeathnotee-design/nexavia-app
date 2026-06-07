@@ -333,44 +333,44 @@ onBeforeUnmount(() => {
     <Head title="Detail Tracking" />
 
     <PublicLayout>
-        <div class="space-y-4 sm:space-y-5">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div class="space-y-4 sm:space-y-6">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between bg-white/50 p-4 rounded-[20px] backdrop-blur-md border border-slate-100 shadow-sm">
                 <div>
-                    <h2 class="text-lg font-semibold text-slate-800">Detail Tracking</h2>
-                    <p class="text-sm text-slate-500">
+                    <h2 class="text-xl font-black text-[#1a365d] tracking-tight">Detail Tracking</h2>
+                    <p class="text-sm text-slate-500 font-medium">
                         Pantau status, rute, dan riwayat pengiriman secara realtime.
                     </p>
                 </div>
 
-                <Link :href="route('tracking.index')" class="btn-secondary w-full justify-center sm:w-auto">
+                <Link :href="route('tracking.index')" class="btn-secondary w-full justify-center sm:w-auto !rounded-xl h-[42px] px-5 bg-white shadow-sm hover:shadow-md transition-shadow">
                     <i class="bi bi-arrow-left" />
                     Lacak Lain
                 </Link>
             </div>
 
             <!-- Info Pengiriman -->
-            <div class="card p-4">
-                <div class="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-4">
-                    <div>
-                        <p class="text-xs text-slate-500">Nomor Resi</p>
-                        <p class="mt-0.5 text-sm font-semibold text-slate-800 break-all">{{ pengiriman.nomor_resi }}</p>
+            <div class="card p-5 sm:p-6 rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 bg-gradient-to-br from-white to-slate-50">
+                <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-4">
+                    <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Nomor Resi</p>
+                        <p class="mt-1 text-[15px] font-black text-[#1a365d] break-all">{{ pengiriman.nomor_resi }}</p>
                     </div>
 
-                    <div>
-                        <p class="text-xs text-slate-500">Rute</p>
-                        <p class="mt-0.5 text-sm text-slate-700">{{ routeText }}</p>
+                    <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Rute</p>
+                        <p class="mt-1 text-[13px] font-semibold text-slate-700 truncate">{{ routeText }}</p>
                     </div>
 
-                    <div>
-                        <p class="text-xs text-slate-500">Status</p>
+                    <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Status</p>
                         <div class="mt-1">
                             <StatusBadge :status="pengiriman.status" />
                         </div>
                     </div>
 
-                    <div>
-                        <p class="text-xs text-slate-500">Estimasi Tiba</p>
-                        <p class="mt-0.5 text-sm text-slate-700">{{ formatDate(pengiriman.estimasi_tiba) }}</p>
+                    <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Estimasi Tiba</p>
+                        <p class="mt-1 text-[13px] font-semibold text-slate-700">{{ formatDate(pengiriman.estimasi_tiba) }}</p>
                     </div>
                 </div>
             </div>
@@ -452,7 +452,7 @@ onBeforeUnmount(() => {
                 </div>
 
                 <div v-if="hasValidCoords" ref="mapEl"
-                    class="h-[260px] w-full overflow-hidden rounded-xl border border-slate-200 sm:h-[340px] md:h-[400px]"></div>
+                    class="h-[260px] w-full overflow-hidden rounded-[20px] border-4 border-white shadow-lg sm:h-[340px] md:h-[400px]"></div>
 
                 <div v-else
                     class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-8 text-center text-sm text-slate-500">
@@ -461,42 +461,49 @@ onBeforeUnmount(() => {
             </div>
 
             <!-- Timeline Tracking -->
-            <div class="card p-4">
-                <div class="mb-3">
-                    <h3 class="text-sm font-semibold text-slate-800">Timeline Tracking</h3>
-                    <p class="text-xs text-slate-500">
-                        Riwayat terbaru tampil di bagian paling atas.
-                    </p>
+            <div class="card p-5 sm:p-6 rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
+                <div class="mb-5 flex items-center justify-between border-b border-slate-100 pb-3">
+                    <div>
+                        <h3 class="text-[14px] font-black uppercase tracking-widest text-[#1a365d]">Timeline Tracking</h3>
+                        <p class="text-xs text-slate-500 mt-1">Riwayat perjalanan terbaru di urutan atas.</p>
+                    </div>
                 </div>
 
-                <div v-if="pengiriman.tracking_histories.length" class="space-y-3 sm:space-y-4">
-                    <div v-for="(item, index) in pengiriman.tracking_histories" :key="item.id" class="relative pl-6">
+                <div v-if="pengiriman.tracking_histories.length" class="space-y-4 sm:space-y-5 pl-2">
+                    <div v-for="(item, index) in pengiriman.tracking_histories" :key="item.id" class="relative pl-8 sm:pl-10">
                         <div v-if="index !== pengiriman.tracking_histories.length - 1"
-                            class="absolute left-2 top-1 h-full w-px bg-slate-200"></div>
+                            class="absolute left-3 sm:left-[17px] top-6 h-full w-[2px] bg-slate-100/80"></div>
 
                         <div
-                            class="absolute left-0 top-1.5 h-4 w-4 rounded-full border-2 border-white shadow"
+                            class="absolute left-0 sm:left-2 top-2 h-6 w-6 rounded-full border-4 border-white shadow-sm flex items-center justify-center z-10"
                             :style="{ backgroundColor: segmentColors[index % segmentColors.length] }">
+                            <div class="h-2 w-2 rounded-full bg-white"></div>
                         </div>
 
-                        <div class="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-                            <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                                <p class="text-sm font-semibold text-slate-800">
+                        <div class="rounded-2xl border border-slate-100/50 bg-slate-50/50 p-4 transition-all hover:bg-white hover:shadow-md hover:border-slate-200">
+                            <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-2">
+                                <p class="text-[13px] font-black tracking-wide" :style="{ color: segmentColors[index % segmentColors.length] }">
                                     {{ statusLabel(item.status_baru) }}
                                 </p>
-                                <p class="text-xs text-slate-500">
-                                    {{ formatDate(item.created_at, true) }}
-                                </p>
+                                <div class="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-md shadow-sm border border-slate-100">
+                                    <i class="bi bi-clock text-[10px] text-slate-400"></i>
+                                    <p class="text-[11px] font-bold text-slate-500">
+                                        {{ formatDate(item.created_at, true) }}
+                                    </p>
+                                </div>
                             </div>
 
-                            <p class="mt-1 text-xs text-slate-500">{{ item.lokasi }}</p>
-                            <p class="mt-1.5 text-sm text-slate-600">{{ item.keterangan }}</p>
+                            <p class="text-[12px] font-semibold text-slate-700 flex items-start gap-1.5 mt-1">
+                                <i class="bi bi-geo-alt-fill text-slate-400 mt-0.5"></i>
+                                {{ item.lokasi }}
+                            </p>
+                            <p class="mt-2 text-[13px] text-slate-600 bg-white p-3 rounded-xl border border-slate-100 leading-relaxed">{{ item.keterangan }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div v-else class="text-sm text-slate-500">
-                    Belum ada riwayat tracking.
+                <div v-else class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-8 text-center text-sm font-medium text-slate-500">
+                    Belum ada riwayat tracking untuk resi ini.
                 </div>
             </div>
         </div>
