@@ -164,24 +164,6 @@ const chartSeries = computed(() => ([
 
     <AppLayout>
         <div class="space-y-4 sm:space-y-5">
-            <!-- [UBAH KHUSUS MOBILE & DESKTOP] Welcome Banner Premium dengan Soft Mesh Gradient -->
-            <div class="relative overflow-hidden rounded-[20px] sm:rounded-xl border border-indigo-100/80 bg-gradient-to-r from-indigo-50 via-white to-blue-50/30 p-4 sm:p-5 shadow-[0_4px_20px_rgb(0,0,0,0.02)]">
-                <!-- Aksen pendar cahaya halus -->
-                <div class="absolute -left-10 -top-10 h-32 w-32 rounded-full bg-indigo-500/10 blur-[40px] pointer-events-none"></div>
-                <div class="relative z-10 flex items-center gap-3 sm:gap-4">
-                    <div class="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-2xl sm:rounded-xl bg-white shadow-sm ring-1 ring-slate-100/80">
-                        <span class="text-lg sm:text-xl text-indigo-600">👋</span>
-                    </div>
-                    <div>
-                        <h2 class="text-[15px] sm:text-[17px] font-extrabold tracking-tight text-slate-800">
-                            Selamat datang, <span class="text-indigo-600">{{ userName }}</span>
-                        </h2>
-                        <p class="mt-0.5 text-[11px] sm:text-[13px] font-medium text-slate-500">
-                            Ringkasan aktivitas pengiriman, pendapatan, tren bulanan, dan data terbaru.
-                        </p>
-                    </div>
-                </div>
-            </div>
 
             <div v-if="terlambat_count > 0" class="rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 sm:px-4 sm:py-3">
                 <div class="flex items-start gap-2.5 sm:gap-3">
