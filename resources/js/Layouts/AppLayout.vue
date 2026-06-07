@@ -47,13 +47,14 @@ const isMobileNavActive = (match, exact) => {
 
         <div class="flex min-h-screen flex-col xl:pl-[280px]"> <!-- Lebar sidebar desktop diperbesar untuk logo Xaviera -->
             
-            <!-- [UPDATE: FASE 1 MOBILE HEADER]
+            <!-- [UPDATE: FASE 4 PERBAIKAN BUG VISUAL MOBILE]
                  Fungsi: Header ini HANYA muncul di Mobile (Layar HP) dan disembunyikan di Desktop.
-                 Cara Kerja: 'sticky top-0 z-30' membuatnya melayang di atas, 'xl:hidden' menyembunyikannya di layar besar.
-                 Perbaikan: Background/padding (bg-slate-50) DIHAPUS agar logo Xaviera tampil murni transparan (tanpa kotak). 
-                 Ukuran logo diperbesar proporsional ('h-16 w-auto max-w-[240px]') tanpa merusak tata letak. -->
+                 Perbaikan: Menghapus 'mix-blend-multiply' dari class img.
+                 Alasan: Gambar logo-xaviera.jpg yang diupload user memiliki latar belakang kotak-kotak bawaan gambar (fake transparent). 
+                 Mix-blend-multiply malah mengubah warna kotak-kotak itu menjadi gelap/hitam. 
+                 Saran: Tetap dianjurkan user mengganti dengan PNG transparan asli agar sempurna. -->
             <div class="sticky top-0 z-30 flex h-20 w-full items-center justify-center border-b border-slate-100 bg-white/95 backdrop-blur-md xl:hidden shadow-sm">
-                <img src="/images/logo-xaviera.jpg" alt="Xaviera" class="h-16 w-auto max-w-[240px] object-contain drop-shadow-md mix-blend-multiply bg-transparent">
+                <img src="/images/logo-xaviera.jpg" alt="Xaviera" class="h-16 w-auto max-w-[240px] object-contain drop-shadow-sm rounded-lg bg-white">
             </div>
 
             <!-- Navbar Desktop (Navbar.vue), di Mobile disembunyikan sepenuhnya -->
@@ -66,36 +67,35 @@ const isMobileNavActive = (match, exact) => {
             </main>
         </div>
 
-        <!-- [UPDATE: FASE 3 BOTTOM NAVIGATION] 
-             Fungsi: Menggantikan Sidebar Desktop. Menu utama ini akan selalu berada di bawah layar (fixed bottom-0) saat dibuka di Mobile.
-             Cara Kerja: Warna indikator 'active' diubah MURNI menggunakan warna Xaviera Blue (#0B132B) dan Xaviera Gold (#B8860B).
-             Perbaikan UI/UX: Desktop tidak akan melihat ini (xl:hidden). Tata letak ini mempertahankan layar HP tetap lega. -->
+        <!-- [UPDATE: FASE 4 PERBAIKAN BUG VISUAL MOBILE] 
+             Fungsi: Menggantikan Sidebar Desktop. Menu utama ini selalu berada di bawah layar saat dibuka di Mobile.
+             Perbaikan UI/UX: Membesarkan ukuran Ikon dari text-[22px] menjadi text-[24px] agar lebih proporsional dengan layar HP modern. -->
         <nav class="fixed bottom-0 left-0 z-50 flex h-[68px] w-full items-center justify-around border-t border-slate-200/60 bg-white/95 px-1 pb-safe backdrop-blur-xl xl:hidden shadow-[0_-8px_30px_rgb(0,0,0,0.04)]">
             
             <!-- Beranda (Icon Aktif: Xaviera Gold) -->
             <Link href="/dashboard" class="group relative flex flex-col items-center justify-center w-16 gap-1" :class="isMobileNavActive('/dashboard', true) ? 'text-[#B8860B]' : 'text-slate-400 hover:text-slate-600'">
-                <i class="bi bi-speedometer2 text-[22px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/dashboard', true) }" />
+                <i class="bi bi-speedometer2 text-[24px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/dashboard', true) }" />
                 <span class="text-[10px] font-semibold tracking-wide" :class="{ 'opacity-100': isMobileNavActive('/dashboard', true), 'opacity-80': !isMobileNavActive('/dashboard', true) }">Beranda</span>
                 <div v-if="isMobileNavActive('/dashboard', true)" class="absolute -bottom-2 h-1 w-1 rounded-full bg-[#B8860B] shadow-[0_0_8px_rgba(184,134,11,0.6)]"></div>
             </Link>
 
             <!-- Paket (Icon Aktif: Xaviera Blue) -->
             <Link href="/pengiriman" class="group relative flex flex-col items-center justify-center w-16 gap-1" :class="isMobileNavActive('/pengiriman', false) ? 'text-[#0B132B]' : 'text-slate-400 hover:text-slate-600'">
-                <i class="bi bi-box-seam text-[22px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/pengiriman', false) }" />
+                <i class="bi bi-box-seam text-[24px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/pengiriman', false) }" />
                 <span class="text-[10px] font-semibold tracking-wide" :class="{ 'opacity-100': isMobileNavActive('/pengiriman', false), 'opacity-80': !isMobileNavActive('/pengiriman', false) }">Paket</span>
                 <div v-if="isMobileNavActive('/pengiriman', false)" class="absolute -bottom-2 h-1 w-1 rounded-full bg-[#0B132B] shadow-[0_0_8px_rgba(11,19,43,0.6)]"></div>
             </Link>
 
             <!-- Tarif (Icon Aktif: Xaviera Gold) -->
             <Link href="/tarif" class="group relative flex flex-col items-center justify-center w-16 gap-1" :class="isMobileNavActive('/tarif', false) ? 'text-[#B8860B]' : 'text-slate-400 hover:text-slate-600'">
-                <i class="bi bi-calculator text-[22px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/tarif', false) }" />
+                <i class="bi bi-calculator text-[24px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/tarif', false) }" />
                 <span class="text-[10px] font-semibold tracking-wide" :class="{ 'opacity-100': isMobileNavActive('/tarif', false), 'opacity-80': !isMobileNavActive('/tarif', false) }">Tarif</span>
                 <div v-if="isMobileNavActive('/tarif', false)" class="absolute -bottom-2 h-1 w-1 rounded-full bg-[#B8860B] shadow-[0_0_8px_rgba(184,134,11,0.6)]"></div>
             </Link>
 
             <!-- Laporan (Icon Aktif: Xaviera Blue) -->
             <Link href="/laporan" class="group relative flex flex-col items-center justify-center w-16 gap-1" :class="isMobileNavActive('/laporan', false) ? 'text-[#0B132B]' : 'text-slate-400 hover:text-slate-600'">
-                <i class="bi bi-file-earmark-bar-graph text-[22px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/laporan', false) }" />
+                <i class="bi bi-file-earmark-bar-graph text-[24px] transition-transform duration-300" :class="{ 'scale-110 drop-shadow-sm': isMobileNavActive('/laporan', false) }" />
                 <span class="text-[10px] font-semibold tracking-wide" :class="{ 'opacity-100': isMobileNavActive('/laporan', false), 'opacity-80': !isMobileNavActive('/laporan', false) }">Laporan</span>
                 <div v-if="isMobileNavActive('/laporan', false)" class="absolute -bottom-2 h-1 w-1 rounded-full bg-[#0B132B] shadow-[0_0_8px_rgba(11,19,43,0.6)]"></div>
             </Link>

@@ -205,10 +205,14 @@ const chartSeries = computed(() => ([
                     </div>
                 </div>
 
-                <div class="h-44 w-full sm:h-48 md:h-52">
+                <!-- [UPDATE: FASE 4 PERBAIKAN BUG VISUAL MOBILE]
+                     Fungsi: Mencegah Kotak Melompong (Terlalu Tinggi) saat Grafik Kosong.
+                     Cara Kerja: Menambahkan v-if="hasChartData" pada kontainer grafik (div h-44).
+                     Alasan: Sebelumnya div ini selalu dirender meskipun data kosong, menyisakan tinggi 176px yang kosong.
+                     Dampak: Kini kotak "Tren 6 Bulan" akan otomatis menyusut ramping di HP jika grafik tidak ada. -->
+                <div v-if="hasChartData" class="h-44 w-full sm:h-48 md:h-52">
                     <!-- [UBAH KHUSUS MOBILE & DESKTOP] Menggunakan ApexCharts yang sangat smooth dan ringan -->
                     <ApexChart
-                        v-if="hasChartData"
                         type="area"
                         height="100%"
                         :options="chartOptions"

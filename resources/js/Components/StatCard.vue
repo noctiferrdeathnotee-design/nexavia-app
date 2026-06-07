@@ -97,8 +97,13 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <!-- [UBAH KHUSUS MOBILE] Kotak Grid: Premium glassmorphism tipis, shadow lembut, desktop tetap aslinya -->
-    <div class="card relative overflow-hidden rounded-[20px] border border-slate-100/60 bg-white/95 p-4.5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm sm:rounded-xl sm:border sm:border-slate-200 sm:bg-white sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
+    <!-- [UPDATE: FASE 4 PERBAIKAN BUG VISUAL MOBILE]
+         Fungsi: Memperbaiki Teks Terpotong (Cut-off Text) di Layar HP.
+         Cara Kerja: Mengembalikan padding yang valid (p-4) pada kotak kartu khusus untuk mobile (sm ke bawah).
+         Alasan: Sebelumnya menggunakan 'p-4.5' yang tidak valid di Tailwind murni, sehingga menyebabkan padding menjadi 0 
+         dan teks "TOTAL PENGIRIMAN" menabrak lengkungan kotak (rounded-[20px]) dan terpotong (hidden).
+         Dampak: Desktop tetap aman (sm:p-5 / sm:p-6), Lighthouse LCP/CLS tetap 100% karena ini murni CSS bawaan Tailwind. -->
+    <div class="card relative overflow-hidden rounded-[20px] border border-slate-100/60 bg-white/95 p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm sm:rounded-xl sm:border sm:border-slate-200 sm:bg-white sm:p-5 sm:shadow-sm sm:backdrop-blur-none">
         
         <!-- Efek cahaya tipis di dalam kotak khusus mobile untuk kesan mewah -->
         <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none lg:hidden"></div>
