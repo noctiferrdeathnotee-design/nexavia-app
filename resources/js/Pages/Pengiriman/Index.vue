@@ -3,7 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 import Pagination from '@/Components/Pagination.vue'
 import StatusBadge from '@/Components/StatusBadge.vue'
 import { Head, Link, router } from '@inertiajs/vue3'
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import ToggleSwitch from '@/Components/ToggleSwitch.vue'
 
 const props = defineProps({
@@ -28,6 +28,9 @@ const filterForm = reactive({
     tanggal_akhir: props.filters.tanggal_akhir || '',
     only_late: props.filters.only_late === 'true' || props.filters.only_late === true || false,
 })
+
+// [UPDATE: FASE 6 PREMIUM MOBILE DISPATCH] State untuk Buka-Tutup Filter di HP
+const showMobileFilter = ref(false)
 
 const rows = computed(() => props.pengiriman?.data ?? [])
 const paginationLinks = computed(() => props.pengiriman?.links ?? [])
@@ -117,17 +120,79 @@ const formatService = (value) => {
                     </p>
                 </div>
 
-                <!-- [UBAH KHUSUS MOBILE] Tombol melengkung elegan (rounded-xl) di Mobile agar berkesan aplikasi native -->
-                <Link :href="route('pengiriman.create')" class="btn-primary w-full justify-center rounded-xl sm:w-auto sm:rounded-lg">
+                <!-- [UPDATE: FASE 6 PREMIUM MOBILE DISPATCH] The Royal Button Khusus Mobile & Tombol Standar Desktop -->
+                <!-- Desktop (100% Tidak Disentuh) -->
+                <Link :href="route('pengiriman.create')" class="hidden sm:inline-flex btn-primary w-auto rounded-lg">
                     <i class="bi bi-plus-lg" />
+                    Input Baru
+                </Link>
+                <!-- Mobile (Premium Xaviera Gold & Midnight Blue) -->
+                <Link :href="route('pengiriman.create')" class="flex sm:hidden w-full items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-sm font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.3)] transition-transform hover:scale-[0.98] active:scale-95">
+                    <i class="bi bi-plus-circle-fill text-base" />
                     Input Baru
                 </Link>
             </div>
 
             <!-- Filter Section -->
-            <!-- [UBAH KHUSUS MOBILE] Kotak Filter Premium: glassmorphism, shadow tipis, border tipis -->
-            <div class="card relative overflow-hidden rounded-[20px] border border-slate-100/60 bg-white/95 p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm sm:rounded-xl sm:border sm:border-slate-200 sm:bg-white sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
-                <!-- Efek cahaya halus khusus mobile -->
+            
+            <!-- [UPDATE: FASE 6 PREMIUM MOBILE DISPATCH] COLLAPSIBLE SMART FILTER KHUSUS MOBILE -->
+            <div class="block sm:hidden space-y-3">
+                <!-- Smart Pill Search Bar (Selalu Terlihat) -->
+                <div class="flex gap-2">
+                    <div class="relative flex-1">
+                        <i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input v-model="filterForm.search" type="text" 
+                               class="w-full rounded-full border border-slate-200 bg-white py-3 pl-10 pr-4 text-[13px] text-slate-800 shadow-[0_2px_10px_rgb(0,0,0,0.02)] focus:border-[#B8860B] focus:ring-[#B8860B]/20 transition-shadow"
+                               placeholder="Cari resi / pengirim..." @keyup.enter="applyFilters">
+                    </div>
+                    <button type="button" @click="showMobileFilter = !showMobileFilter" 
+                            class="flex shrink-0 items-center justify-center rounded-full bg-white px-4 text-slate-600 shadow-[0_2px_10px_rgb(0,0,0,0.02)] border border-slate-200 transition-colors"
+                            :class="showMobileFilter ? 'bg-slate-100 ring-2 ring-slate-200' : ''">
+                        <i class="bi bi-sliders text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Expanded Filters (Collapsible via v-show untuk LCP tercepat) -->
+                <div v-show="showMobileFilter" class="rounded-[20px] border border-slate-100 bg-white/95 p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-md transition-all duration-300 space-y-4">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="col-span-2">
+                            <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-widest text-slate-400">Status</label>
+                            <select v-model="filterForm.status" class="w-full rounded-xl border-slate-100 bg-slate-50 text-[13px] text-slate-700 focus:border-[#B8860B] focus:ring-[#B8860B]/20" @change="applyFilters">
+                                <option value="">Semua Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="diproses">Diproses</option>
+                                <option value="dalam_perjalanan">Dalam Perjalanan</option>
+                                <option value="tiba_di_kota_tujuan">Tiba Kota Tujuan</option>
+                                <option value="sedang_diantar">Sedang Diantar</option>
+                                <option value="terkirim">Terkirim</option>
+                                <option value="gagal">Gagal</option>
+                                <option value="dibatalkan">Dibatalkan</option>
+                            </select>
+                        </div>
+                        <div class="col-span-1">
+                            <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-widest text-slate-400">Dari</label>
+                            <input v-model="filterForm.tanggal_mulai" type="date" class="w-full rounded-xl border-slate-100 bg-slate-50 px-3 py-2 text-[13px] text-slate-700 focus:border-[#B8860B] focus:ring-[#B8860B]/20" @change="applyFilters">
+                        </div>
+                        <div class="col-span-1">
+                            <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-widest text-slate-400">Sampai</label>
+                            <input v-model="filterForm.tanggal_akhir" type="date" class="w-full rounded-xl border-slate-100 bg-slate-50 px-3 py-2 text-[13px] text-slate-700 focus:border-[#B8860B] focus:ring-[#B8860B]/20" @change="applyFilters">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 p-2.5">
+                        <ToggleSwitch v-model="filterForm.only_late" label="Hanya Terlambat" @change="applyFilters" />
+                    </div>
+
+                    <div class="pt-2">
+                        <button v-if="hasActiveFilter || filterForm.only_late" type="button" class="w-full rounded-xl bg-red-50 py-3 text-[13px] font-bold text-red-600 transition-colors hover:bg-red-100 border border-red-100" @click="resetFilters">
+                            Reset Filter
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FILTER DESKTOP (100% Tidak Disentuh, Hanya Disembunyikan di Mobile) -->
+            <div class="hidden sm:block card relative overflow-hidden rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                 <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none lg:hidden"></div>
                 
                 <!-- [UBAH KHUSUS MOBILE & DESKTOP] Tata letak grid baru setelah "Sort" dan "Layanan" dihapus -->
