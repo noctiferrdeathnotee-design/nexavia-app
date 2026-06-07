@@ -381,29 +381,45 @@ const submit = async () => {
     <AppLayout>
         <!-- [UBAH KHUSUS MOBILE] Padding bawah ekstra agar konten tidak tertutup oleh tombol sticky -->
         <div class="space-y-4 sm:space-y-5 pb-28 sm:pb-0">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <!-- [UPDATE: FASE 7 ULTRA-PREMIUM NATIVE FORM] Header terpisah -->
+            <!-- DESKTOP HEADER (100% Tidak Disentuh) -->
+            <div class="hidden sm:flex flex-row items-center justify-between">
                 <div>
                     <h2 class="text-lg font-semibold text-slate-800">Input Pengiriman</h2>
                     <p class="text-sm text-slate-500">
                         Form 4 langkah untuk membuat data pengiriman baru.
                     </p>
                 </div>
-
-                <Link :href="route('pengiriman.index')" class="btn-secondary w-full justify-center sm:w-auto">
+                <Link :href="route('pengiriman.index')" class="btn-secondary w-auto">
                     <i class="bi bi-arrow-left" />
                     Kembali
                 </Link>
             </div>
 
-            <div class="card p-3 sm:p-4">
+            <!-- MOBILE HEADER (Native App Feel) -->
+            <div class="flex sm:hidden items-center justify-between mb-2">
+                <Link :href="route('pengiriman.index')" class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-700 shadow-[0_2px_10px_rgba(0,0,0,0.03)] border border-slate-100 transition-transform active:scale-95">
+                    <i class="bi bi-arrow-left text-lg" />
+                </Link>
+                <h2 class="text-[17px] font-bold text-[#0B132B] tracking-tight">Input Pengiriman</h2>
+                <div class="w-10"></div> <!-- Spacer -->
+            </div>
+
+            <!-- [UPDATE: FASE 7] Liquid Progress Bar (Tanpa Card Background di Mobile) -->
+            <div class="px-2 py-1 sm:card sm:p-4">
                 <div class="flex items-center justify-between gap-1.5 overflow-x-auto sm:gap-2">
                     <div v-for="item in stepItems" :key="item.no" class="flex min-w-0 flex-1 items-center gap-2">
-                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold sm:h-9 sm:w-9 sm:text-sm"
-                            :class="item.no < step
-                                ? 'bg-emerald-500 text-white'
-                                : item.no === step
-                                    ? 'bg-indigo-500 text-white'
-                                    : 'bg-slate-100 text-slate-500'">
+                        
+                        <!-- Lingkaran Desktop (Tidak Disentuh) -->
+                        <div class="hidden h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold sm:flex"
+                            :class="item.no < step ? 'bg-emerald-500 text-white' : item.no === step ? 'bg-indigo-500 text-white' : 'bg-slate-100 text-slate-500'">
+                            <i v-if="item.no < step" class="bi bi-check-lg" />
+                            <span v-else>{{ item.no }}</span>
+                        </div>
+
+                        <!-- Lingkaran Mobile (Premium Xaviera Gold) -->
+                        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold shadow-sm transition-all duration-300 sm:hidden"
+                            :class="item.no < step ? 'bg-[#0B132B] text-[#D4AF37]' : item.no === step ? 'bg-gradient-to-br from-[#D4AF37] to-[#B8860B] text-white ring-4 ring-[#D4AF37]/20 shadow-[0_4px_15px_rgba(212,175,55,0.4)]' : 'bg-white text-slate-400 border border-slate-100 shadow-[0_2px_8px_rgba(0,0,0,0.02)]'">
                             <i v-if="item.no < step" class="bi bi-check-lg" />
                             <span v-else>{{ item.no }}</span>
                         </div>
@@ -424,24 +440,24 @@ const submit = async () => {
                 Ada validasi yang belum sesuai. Periksa kembali form Anda.
             </div>
 
-            <div v-if="step === 1" class="card p-3 sm:p-4">
+            <div v-if="step === 1" class="p-4 bg-white/60 backdrop-blur-md border border-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:card sm:rounded-xl sm:bg-white sm:border-slate-200 sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
                 <div class="mb-4">
-                    <h3 class="text-sm font-semibold text-slate-800">Step 1 — Data Pengirim</h3>
+                    <h3 class="text-sm font-semibold text-[#0B132B] sm:text-slate-800">Step 1 — Data Pengirim</h3>
                     <p class="text-xs text-slate-500">Isi data pengirim dan pilih kota asal.</p>
                 </div>
 
-                <div class="grid grid-cols-1 gap-3 sm:gap-4">
-                    <div class="max-w-xs">
+                <div class="grid grid-cols-1 gap-4 sm:gap-4">
+                    <div class="w-full sm:max-w-xs">
                         <label class="form-label">Nama Pengirim</label>
-                        <input v-model="form.pengirim_nama" type="text" class="form-input">
+                        <input v-model="form.pengirim_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
                         <p v-if="form.errors.pengirim_nama" class="mt-1 text-xs text-red-500">
                             {{ form.errors.pengirim_nama }}
                         </p>
                     </div>
 
-                    <div class="max-w-[180px]">
+                    <div class="w-full sm:max-w-[180px]">
                         <label class="form-label">No HP</label>
-                        <input v-model="form.pengirim_hp" type="tel" inputmode="numeric" class="form-input"
+                        <input v-model="form.pengirim_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0"
                             @input="sanitizePhone('pengirim_hp')">
                         <p v-if="form.errors.pengirim_hp" class="mt-1 text-xs text-red-500">
                             {{ form.errors.pengirim_hp }}
@@ -456,7 +472,7 @@ const submit = async () => {
                         </p>
                     </div>
 
-                    <div class="max-w-xs relative z-30">
+                    <div class="w-full sm:max-w-xs relative z-30">
                         <label class="form-label font-medium tracking-tight">Kota Asal</label>
                         <!-- [UBAH KHUSUS MOBILE & DESKTOP] Mengganti native select panjang yang merusak tampilan dengan Searchable Select pintar -->
                         <SearchableSelect 
@@ -469,38 +485,44 @@ const submit = async () => {
                         </p>
                     </div>
 
-                    <div class="max-w-sm">
+                    <div class="w-full sm:max-w-sm">
                         <KotaInfoBox :kota="kotaPengirim" />
                     </div>
                 </div>
 
-                <!-- [UBAH KHUSUS MOBILE] Memindahkan tombol Selanjutnya ke area bawah (Sticky Bottom Bar) agar mudah ditekan pakai 1 tangan -->
-                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-[0_-8px_30px_rgb(0,0,0,0.06)] z-40 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:flex sm:justify-end">
-                    <button type="button" class="btn-primary w-full justify-center rounded-xl sm:w-auto sm:rounded-lg" @click="goToStep(2)">
+                <!-- [UPDATE: FASE 7] The Royal Action Bar (Sticky Bottom Nav Khusus Mobile) -->
+                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-40 flex sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-end">
+                    <!-- Desktop -->
+                    <button type="button" class="hidden sm:inline-flex btn-primary w-auto rounded-lg" @click="goToStep(2)">
                         Selanjutnya
                         <i class="bi bi-arrow-right" />
+                    </button>
+                    <!-- Mobile -->
+                    <button type="button" class="flex sm:hidden w-full items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-[15px] font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.3)] transition-transform hover:scale-[0.98] active:scale-95" @click="goToStep(2)">
+                        Selanjutnya
+                        <i class="bi bi-arrow-right font-bold text-lg" />
                     </button>
                 </div>
             </div>
 
-            <div v-else-if="step === 2" class="card p-3 sm:p-4">
+            <div v-else-if="step === 2" class="p-4 bg-white/60 backdrop-blur-md border border-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:card sm:rounded-xl sm:bg-white sm:border-slate-200 sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
                 <div class="mb-4">
-                    <h3 class="text-sm font-semibold text-slate-800">Step 2 — Data Penerima</h3>
+                    <h3 class="text-sm font-semibold text-[#0B132B] sm:text-slate-800">Step 2 — Data Penerima</h3>
                     <p class="text-xs text-slate-500">Isi data penerima dan pilih kota tujuan.</p>
                 </div>
 
-                <div class="grid grid-cols-1 gap-3 sm:gap-4">
-                    <div class="max-w-xs">
+                <div class="grid grid-cols-1 gap-4 sm:gap-4">
+                    <div class="w-full sm:max-w-xs">
                         <label class="form-label">Nama Penerima</label>
-                        <input v-model="form.penerima_nama" type="text" class="form-input">
+                        <input v-model="form.penerima_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
                         <p v-if="form.errors.penerima_nama" class="mt-1 text-xs text-red-500">
                             {{ form.errors.penerima_nama }}
                         </p>
                     </div>
 
-                    <div class="max-w-[180px]">
+                    <div class="w-full sm:max-w-[180px]">
                         <label class="form-label">No HP</label>
-                        <input v-model="form.penerima_hp" type="tel" inputmode="numeric" class="form-input"
+                        <input v-model="form.penerima_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0"
                             @input="sanitizePhone('penerima_hp')">
                         <p v-if="form.errors.penerima_hp" class="mt-1 text-xs text-red-500">
                             {{ form.errors.penerima_hp }}
@@ -515,7 +537,7 @@ const submit = async () => {
                         </p>
                     </div>
 
-                    <div class="max-w-xs relative z-30">
+                    <div class="w-full sm:max-w-xs relative z-30">
                         <label class="form-label font-medium tracking-tight">Kota Tujuan</label>
                         <!-- [UBAH KHUSUS MOBILE & DESKTOP] Searchable Select untuk Tujuan -->
                         <SearchableSelect 
@@ -528,28 +550,37 @@ const submit = async () => {
                         </p>
                     </div>
 
-                    <div class="max-w-sm">
+                    <div class="w-full sm:max-w-sm">
                         <KotaInfoBox :kota="kotaPenerima" />
                     </div>
                 </div>
 
-                <!-- [UBAH KHUSUS MOBILE] Bar Navigasi Lengkung dan Melayang -->
-                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-[0_-8px_30px_rgb(0,0,0,0.06)] z-40 flex gap-3 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-between">
-                    <button type="button" class="btn-secondary flex-1 justify-center rounded-xl sm:flex-none sm:rounded-lg" @click="step = 1">
+                <!-- [UPDATE: FASE 7] The Royal Action Bar (Sticky Bottom Nav Khusus Mobile) -->
+                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-40 flex gap-3 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-between">
+                    <!-- Desktop -->
+                    <button type="button" class="hidden sm:inline-flex btn-secondary w-auto justify-center rounded-lg" @click="step = 1">
                         <i class="bi bi-arrow-left" />
                         Kembali
                     </button>
-
-                    <button type="button" class="btn-primary flex-1 justify-center rounded-xl sm:flex-none sm:rounded-lg" @click="goToStep(3)">
+                    <button type="button" class="hidden sm:inline-flex btn-primary w-auto justify-center rounded-lg" @click="goToStep(3)">
                         Selanjutnya
                         <i class="bi bi-arrow-right" />
+                    </button>
+
+                    <!-- Mobile -->
+                    <button type="button" class="flex sm:hidden flex-1 items-center justify-center gap-2 rounded-[16px] bg-slate-100 px-4 py-3.5 text-[15px] font-bold tracking-wide text-slate-600 transition-transform active:scale-95" @click="step = 1">
+                        Kembali
+                    </button>
+                    <button type="button" class="flex sm:hidden flex-[2] items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-[15px] font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.3)] transition-transform hover:scale-[0.98] active:scale-95" @click="goToStep(3)">
+                        Selanjutnya
+                        <i class="bi bi-arrow-right font-bold text-lg" />
                     </button>
                 </div>
             </div>
 
-            <div v-else-if="step === 3" class="card p-3 sm:p-4">
+            <div v-else-if="step === 3" class="p-4 bg-white/60 backdrop-blur-md border border-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:card sm:rounded-xl sm:bg-white sm:border-slate-200 sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
                 <div class="mb-4">
-                    <h3 class="text-sm font-semibold text-slate-800">Step 3 — Detail Barang</h3>
+                    <h3 class="text-sm font-semibold text-[#0B132B] sm:text-slate-800">Step 3 — Detail Barang</h3>
                     <p class="text-xs text-slate-500">Isi seluruh barang dan dimensi untuk hitung volumetrik.</p>
                 </div>
 
@@ -569,9 +600,9 @@ const submit = async () => {
                         </div>
 
                         <div class="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-2 xl:grid-cols-6">
-                            <div class="col-span-2 max-w-xs xl:col-span-2">
+                            <div class="col-span-2 w-full sm:max-w-xs xl:col-span-2">
                                 <label class="form-label">Nama Barang</label>
-                                <input v-model="item.nama_barang" type="text" class="form-input">
+                                <input v-model="item.nama_barang" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
                                 <p v-if="form.errors[`barang.${index}.nama_barang`]" class="mt-1 text-xs text-red-500">
                                     {{ form.errors[`barang.${index}.nama_barang`] }}
                                 </p>
@@ -659,23 +690,32 @@ const submit = async () => {
                     </div>
                 </div>
 
-                <!-- [UBAH KHUSUS MOBILE] Bar Navigasi Lengkung dan Melayang -->
-                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-[0_-8px_30px_rgb(0,0,0,0.06)] z-40 flex gap-3 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-between">
-                    <button type="button" class="btn-secondary flex-1 justify-center rounded-xl sm:flex-none sm:rounded-lg" @click="step = 2">
+                <!-- [UPDATE: FASE 7] The Royal Action Bar (Sticky Bottom Nav Khusus Mobile) -->
+                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-40 flex gap-3 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-between">
+                    <!-- Desktop -->
+                    <button type="button" class="hidden sm:inline-flex btn-secondary w-auto justify-center rounded-lg" @click="step = 2">
                         <i class="bi bi-arrow-left" />
                         Kembali
                     </button>
-
-                    <button type="button" class="btn-primary flex-1 justify-center rounded-xl sm:flex-none sm:rounded-lg" @click="goToStep(4)">
+                    <button type="button" class="hidden sm:inline-flex btn-primary w-auto justify-center rounded-lg" @click="goToStep(4)">
                         Selanjutnya
                         <i class="bi bi-arrow-right" />
+                    </button>
+
+                    <!-- Mobile -->
+                    <button type="button" class="flex sm:hidden flex-1 items-center justify-center gap-2 rounded-[16px] bg-slate-100 px-4 py-3.5 text-[15px] font-bold tracking-wide text-slate-600 transition-transform active:scale-95" @click="step = 2">
+                        Kembali
+                    </button>
+                    <button type="button" class="flex sm:hidden flex-[2] items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-[15px] font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.3)] transition-transform hover:scale-[0.98] active:scale-95" @click="goToStep(4)">
+                        Selanjutnya
+                        <i class="bi bi-arrow-right font-bold text-lg" />
                     </button>
                 </div>
             </div>
 
-            <div v-else class="card p-3 sm:p-4">
+            <div v-else class="p-4 bg-white/60 backdrop-blur-md border border-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:card sm:rounded-xl sm:bg-white sm:border-slate-200 sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
                 <div class="mb-4">
-                    <h3 class="text-sm font-semibold text-slate-800">Step 4 — Layanan & Pembayaran</h3>
+                    <h3 class="text-sm font-semibold text-[#0B132B] sm:text-slate-800">Step 4 — Layanan & Pembayaran</h3>
                     <p class="text-xs text-slate-500">Pilih layanan, isi biaya tambahan, lalu simpan.</p>
                 </div>
 
@@ -733,16 +773,16 @@ const submit = async () => {
 
                     <div class="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-2">
                         <div>
-                            <div class="mb-4 max-w-[160px]">
+                            <div class="mb-4 w-full sm:max-w-[160px]">
                                 <label class="form-label">Biaya Asuransi</label>
                                 <input v-model="form.biaya_asuransi" type="number" min="0" step="1000"
-                                    class="form-input">
+                                    class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
                             </div>
 
-                            <div class="max-w-[160px]">
+                            <div class="w-full sm:max-w-[160px]">
                                 <label class="form-label">Biaya Tambahan</label>
                                 <input v-model="form.biaya_tambahan" type="number" min="0" step="1000"
-                                    class="form-input">
+                                    class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
                             </div>
 
                             <div class="mt-5">
@@ -808,24 +848,40 @@ const submit = async () => {
                     </div>
                 </div>
 
-                <!-- [UBAH KHUSUS MOBILE] Bar Navigasi Lengkung dan Melayang untuk Simpan Data -->
-                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-[0_-8px_30px_rgb(0,0,0,0.06)] z-40 flex gap-3 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-between">
-                    <button type="button" class="btn-secondary flex-1 justify-center rounded-xl sm:flex-none sm:rounded-lg" @click="step = 3">
+                <!-- [UPDATE: FASE 7] The Royal Action Bar (Sticky Bottom Nav Khusus Mobile) -->
+                <div class="fixed bottom-0 inset-x-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-40 flex gap-3 sm:static sm:bg-transparent sm:border-0 sm:shadow-none sm:p-0 sm:mt-5 sm:justify-between">
+                    <!-- Desktop -->
+                    <button type="button" class="hidden sm:inline-flex btn-secondary w-auto justify-center rounded-lg" @click="step = 3">
                         <i class="bi bi-arrow-left" />
                         Kembali
                     </button>
-
-                    <button type="button" class="btn-primary flex-1 justify-center rounded-xl sm:flex-none sm:rounded-lg"
+                    <button type="button" class="hidden sm:inline-flex btn-primary w-auto justify-center rounded-lg"
                         :disabled="form.processing || !selectedTarif"
                         :class="{ 'opacity-60 cursor-not-allowed': form.processing || !selectedTarif }" @click="submit">
                         <span v-if="form.processing" class="inline-flex items-center gap-2">
                             <i class="bi bi-arrow-repeat animate-spin" />
                             Menyimpan...
                         </span>
-
                         <span v-else class="inline-flex items-center gap-2">
                             <i class="bi bi-check2-circle" />
                             Simpan Pengiriman
+                        </span>
+                    </button>
+
+                    <!-- Mobile -->
+                    <button type="button" class="flex sm:hidden flex-1 items-center justify-center gap-2 rounded-[16px] bg-slate-100 px-4 py-3.5 text-[15px] font-bold tracking-wide text-slate-600 transition-transform active:scale-95" @click="step = 3">
+                        Kembali
+                    </button>
+                    <button type="button" class="flex sm:hidden flex-[2] items-center justify-center gap-2 rounded-[16px] bg-[#0B132B] px-4 py-3.5 text-[15px] font-bold tracking-wide text-[#D4AF37] shadow-[0_8px_20px_rgba(11,19,43,0.3)] transition-transform hover:scale-[0.98] active:scale-95"
+                        :disabled="form.processing || !selectedTarif"
+                        :class="{ 'opacity-60 cursor-not-allowed': form.processing || !selectedTarif }" @click="submit">
+                        <span v-if="form.processing" class="inline-flex items-center gap-2">
+                            <i class="bi bi-arrow-repeat animate-spin text-lg" />
+                            Tunggu...
+                        </span>
+                        <span v-else class="inline-flex items-center gap-2">
+                            Simpan Data
+                            <i class="bi bi-check2-circle font-bold text-lg" />
                         </span>
                     </button>
                 </div>
