@@ -47,10 +47,10 @@ const isMobileNavActive = (match, exact) => {
 
         <div class="flex min-h-screen flex-col xl:pl-[280px]"> <!-- Lebar sidebar desktop diperbesar untuk logo Xaviera -->
             
-            <!-- [UBAH KHUSUS MOBILE] Header Mobile: Menampilkan Logo Xaviera Raksasa Rata Tengah -->
-            <div class="sticky top-0 z-30 flex h-16 w-full items-center justify-center border-b border-slate-100 bg-white/95 backdrop-blur-md xl:hidden shadow-sm">
-                <!-- Ukuran w-32 object-contain menjamin ketajaman logo HD tanpa pecah -->
-                <img src="/images/logo-brand.png" alt="Xaviera" class="h-10 w-32 object-contain drop-shadow-sm">
+            <!-- [UPDATE] Header Mobile Khusus Xaviera: Tinggi diperbesar (h-20) untuk menampung logo raksasa yang HD -->
+            <div class="sticky top-0 z-30 flex h-20 w-full items-center justify-center border-b border-slate-100 bg-white/95 backdrop-blur-md xl:hidden shadow-sm">
+                <!-- Menggunakan gambar logo asli dengan ukuran optimal (h-14 max-w-xs) agar ketajaman terjaga -->
+                <img src="/images/logo-xaviera.jpg" alt="Xaviera" class="h-14 w-auto max-w-[220px] object-contain drop-shadow-md">
             </div>
 
             <!-- Navbar Desktop (Navbar.vue), di Mobile disembunyikan sepenuhnya -->

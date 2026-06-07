@@ -1,23 +1,30 @@
 {
-  "_AppLayout-odTgxGut.js": {
-    "file": "assets/AppLayout-odTgxGut.js",
+  "_AppLayout-BeqKfJR3.js": {
+    "file": "assets/AppLayout-BeqKfJR3.js",
     "name": "AppLayout",
     "imports": [
       "resources/js/app.js",
       "_useFlash-ClpPXnis.js"
     ]
   },
-  "_PublicLayout-CPznlRxg.js": {
-    "file": "assets/PublicLayout-CPznlRxg.js",
+  "_PublicLayout-DB4HAYpT.js": {
+    "file": "assets/PublicLayout-DB4HAYpT.js",
     "name": "PublicLayout",
     "imports": [
       "resources/js/app.js",
       "_useFlash-ClpPXnis.js"
     ]
   },
-  "_StatusBadge-CAStGYDK.js": {
-    "file": "assets/StatusBadge-CAStGYDK.js",
+  "_StatusBadge-DZ_QpwI7.js": {
+    "file": "assets/StatusBadge-DZ_QpwI7.js",
     "name": "StatusBadge",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_ToggleSwitch-D0r-e5wZ.js": {
+    "file": "assets/ToggleSwitch-D0r-e5wZ.js",
+    "name": "ToggleSwitch",
     "imports": [
       "resources/js/app.js"
     ]
@@ -25,12 +32,6 @@
   "_useFlash-ClpPXnis.js": {
     "file": "assets/useFlash-ClpPXnis.js",
     "name": "useFlash"
-  },
-  "node_modules/chart.js/auto/auto.js": {
-    "file": "assets/auto-CquwA8NN.js",
-    "name": "auto",
-    "src": "node_modules/chart.js/auto/auto.js",
-    "isDynamicEntry": true
   },
   "node_modules/leaflet/dist/images/layers-2x.png": {
     "file": "assets/layers-2x-Bpkbi35X.png",
@@ -52,111 +53,132 @@
     "file": "assets/marker-shadow-f7SaPCxT.png",
     "src": "node_modules/leaflet/dist/images/marker-shadow.png"
   },
+  "node_modules/vue3-apexcharts/dist/apexcharts.ssr.esm-fe46cd2d.js": {
+    "file": "assets/apexcharts.ssr.esm-fe46cd2d-CHmRg-9z.js",
+    "name": "apexcharts.ssr.esm-fe46cd2d",
+    "src": "node_modules/vue3-apexcharts/dist/apexcharts.ssr.esm-fe46cd2d.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/vue3-apexcharts/dist/vue3-apexcharts.js": {
+    "file": "assets/vue3-apexcharts-CiyvcFAR.js",
+    "name": "vue3-apexcharts",
+    "src": "node_modules/vue3-apexcharts/dist/vue3-apexcharts.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "dynamicImports": [
+      "node_modules/vue3-apexcharts/dist/apexcharts.ssr.esm-fe46cd2d.js",
+      "node_modules/vue3-apexcharts/dist/apexcharts.ssr.esm-fe46cd2d.js"
+    ]
+  },
   "resources/js/Pages/Auth/Login.vue": {
-    "file": "assets/Login-B6O_knNZ.js",
+    "file": "assets/Login-DOFH0hHC.js",
     "name": "Login",
     "src": "resources/js/Pages/Auth/Login.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_useFlash-ClpPXnis.js"
+      "_useFlash-ClpPXnis.js",
+      "_ToggleSwitch-D0r-e5wZ.js"
     ],
     "css": [
-      "assets/Login-CBvGmrJ-.css"
+      "assets/Login-Vy0VHvtX.css"
     ]
   },
   "resources/js/Pages/Dashboard/Index.vue": {
-    "file": "assets/Index-DrruKgN9.js",
+    "file": "assets/Index-CNNnlmaO.js",
     "name": "Index",
     "src": "resources/js/Pages/Dashboard/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AppLayout-odTgxGut.js",
-      "_StatusBadge-CAStGYDK.js",
+      "_AppLayout-BeqKfJR3.js",
+      "_StatusBadge-DZ_QpwI7.js",
       "_useFlash-ClpPXnis.js"
     ],
     "dynamicImports": [
-      "node_modules/chart.js/auto/auto.js"
+      "node_modules/vue3-apexcharts/dist/vue3-apexcharts.js"
     ]
   },
   "resources/js/Pages/Laporan/Index.vue": {
-    "file": "assets/Index-CnLNrHUA.js",
+    "file": "assets/Index-GPDaFiEz.js",
     "name": "Index",
     "src": "resources/js/Pages/Laporan/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AppLayout-odTgxGut.js",
-      "_StatusBadge-CAStGYDK.js",
+      "_AppLayout-BeqKfJR3.js",
+      "_StatusBadge-DZ_QpwI7.js",
       "_useFlash-ClpPXnis.js"
     ]
   },
   "resources/js/Pages/Pengiriman/Create.vue": {
-    "file": "assets/Create-D_WaYfk_.js",
+    "file": "assets/Create-Cq0c3GhZ.js",
     "name": "Create",
     "src": "resources/js/Pages/Pengiriman/Create.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AppLayout-odTgxGut.js",
+      "_AppLayout-BeqKfJR3.js",
       "_useFlash-ClpPXnis.js"
     ]
   },
   "resources/js/Pages/Pengiriman/Index.vue": {
-    "file": "assets/Index-DYcHWwcx.js",
+    "file": "assets/Index-Ch8zLljg.js",
     "name": "Index",
     "src": "resources/js/Pages/Pengiriman/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AppLayout-odTgxGut.js",
-      "_StatusBadge-CAStGYDK.js",
+      "_AppLayout-BeqKfJR3.js",
+      "_StatusBadge-DZ_QpwI7.js",
+      "_ToggleSwitch-D0r-e5wZ.js",
       "_useFlash-ClpPXnis.js"
     ]
   },
   "resources/js/Pages/Pengiriman/Show.vue": {
-    "file": "assets/Show-0wvlrfxE.js",
+    "file": "assets/Show-B9C-Wwiq.js",
     "name": "Show",
     "src": "resources/js/Pages/Pengiriman/Show.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AppLayout-odTgxGut.js",
-      "_StatusBadge-CAStGYDK.js",
+      "_AppLayout-BeqKfJR3.js",
+      "_StatusBadge-DZ_QpwI7.js",
       "_useFlash-ClpPXnis.js"
     ]
   },
   "resources/js/Pages/Tarif/Index.vue": {
-    "file": "assets/Index-CG8fR4go.js",
+    "file": "assets/Index-D8iB8aQM.js",
     "name": "Index",
     "src": "resources/js/Pages/Tarif/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AppLayout-odTgxGut.js",
+      "_AppLayout-BeqKfJR3.js",
       "_useFlash-ClpPXnis.js"
     ]
   },
   "resources/js/Pages/Tracking/Index.vue": {
-    "file": "assets/Index-C2xPub4q.js",
+    "file": "assets/Index-ccJYP6nq.js",
     "name": "Index",
     "src": "resources/js/Pages/Tracking/Index.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_PublicLayout-CPznlRxg.js",
+      "_PublicLayout-DB4HAYpT.js",
       "_useFlash-ClpPXnis.js"
     ]
   },
   "resources/js/Pages/Tracking/Show.vue": {
-    "file": "assets/Show-BTyqNx1Y.js",
+    "file": "assets/Show-ilZjnpHn.js",
     "name": "Show",
     "src": "resources/js/Pages/Tracking/Show.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_PublicLayout-CPznlRxg.js",
-      "_StatusBadge-CAStGYDK.js",
+      "_PublicLayout-DB4HAYpT.js",
+      "_StatusBadge-DZ_QpwI7.js",
       "resources/js/app.js",
       "_useFlash-ClpPXnis.js"
     ],
@@ -172,7 +194,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-Dky0kH3m.js",
+    "file": "assets/app-TjhfHMdC.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -188,7 +210,7 @@
       "resources/js/Pages/Tracking/Show.vue"
     ],
     "css": [
-      "assets/app-BH9U26u4.css"
+      "assets/app-D2_o7RPP.css"
     ]
   }
 }

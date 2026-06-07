@@ -193,7 +193,7 @@ const formatService = (value) => {
                         <div class="flex items-start justify-between">
                             <div class="flex flex-col gap-0.5">
                                 <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">No. Resi</span>
-                                <span class="text-[15px] font-bold tracking-tight text-[#1a365d]">{{ item.nomor_resi || '-' }}</span>
+                                <span class="text-[15px] font-bold tracking-tight text-[#0B132B]">{{ item.nomor_resi || '-' }}</span>
                             </div>
                             <StatusBadge :status="item.status" />
                         </div>
@@ -220,7 +220,7 @@ const formatService = (value) => {
                                     Telat
                                 </span>
                             </div>
-                            <Link :href="route('pengiriman.show', item.id)" class="btn-secondary btn-sm !rounded-full px-4 border-slate-200 shadow-sm text-[#1a365d] hover:bg-slate-50">
+                            <Link :href="route('pengiriman.show', item.id)" class="btn-secondary btn-sm !rounded-full px-4 border-slate-200 shadow-sm text-[#0B132B] hover:bg-slate-50">
                                 Detail
                             </Link>
                         </div>
@@ -258,7 +258,7 @@ const formatService = (value) => {
 
                         <tbody class="divide-y divide-slate-100 bg-white">
                             <tr v-for="item in rows" :key="item.id" :class="item.is_terlambat ? 'bg-red-50/80 hover:bg-red-50' : 'hover:bg-slate-50/80 transition-colors duration-150'">
-                                <td class="px-3 py-3 text-sm font-semibold text-[#1a365d]">
+                                <td class="px-3 py-3 text-sm font-semibold text-[#0B132B]">
                                     <div class="flex flex-col gap-1">
                                         <span>{{ item.nomor_resi || '-' }}</span>
                                         <span v-if="item.is_terlambat"

@@ -22,8 +22,8 @@ defineEmits(['update:modelValue'])
                 :checked="modelValue"
                 @change="$emit('update:modelValue', $event.target.checked)"
             >
-            <!-- Latar belakang kapsul (Pudar -> Xaviera Blue) -->
-            <div class="h-6 w-11 rounded-full bg-slate-200 transition-colors duration-300 ease-in-out peer-checked:bg-[#1a365d] peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#b8860b]/50"></div>
+            <!-- [UPDATE] Latar belakang kapsul: Warna Xaviera Blue saat aktif -->
+            <div class="h-6 w-11 rounded-full bg-slate-200 transition-colors duration-300 ease-in-out peer-checked:bg-[#0B132B] peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#B8860B]/50"></div>
             <!-- Knob / Lingkaran peluncur -->
             <div class="absolute left-[2px] top-[2px] h-5 w-5 rounded-full bg-white shadow-sm transition-transform duration-300 ease-in-out peer-checked:translate-x-5 peer-checked:border-white"></div>
         </div>

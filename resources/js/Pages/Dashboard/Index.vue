@@ -184,9 +184,11 @@ const chartSeries = computed(() => ([
 
             <!-- [UBAH KHUSUS DESKTOP] Memperlebar gap grid di desktop (sm:gap-6) agar lebih elegan -->
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6">
-                <StatCard title="Total Pengiriman" :value="stats.total_pengiriman" icon="bi-box-seam" color="indigo" />
+                <!-- [UPDATE] Menggunakan warna premium Xaviera Blue untuk jumlah pengiriman -->
+                <StatCard title="Total Pengiriman" :value="stats.total_pengiriman" icon="bi-box-seam" color="xavieraBlue" />
 
-                <StatCard title="Total Pendapatan" :value="stats.total_pendapatan" icon="bi-cash-stack" color="emerald"
+                <!-- [UPDATE] Menggunakan warna premium Xaviera Gold untuk pendapatan -->
+                <StatCard title="Total Pendapatan" :value="stats.total_pendapatan" icon="bi-cash-stack" color="xavieraGold"
                     prefix="Rp" />
             </div>
 

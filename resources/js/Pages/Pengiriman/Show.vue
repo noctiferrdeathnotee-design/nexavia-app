@@ -300,7 +300,7 @@ const submitCancel = async () => {
 
                             <div class="text-[13px] font-medium text-slate-500">
                                 Estimasi tiba:
-                                <span class="font-bold text-[#1a365d]">
+                                <span class="font-bold text-[#0B132B]">
                                     {{ formatDate(pengiriman.estimasi_tiba) }}
                                 </span>
                             </div>
@@ -310,24 +310,24 @@ const submitCancel = async () => {
                     <!-- Pengirim & Penerima -->
                     <div class="grid grid-cols-1 gap-3 sm:gap-4 xl:grid-cols-2">
                         <div class="card p-4 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                            <h3 class="text-xs font-bold uppercase tracking-widest text-[#1a365d]">Pengirim</h3>
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-[#0B132B]">Pengirim</h3>
 
                             <div class="mt-3 space-y-2 text-sm text-slate-600">
                                 <p><span class="inline-block w-16 font-semibold text-slate-400">Nama</span> <span class="font-semibold text-slate-800">{{ pengiriman.pengirim_nama || '-' }}</span></p>
                                 <p><span class="inline-block w-16 font-semibold text-slate-400">HP</span> <span class="font-medium text-slate-800">{{ pengiriman.pengirim_hp || '-' }}</span></p>
                                 <p><span class="block font-semibold text-slate-400 mb-1">Alamat</span> <span class="text-slate-700 whitespace-pre-line">{{ pengiriman.pengirim_alamat || '-' }}</span></p>
-                                <p class="pt-2"><span class="font-semibold text-[#b8860b]">{{ pengiriman.pengirim_kota?.nama_kota || '-' }}, {{ pengiriman.pengirim_kota?.provinsi || '-' }}</span></p>
+                                <p class="pt-2"><span class="font-semibold text-[#B8860B]">{{ pengiriman.pengirim_kota?.nama_kota || '-' }}, {{ pengiriman.pengirim_kota?.provinsi || '-' }}</span></p>
                             </div>
                         </div>
 
                         <div class="card p-4 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                            <h3 class="text-xs font-bold uppercase tracking-widest text-[#1a365d]">Penerima</h3>
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-[#0B132B]">Penerima</h3>
 
                             <div class="mt-3 space-y-2 text-sm text-slate-600">
                                 <p><span class="inline-block w-16 font-semibold text-slate-400">Nama</span> <span class="font-semibold text-slate-800">{{ pengiriman.penerima_nama || '-' }}</span></p>
                                 <p><span class="inline-block w-16 font-semibold text-slate-400">HP</span> <span class="font-medium text-slate-800">{{ pengiriman.penerima_hp || '-' }}</span></p>
                                 <p><span class="block font-semibold text-slate-400 mb-1">Alamat</span> <span class="text-slate-700 whitespace-pre-line">{{ pengiriman.penerima_alamat || '-' }}</span></p>
-                                <p class="pt-2"><span class="font-semibold text-[#b8860b]">{{ pengiriman.penerima_kota?.nama_kota || '-' }}, {{ pengiriman.penerima_kota?.provinsi || '-' }}</span></p>
+                                <p class="pt-2"><span class="font-semibold text-[#B8860B]">{{ pengiriman.penerima_kota?.nama_kota || '-' }}, {{ pengiriman.penerima_kota?.provinsi || '-' }}</span></p>
                             </div>
                         </div>
                     </div>
@@ -335,7 +335,7 @@ const submitCancel = async () => {
                     <!-- Detail Barang (Mobile Stacked Card View) -->
                     <div class="card overflow-hidden rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                         <div class="border-b border-slate-100/60 bg-slate-50/50 px-4 py-3">
-                            <h3 class="text-xs font-bold uppercase tracking-widest text-[#1a365d]">Detail Barang</h3>
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-[#0B132B]">Detail Barang</h3>
                         </div>
 
                         <!-- Mobile View -->
@@ -381,7 +381,7 @@ const submitCancel = async () => {
 
                         <!-- Summary Bawah Barang -->
                         <div class="bg-slate-50/80 px-4 py-3 flex flex-wrap justify-between items-center text-sm border-t border-slate-100">
-                            <span class="font-bold text-[#1a365d]">Total Tagihan:</span>
+                            <span class="font-bold text-[#0B132B]">Total Tagihan:</span>
                             <span class="font-black text-indigo-600 text-base">{{ formatWeight(pengiriman.total_berat_tagihan) }}</span>
                         </div>
                         <div v-if="!barangList.length" class="px-4 py-8 text-center text-sm text-slate-500">Belum ada data barang.</div>
@@ -389,7 +389,7 @@ const submitCancel = async () => {
 
                     <!-- Biaya -->
                     <div class="card p-4 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-[#1a365d] mb-4">Biaya & Informasi</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-[#0B132B] mb-4">Biaya & Informasi</h3>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-3 text-sm text-slate-600">
@@ -404,7 +404,7 @@ const submitCancel = async () => {
                                 </div>
                             </div>
                             <div class="space-y-3 text-[13px] text-slate-500 bg-slate-50/50 p-3 rounded-xl border border-slate-100/60">
-                                <p><span class="block font-bold text-slate-400 uppercase tracking-widest text-[10px]">Metode</span> <span class="font-semibold text-[#1a365d]">{{ formatPayment(pengiriman.metode_pembayaran) }}</span></p>
+                                <p><span class="block font-bold text-slate-400 uppercase tracking-widest text-[10px]">Metode</span> <span class="font-semibold text-[#0B132B]">{{ formatPayment(pengiriman.metode_pembayaran) }}</span></p>
                                 <p><span class="block font-bold text-slate-400 uppercase tracking-widest text-[10px]">Dibuat</span> <span class="font-semibold text-slate-700">{{ formatDate(pengiriman.created_at, true) }}</span></p>
                                 <p v-if="pengiriman.alasan_batal"><span class="block font-bold text-red-400 uppercase tracking-widest text-[10px]">Alasan Batal</span> <span class="font-semibold text-red-600">{{ pengiriman.alasan_batal }}</span></p>
                             </div>
@@ -416,21 +416,21 @@ const submitCancel = async () => {
                 <div class="order-1 flex flex-col gap-4 sm:gap-5 lg:order-2 lg:col-span-2">
                     
                     <!-- Timeline (Berada Paling Atas di Mobile!) -->
-                    <div class="card p-4 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-gradient-to-b from-[#1a365d] to-slate-900 text-white relative overflow-hidden">
+                    <div class="card p-4 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-gradient-to-b from-[#0B132B] to-slate-900 text-white relative overflow-hidden">
                         <!-- Dekorasi sayap Xaviera pudar -->
                         <div class="absolute -right-10 -top-10 opacity-10 blur-sm pointer-events-none w-48 h-48 bg-white rounded-full"></div>
                         <div class="relative z-10">
-                            <h3 class="text-xs font-bold uppercase tracking-widest text-[#b8860b] mb-5">Timeline Tracking</h3>
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-[#B8860B] mb-5">Timeline Tracking</h3>
 
                             <div v-if="trackingHistories.length" class="space-y-4">
                                 <div v-for="(item, index) in trackingHistories" :key="item.id" class="relative pl-6">
                                     <div v-if="index !== trackingHistories.length - 1" class="absolute left-1.5 top-2 h-full w-0.5 bg-slate-700/50"></div>
-                                    <div class="absolute left-0 top-1.5 h-3.5 w-3.5 rounded-full border-2 border-[#1a365d] bg-[#b8860b] shadow-[0_0_8px_rgba(184,134,11,0.8)]"></div>
+                                    <div class="absolute left-0 top-1.5 h-3.5 w-3.5 rounded-full border-2 border-[#0B132B] bg-[#B8860B] shadow-[0_0_8px_rgba(184,134,11,0.8)]"></div>
 
                                     <div class="flex flex-col gap-0.5">
                                         <p class="text-sm font-bold text-white">{{ statusLabel(item.status_baru) }}</p>
                                         <p class="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">{{ formatDate(item.created_at, true) }}</p>
-                                        <p class="text-xs text-slate-300 mt-1 font-medium"><i class="bi bi-geo-alt-fill text-[#b8860b] mr-1"></i>{{ item.lokasi || '-' }}</p>
+                                        <p class="text-xs text-slate-300 mt-1 font-medium"><i class="bi bi-geo-alt-fill text-[#B8860B] mr-1"></i>{{ item.lokasi || '-' }}</p>
                                         <p class="text-[11px] text-slate-400 italic mt-0.5">{{ item.keterangan || '-' }}</p>
                                     </div>
                                 </div>
@@ -467,7 +467,7 @@ const submitCancel = async () => {
                             <div class="h-1.5 w-12 rounded-full bg-slate-200"></div>
                         </div>
                         
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-[#1a365d] mb-4">Update Status</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-[#0B132B] mb-4">Update Status</h3>
                         
                         <div v-if="canUpdateStatus" class="space-y-4">
                             <div>

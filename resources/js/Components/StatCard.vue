@@ -29,6 +29,9 @@ let frameId = null
 
 const colorClass = computed(() => {
     const colors = {
+        // [UPDATE] Warna premium Xaviera untuk Statistik
+        xavieraBlue: 'bg-[#1C2541] text-white shadow-md border border-[#0B132B]',
+        xavieraGold: 'bg-gradient-to-br from-[#D4AF37] to-[#B8860B] text-white shadow-lg border border-[#B8860B]',
         indigo: 'bg-indigo-50 text-indigo-600',
         emerald: 'bg-emerald-50 text-emerald-600',
         amber: 'bg-amber-50 text-amber-600',
@@ -103,11 +106,11 @@ onBeforeUnmount(() => {
         <div class="relative z-10 flex items-start justify-between gap-3">
             <div>
                 <!-- [UBAH KHUSUS MOBILE] Font teks label: Uppercase, huruf direnggangkan (tracking-widest) -->
-                <p class="text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:text-xs sm:font-medium sm:normal-case sm:tracking-normal">
+                <p class="text-[11px] font-black uppercase tracking-widest text-[#B8860B] sm:text-xs sm:font-bold">
                     {{ title }}
                 </p>
                 <!-- [UBAH KHUSUS MOBILE] Font teks angka: Lebih besar, sangat tebal, rapat (tracking-tight) -->
-                <p class="mt-1.5 text-[26px] font-extrabold tracking-tight text-slate-900 sm:mt-2 sm:text-2xl sm:font-bold sm:tracking-normal">
+                <p class="mt-1.5 text-[26px] font-extrabold tracking-tight text-[#0B132B] sm:mt-2 sm:text-2xl sm:font-bold font-['Cinzel']">
                     {{ formattedValue }}
                 </p>
             </div>

@@ -65,58 +65,60 @@ const isActive = (item) => {
 }
 
 const linkClass = (item) => {
+    // [UPDATE] Sidebar menggunakan warna dasar gelap (xaviera-blue), efek hover/aktif menggunakan warna xaviera-gold
     return isActive(item)
-        ? 'bg-indigo-50 text-indigo-600 font-semibold border-l-2 border-indigo-500'
-        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-800 border-l-2 border-transparent'
+        ? 'bg-[#1C2541]/80 text-[#D4AF37] font-semibold border-l-4 border-[#B8860B] drop-shadow-md'
+        : 'text-slate-300 hover:bg-[#1C2541]/40 hover:text-white border-l-4 border-transparent'
 }
 </script>
 
 <template>
     <!-- [UBAH KHUSUS DESKTOP] Sidebar hanya muncul di Desktop (xl:flex), di Mobile disembunyikan total -->
-    <!-- Desain Glassmorphism premium: bg-white/80 backdrop-blur-xl -->
+    <!-- [UPDATE] Sidebar Kelas Atas Xaviera: Menggunakan background Midnight Blue (#0B132B) dengan sedikit efek glass -->
     <aside
-        class="fixed inset-y-0 left-0 z-40 hidden w-[280px] flex-col border-r border-slate-100 bg-white/80 backdrop-blur-xl xl:flex shadow-[4px_0_24px_rgb(0,0,0,0.02)]">
+        class="fixed inset-y-0 left-0 z-40 hidden w-[280px] flex-col border-r border-[#1C2541] bg-[#0B132B]/95 backdrop-blur-xl xl:flex shadow-[4px_0_24px_rgb(0,0,0,0.2)]">
         
-        <!-- [UBAH KHUSUS DESKTOP] Header Sidebar: Logo Xaviera Raksasa -->
-        <div class="flex items-center justify-center border-b border-slate-100/60 p-6">
-            <img src="/images/logo-brand.png" alt="Xaviera"
-                class="w-full h-auto max-h-24 object-contain drop-shadow-md">
+        <!-- [UPDATE] Header Sidebar: Logo Xaviera Raksasa. Tinggi p-8 agar proporsional -->
+        <div class="flex items-center justify-center border-b border-[#1C2541] p-8">
+            <img src="/images/logo-xaviera.jpg" alt="Xaviera"
+                class="w-full h-auto max-h-32 object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
         </div>
 
-        <div class="flex-1 overflow-y-auto px-3 py-4">
-            <p class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+        <div class="flex-1 overflow-y-auto px-3 py-4 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-[#1C2541]">
+            <!-- [UPDATE] Teks kategori menu berwarna gold/slate-400 gelap -->
+            <p class="mb-2 px-3 text-[11px] font-black uppercase tracking-widest text-[#B8860B]/70">
                 Menu Utama
             </p>
 
-            <nav class="space-y-0.5">
+            <nav class="space-y-1">
                 <Link v-for="item in menuUtama" :key="item.href" :href="item.href"
-                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm"
+                    class="flex items-center gap-3 rounded-lg px-3 py-3 text-sm tracking-wide"
                     :class="linkClass(item)" @click="$emit('close')"
-                    :style="{ transition: 'background-color 0.15s ease, color 0.15s ease' }">
-                    <i :class="['text-base', item.icon]" />
+                    :style="{ transition: 'background-color 0.2s ease, color 0.2s ease, transform 0.2s ease' }">
+                    <i :class="['text-lg', item.icon]" />
                     <span>{{ item.label }}</span>
                 </Link>
             </nav>
 
-            <div class="my-4 border-t border-slate-200" />
+            <div class="my-5 border-t border-[#1C2541]" />
 
-            <p class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+            <p class="mb-2 px-3 text-[11px] font-black uppercase tracking-widest text-[#B8860B]/70">
                 Laporan
             </p>
 
-            <nav class="space-y-0.5">
+            <nav class="space-y-1">
                 <Link v-for="item in menuLaporan" :key="item.href" :href="item.href"
-                    class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm"
+                    class="flex items-center gap-3 rounded-lg px-3 py-3 text-sm tracking-wide"
                     :class="linkClass(item)" @click="$emit('close')"
-                    :style="{ transition: 'background-color 0.15s ease, color 0.15s ease' }">
-                    <i :class="['text-base', item.icon]" />
+                    :style="{ transition: 'background-color 0.2s ease, color 0.2s ease, transform 0.2s ease' }">
+                    <i :class="['text-lg', item.icon]" />
                     <span>{{ item.label }}</span>
                 </Link>
             </nav>
         </div>
 
-        <div class="border-t border-slate-100/60 px-6 py-4">
-            <p class="text-[11px] font-medium text-slate-400">© 2026 Xaviera Delivery</p>
+        <div class="border-t border-[#1C2541] px-6 py-4 bg-[#080d1e]">
+            <p class="text-[11px] font-medium text-slate-500 tracking-wider">© 2026 XAVIERA DELIVERY</p>
         </div>
     </aside>
 </template>

@@ -10,7 +10,8 @@
     <title inertia>xaviera</title>
 
     <!-- Favicon Premium -->
-    <link rel="icon" type="image/png" href="/images/logo-brand.png">
+    <!-- [UPDATE] Favicon diubah ke logo yang dikirim user untuk title chrome -->
+    <link rel="icon" type="image/jpeg" href="/images/logo-xaviera.jpg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

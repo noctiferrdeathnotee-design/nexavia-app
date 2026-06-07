@@ -14,6 +14,15 @@ export default {
     theme: {
         extend: {
             colors: {
+                // [UPDATE] Definisi warna premium Xaviera sesuai Blueprint
+                // xaviera-blue: Biru gelap mewah (Midnight Blue) dari warna bola dunia logo
+                // xaviera-gold: Emas kerajaan (Royal Gold) dari ukiran sayap logo
+                xaviera: {
+                    blue: "#0B132B",
+                    blueLight: "#1C2541",
+                    gold: "#B8860B",
+                    goldLight: "#D4AF37",
+                },
                 primary: {
                     50: "#EEF2FF",
                     100: "#E0E7FF",
@@ -23,7 +32,10 @@ export default {
                 },
             },
             fontFamily: {
-                sans: ["Inter", ...defaultTheme.fontFamily.sans],
+                // [UPDATE] Menggunakan font premium: Plus Jakarta Sans untuk teks umum (HD, tajam)
+                // dan Cinzel untuk teks judul/brand agar serasi dengan ornamen logo steampunk.
+                sans: ["'Plus Jakarta Sans'", ...defaultTheme.fontFamily.sans],
+                cinzel: ["'Cinzel'", ...defaultTheme.fontFamily.sans],
             },
         },
     },
