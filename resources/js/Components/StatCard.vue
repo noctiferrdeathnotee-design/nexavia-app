@@ -57,12 +57,17 @@ const animateValue = (target) => {
 
     const start = Number(displayValue.value || 0)
     const end = Number(target || 0)
-    const duration = 900
+    // [UBAH KHUSUS MOBILE & DESKTOP] Efek animasi angka yang sangat halus dan pelan (easeOutExpo)
+    const duration = 2500 // Diperlambat menjadi 2.5 detik untuk efek premium
     const startTime = performance.now()
 
     const tick = (time) => {
         const progress = Math.min((time - startTime) / duration, 1)
-        displayValue.value = start + (end - start) * progress
+        
+        // Rumus Easing Out Expo: Berputar cepat di awal, sangat pelan di akhir
+        const easeOutExpo = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress)
+        
+        displayValue.value = start + (end - start) * easeOutExpo
 
         if (progress < 1) {
             frameId = requestAnimationFrame(tick)
@@ -89,19 +94,27 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="card p-3 sm:p-4">
-        <div class="flex items-start justify-between gap-3">
+    <!-- [UBAH KHUSUS MOBILE] Kotak Grid: Premium glassmorphism tipis, shadow lembut, desktop tetap aslinya -->
+    <div class="card relative overflow-hidden rounded-[20px] border border-slate-100/60 bg-white/95 p-4.5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm sm:rounded-xl sm:border sm:border-slate-200 sm:bg-white sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
+        
+        <!-- Efek cahaya tipis di dalam kotak khusus mobile untuk kesan mewah -->
+        <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none lg:hidden"></div>
+
+        <div class="relative z-10 flex items-start justify-between gap-3">
             <div>
-                <p class="text-xs font-medium text-slate-500 sm:text-sm">
+                <!-- [UBAH KHUSUS MOBILE] Font teks label: Uppercase, huruf direnggangkan (tracking-widest) -->
+                <p class="text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:text-xs sm:font-medium sm:normal-case sm:tracking-normal">
                     {{ title }}
                 </p>
-                <p class="mt-1.5 text-xl font-bold text-slate-800 sm:mt-2 sm:text-2xl">
+                <!-- [UBAH KHUSUS MOBILE] Font teks angka: Lebih besar, sangat tebal, rapat (tracking-tight) -->
+                <p class="mt-1.5 text-[26px] font-extrabold tracking-tight text-slate-900 sm:mt-2 sm:text-2xl sm:font-bold sm:tracking-normal">
                     {{ formattedValue }}
                 </p>
             </div>
 
-            <div class="flex h-10 w-10 items-center justify-center rounded-xl sm:h-11 sm:w-11" :class="colorClass">
-                <i :class="['text-base sm:text-lg', icon]" />
+            <!-- Icon Container -->
+            <div class="flex h-11 w-11 items-center justify-center rounded-2xl shadow-sm sm:h-11 sm:w-11 sm:rounded-xl sm:shadow-none" :class="colorClass">
+                <i :class="['text-[18px] sm:text-lg', icon]" />
             </div>
         </div>
     </div>

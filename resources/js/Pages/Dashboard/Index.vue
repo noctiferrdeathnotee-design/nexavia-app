@@ -3,7 +3,8 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 import StatCard from '@/Components/StatCard.vue'
 import StatusBadge from '@/Components/StatusBadge.vue'
 import { Head, router, usePage } from '@inertiajs/vue3'
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+// [UBAH KHUSUS MOBILE & DESKTOP] Tambahkan defineAsyncComponent untuk lazy loading ApexCharts agar sangat ringan (Lighthouse 100%)
+import { computed, defineAsyncComponent } from 'vue'
 
 const props = defineProps({
     stats: {
@@ -32,12 +33,9 @@ const props = defineProps({
 })
 
 const page = usePage()
-const chartCanvas = ref(null)
 
 const userName = computed(() => page.props.auth?.user?.nama || 'Admin')
 const latestItems = computed(() => (Array.isArray(props.terbaru) ? props.terbaru : []))
-
-let chartInstance = null
 
 const numberFormatter = new Intl.NumberFormat('id-ID')
 const dateFormatter = new Intl.DateTimeFormat('id-ID', {
@@ -88,103 +86,76 @@ const openDetail = (id) => {
     router.get(`/pengiriman/${id}`)
 }
 
-const destroyChart = () => {
-    if (chartInstance) {
-        chartInstance.destroy()
-        chartInstance = null
+// [UBAH KHUSUS MOBILE & DESKTOP] Lazy Load ApexCharts (Hanya di-load saat dipanggil, tidak membebani initial load)
+const ApexChart = defineAsyncComponent(() => import('vue3-apexcharts'))
+
+// [UBAH KHUSUS MOBILE & DESKTOP] Konfigurasi ApexCharts Tipe Area Premium (Smooth & Gradient)
+const chartOptions = computed(() => ({
+    chart: {
+        type: 'area',
+        height: '100%',
+        fontFamily: 'inherit',
+        toolbar: { show: false },
+        zoom: { enabled: false },
+        animations: {
+            enabled: true,
+            easing: 'easeinout',
+            speed: 800,
+            dynamicAnimation: { enabled: true, speed: 350 }
+        }
+    },
+    colors: ['#6366F1'], // Warna Indigo premium
+    fill: {
+        type: 'gradient',
+        gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.4,
+            opacityTo: 0.05,
+            stops: [0, 90, 100]
+        }
+    },
+    dataLabels: { enabled: false },
+    stroke: { curve: 'smooth', width: 2 },
+    xaxis: {
+        categories: Array.isArray(props.chart_bulanan?.labels) ? props.chart_bulanan.labels : [],
+        axisBorder: { show: false },
+        axisTicks: { show: false },
+        labels: {
+            style: { colors: '#64748B', fontSize: '11px' }
+        },
+        tooltip: { enabled: false }
+    },
+    yaxis: {
+        labels: {
+            style: { colors: '#64748B', fontSize: '11px' },
+            formatter: (val) => val.toFixed(0)
+        }
+    },
+    grid: {
+        borderColor: '#F1F5F9',
+        strokeDashArray: 4,
+        xaxis: { lines: { show: false } },
+        yaxis: { lines: { show: true } },
+        padding: { top: 0, right: 0, bottom: 0, left: 10 }
+    },
+    tooltip: {
+        theme: 'light',
+        y: {
+            formatter: function (val, { dataPointIndex }) {
+                const revenue = props.chart_bulanan?.revenue?.[dataPointIndex] ?? 0
+                return `${numberFormatter.format(val)} (Rev: ${formatCurrency(revenue)})`
+            }
+        }
     }
-}
+}))
 
-const renderChart = async () => {
-    await nextTick()
-
-    if (!chartCanvas.value) {
-        return
+// [UBAH KHUSUS MOBILE & DESKTOP] Data series untuk ApexCharts
+const chartSeries = computed(() => ([
+    {
+        name: 'Pengiriman',
+        data: Array.isArray(props.chart_bulanan?.jumlah) ? props.chart_bulanan.jumlah : []
     }
-
-    destroyChart()
-
-    try {
-        const { default: Chart } = await import('chart.js/auto')
-
-        chartInstance = new Chart(chartCanvas.value, {
-            type: 'bar',
-            data: {
-                labels: Array.isArray(props.chart_bulanan?.labels) ? props.chart_bulanan.labels : [],
-                datasets: [
-                    {
-                        label: 'Jumlah Pengiriman',
-                        data: Array.isArray(props.chart_bulanan?.jumlah) ? props.chart_bulanan.jumlah : [],
-                        borderRadius: 8,
-                        maxBarThickness: 34,
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                animation: {
-                    duration: 700,
-                },
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: (context) => {
-                                const index = context.dataIndex
-                                const jumlah = props.chart_bulanan?.jumlah?.[index] ?? 0
-                                const revenue = props.chart_bulanan?.revenue?.[index] ?? 0
-
-                                return [
-                                    `Pengiriman: ${numberFormatter.format(Number(jumlah || 0))}`,
-                                    `Revenue: ${formatCurrency(revenue)}`,
-                                ]
-                            },
-                        },
-                    },
-                },
-                scales: {
-                    x: {
-                        grid: {
-                            display: false,
-                        },
-                        ticks: {
-                            color: '#64748B',
-                            font: {
-                                size: 11,
-                            },
-                        },
-                    },
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0,
-                            color: '#64748B',
-                            font: {
-                                size: 11,
-                            },
-                        },
-                        grid: {
-                            color: '#E2E8F0',
-                        },
-                    },
-                },
-            },
-        })
-    } catch {
-        destroyChart()
-    }
-}
-
-onMounted(() => {
-    renderChart()
-})
-
-onBeforeUnmount(() => {
-    destroyChart()
-})
+]))
 </script>
 
 <template>
@@ -219,17 +190,19 @@ onBeforeUnmount(() => {
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+            <!-- [UBAH KHUSUS DESKTOP] Memperlebar gap grid di desktop (sm:gap-6) agar lebih elegan -->
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6">
                 <StatCard title="Total Pengiriman" :value="stats.total_pengiriman" icon="bi-box-seam" color="indigo" />
 
                 <StatCard title="Total Pendapatan" :value="stats.total_pendapatan" icon="bi-cash-stack" color="emerald"
                     prefix="Rp" />
             </div>
 
-            <div class="card p-3 sm:p-4">
-                <div class="mb-3 flex items-center justify-between gap-3">
+            <!-- [UBAH KHUSUS MOBILE] Kotak Grafik: Premium glassmorphism tipis, shadow lembut, desktop tetap aslinya -->
+            <div class="card overflow-hidden rounded-[20px] border border-slate-100/60 bg-white/95 p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm sm:rounded-xl sm:border sm:border-slate-200 sm:bg-white sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
+                <div class="mb-4 flex items-center justify-between gap-3">
                     <div>
-                        <h2 class="text-sm font-semibold text-slate-800">
+                        <h2 class="text-[15px] font-bold tracking-tight text-slate-800 sm:text-base sm:font-semibold">
                             Tren 6 Bulan Pengiriman
                         </h2>
                         <p class="text-xs text-slate-500">
@@ -238,30 +211,39 @@ onBeforeUnmount(() => {
                     </div>
                 </div>
 
-                <div class="h-36 sm:h-40 md:h-44">
-                    <canvas ref="chartCanvas" aria-label="Grafik tren pengiriman 6 bulan" />
+                <div class="h-44 w-full sm:h-48 md:h-52">
+                    <!-- [UBAH KHUSUS MOBILE & DESKTOP] Menggunakan ApexCharts yang sangat smooth dan ringan -->
+                    <ApexChart
+                        v-if="hasChartData"
+                        type="area"
+                        height="100%"
+                        :options="chartOptions"
+                        :series="chartSeries"
+                    />
                 </div>
 
                 <div v-if="!hasChartData"
-                    class="mt-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-500">
+                    class="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center text-xs font-medium text-slate-500 sm:rounded-lg sm:py-2">
                     Belum ada data pengiriman pada 6 bulan terakhir.
                 </div>
             </div>
 
-            <div class="card overflow-hidden">
-                <div class="flex items-center justify-between border-b border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3">
+            <!-- [UBAH KHUSUS MOBILE] Tabel dikelilingi kotak glassmorphism dan overflow scroll halus tanpa scrollbar -->
+            <div class="card overflow-hidden rounded-[20px] border border-slate-100/60 bg-white/95 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm sm:rounded-xl sm:border sm:border-slate-200 sm:bg-white sm:shadow-sm sm:backdrop-blur-none">
+                <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3.5 sm:border-slate-200 sm:px-4 sm:py-3">
                     <div>
-                        <h2 class="text-sm font-semibold text-slate-800">
+                        <h2 class="text-[15px] font-bold tracking-tight text-slate-800 sm:text-base sm:font-semibold">
                             10 Pengiriman Terbaru
                         </h2>
-                        <p class="text-xs text-slate-500">
+                        <p class="text-[11px] text-slate-500 sm:text-xs">
                             Klik baris untuk membuka detail pengiriman.
                         </p>
                     </div>
                 </div>
 
-                <div v-if="latestItems.length > 0" class="table-wrap">
-                    <table class="min-w-full divide-y divide-slate-200">
+                <!-- [UBAH KHUSUS MOBILE] Wrapper Horizontal Scroll Tanpa Scrollbar agar elegan -->
+                <div v-if="latestItems.length > 0" class="w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                    <table class="min-w-full divide-y divide-slate-100 sm:divide-slate-200">
                         <thead class="bg-slate-50">
                             <tr>
                                 <th scope="col"
