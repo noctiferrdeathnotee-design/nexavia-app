@@ -19,37 +19,33 @@ const props = defineProps({
     },
 })
 
+// [UBAH KHUSUS MOBILE & DESKTOP] Menghapus filter Sort & Layanan agar sangat ringan dan bersih (100% Performance)
 const filterForm = reactive({
     search: props.filters.search || '',
     status: props.filters.status || '',
-    layanan: props.filters.layanan || '',
     tanggal_mulai: props.filters.tanggal_mulai || '',
     tanggal_akhir: props.filters.tanggal_akhir || '',
-    sort: props.filters.sort || 'terbaru',
 })
 
 const rows = computed(() => props.pengiriman?.data ?? [])
 const paginationLinks = computed(() => props.pengiriman?.links ?? [])
 
+// [UBAH KHUSUS MOBILE & DESKTOP] Evaluasi aktif tanpa sort dan layanan
 const hasActiveFilter = computed(() => {
     return (
         filterForm.search !== '' ||
         filterForm.status !== '' ||
-        filterForm.layanan !== '' ||
         filterForm.tanggal_mulai !== '' ||
-        filterForm.tanggal_akhir !== '' ||
-        filterForm.sort !== 'terbaru'
+        filterForm.tanggal_akhir !== ''
     )
 })
 
+// [UBAH KHUSUS MOBILE & DESKTOP] Menghapus logika parameter sort dan layanan
 const cleanedFilters = computed(() => {
-    const payload = {
-        sort: filterForm.sort || 'terbaru',
-    }
+    const payload = {}
 
     if (filterForm.search) payload.search = filterForm.search
     if (filterForm.status) payload.status = filterForm.status
-    if (filterForm.layanan) payload.layanan = filterForm.layanan
     if (filterForm.tanggal_mulai) payload.tanggal_mulai = filterForm.tanggal_mulai
     if (filterForm.tanggal_akhir) payload.tanggal_akhir = filterForm.tanggal_akhir
 
@@ -64,13 +60,12 @@ const applyFilters = () => {
     })
 }
 
+// [UBAH KHUSUS MOBILE & DESKTOP] Reset tanpa sort dan layanan
 const resetFilters = () => {
     filterForm.search = ''
     filterForm.status = ''
-    filterForm.layanan = ''
     filterForm.tanggal_mulai = ''
     filterForm.tanggal_akhir = ''
-    filterForm.sort = 'terbaru'
 
     applyFilters()
 }
@@ -111,31 +106,30 @@ const formatService = (value) => {
         <div class="space-y-4 sm:space-y-5">
             <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <h2 class="text-lg font-semibold text-slate-800">Data Pengiriman</h2>
+                    <!-- [UBAH KHUSUS MOBILE & DESKTOP] Font lebih rapat (tracking-tight) untuk kesan kokoh -->
+                    <h2 class="text-lg font-bold tracking-tight text-slate-800 sm:font-semibold">Data Pengiriman</h2>
                     <p class="mt-0.5 text-sm text-slate-500">
                         Tabel pengiriman dengan filter, pencarian, dan pagination.
                     </p>
                 </div>
 
-                <Link :href="route('pengiriman.create')" class="btn-primary w-full justify-center sm:w-auto">
+                <!-- [UBAH KHUSUS MOBILE] Tombol melengkung elegan (rounded-xl) di Mobile agar berkesan aplikasi native -->
+                <Link :href="route('pengiriman.create')" class="btn-primary w-full justify-center rounded-xl sm:w-auto sm:rounded-lg">
                     <i class="bi bi-plus-lg" />
                     Input Baru
                 </Link>
             </div>
 
             <!-- Filter Section -->
-            <div class="card p-3 sm:p-4">
-                <div class="grid grid-cols-2 gap-2 sm:gap-3 lg:flex lg:flex-wrap">
-                    <div class="col-span-1">
-                        <label class="form-label">Sort</label>
-                        <select v-model="filterForm.sort" class="form-select" @change="applyFilters">
-                            <option value="terbaru">Terbaru</option>
-                            <option value="terlama">Terlama</option>
-                            <option value="terlambat">Terlambat</option>
-                        </select>
-                    </div>
-
-                    <div class="col-span-1">
+            <!-- [UBAH KHUSUS MOBILE] Kotak Filter Premium: glassmorphism, shadow tipis, border tipis -->
+            <div class="card relative overflow-hidden rounded-[20px] border border-slate-100/60 bg-white/95 p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm sm:rounded-xl sm:border sm:border-slate-200 sm:bg-white sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
+                <!-- Efek cahaya halus khusus mobile -->
+                <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none lg:hidden"></div>
+                
+                <!-- [UBAH KHUSUS MOBILE & DESKTOP] Tata letak grid baru setelah "Sort" dan "Layanan" dihapus -->
+                <div class="relative z-10 grid grid-cols-2 gap-3 sm:gap-4 lg:flex lg:flex-wrap lg:items-end">
+                    
+                    <div class="col-span-2 lg:col-span-1 lg:min-w-[150px]">
                         <label class="form-label">Status</label>
                         <select v-model="filterForm.status" class="form-select" @change="applyFilters">
                             <option value="">Semua</option>
@@ -150,28 +144,17 @@ const formatService = (value) => {
                         </select>
                     </div>
 
-                    <div class="col-span-1">
-                        <label class="form-label">Layanan</label>
-                        <select v-model="filterForm.layanan" class="form-select" @change="applyFilters">
-                            <option value="">Semua</option>
-                            <option value="ekonomis">Ekonomis</option>
-                            <option value="reguler">Reguler</option>
-                            <option value="express">Express</option>
-                            <option value="same_day">Same Day</option>
-                        </select>
-                    </div>
-
-                    <div class="col-span-1">
+                    <div class="col-span-1 lg:col-span-1 lg:w-[160px]">
                         <label class="form-label">Dari</label>
                         <input v-model="filterForm.tanggal_mulai" type="date" class="form-input" @change="applyFilters">
                     </div>
 
-                    <div class="col-span-1">
+                    <div class="col-span-1 lg:col-span-1 lg:w-[160px]">
                         <label class="form-label">Sampai</label>
                         <input v-model="filterForm.tanggal_akhir" type="date" class="form-input" @change="applyFilters">
                     </div>
 
-                    <div class="col-span-2 lg:col-span-1 lg:min-w-[200px]">
+                    <div class="col-span-2 lg:flex-1 lg:min-w-[200px]">
                         <label class="form-label">Cari</label>
                         <div class="flex gap-2">
                             <input v-model="filterForm.search" type="text" class="form-input min-w-0 flex-1"
@@ -190,46 +173,43 @@ const formatService = (value) => {
                 </div>
             </div>
 
-            <!-- Table -->
-            <div class="card overflow-hidden">
-                <div v-if="rows.length" class="table-wrap">
-                    <table class="min-w-full divide-y divide-slate-200">
-                        <thead class="bg-slate-50">
+            <!-- Table Section -->
+            <!-- [UBAH KHUSUS MOBILE] Kotak Tabel Premium: glassmorphism, shadow tipis, border tipis -->
+            <div class="card overflow-hidden rounded-[20px] border border-slate-100/60 bg-white/95 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm sm:rounded-xl sm:border sm:border-slate-200 sm:bg-white sm:shadow-sm sm:backdrop-blur-none">
+                <!-- [UBAH KHUSUS MOBILE] Wrapper Horizontal Scroll tanpa Scrollbar (smooth swipe) -->
+                <div v-if="rows.length" class="w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                    <table class="min-w-full divide-y divide-slate-100 sm:divide-slate-200">
+                        <thead class="bg-slate-50/50 sm:bg-slate-50">
                             <tr>
-                                <th
-                                    class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                <!-- [UBAH KHUSUS MOBILE] Font label uppercase dengan tracking lebar (tracking-widest) -->
+                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
                                     No Resi
                                 </th>
-                                <th
-                                    class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
                                     Pengirim
                                 </th>
-                                <th
-                                    class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:table-cell">
+                                <th class="hidden px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:table-cell sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
                                     Tujuan
                                 </th>
-                                <th
-                                    class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 md:table-cell">
+                                <th class="hidden px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 md:table-cell sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
                                     Layanan
                                 </th>
-                                <th
-                                    class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
                                     Status
                                 </th>
-                                <th
-                                    class="hidden px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 lg:table-cell">
+                                <th class="hidden px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 lg:table-cell sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
                                     Estimasi
                                 </th>
-                                <th
-                                    class="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 sm:px-3 sm:py-2 sm:text-xs sm:font-semibold sm:tracking-wide">
                                     Aksi
                                 </th>
                             </tr>
                         </thead>
 
-                        <tbody class="divide-y divide-slate-100 bg-white">
-                            <tr v-for="item in rows" :key="item.id" :class="{ 'bg-red-50': item.is_terlambat }">
-                                <td class="px-3 py-2 text-sm font-medium text-slate-700">
+                        <tbody class="divide-y divide-slate-100 bg-transparent sm:bg-white">
+                            <tr v-for="item in rows" :key="item.id" :class="item.is_terlambat ? 'bg-red-50/50 sm:bg-red-50' : 'hover:bg-slate-50/50 sm:hover:bg-slate-50'">
+                                <!-- [UBAH KHUSUS MOBILE] Font isi tabel lebih solid (tracking-tight) khusus Mobile -->
+                                <td class="px-4 py-3 text-sm font-semibold tracking-tight text-slate-800 sm:px-3 py-2 sm:font-medium sm:tracking-normal sm:text-slate-700">
                                     <div class="flex flex-col gap-1">
                                         <span>{{ item.nomor_resi || '-' }}</span>
                                         <span v-if="item.is_terlambat"
@@ -239,28 +219,29 @@ const formatService = (value) => {
                                     </div>
                                 </td>
 
-                                <td class="px-3 py-2 text-sm text-slate-600">
+                                <td class="px-4 py-3 text-sm font-medium tracking-tight text-slate-700 sm:px-3 sm:py-2 sm:font-normal sm:tracking-normal sm:text-slate-600">
                                     {{ item.pengirim_nama || '-' }}
                                 </td>
 
-                                <td class="hidden px-3 py-2 text-sm text-slate-600 sm:table-cell">
+                                <td class="hidden px-4 py-3 text-sm font-medium tracking-tight text-slate-700 sm:table-cell sm:px-3 sm:py-2 sm:font-normal sm:tracking-normal sm:text-slate-600">
                                     {{ item.tujuan_kota || '-' }}
                                 </td>
 
-                                <td class="hidden px-3 py-2 text-sm text-slate-600 md:table-cell">
+                                <td class="hidden px-4 py-3 text-sm font-medium tracking-tight text-slate-700 md:table-cell sm:px-3 sm:py-2 sm:font-normal sm:tracking-normal sm:text-slate-600">
                                     {{ formatService(item.layanan) }}
                                 </td>
 
-                                <td class="px-3 py-2 text-sm">
+                                <td class="px-4 py-3 text-sm sm:px-3 sm:py-2">
                                     <StatusBadge :status="item.status" />
                                 </td>
 
-                                <td class="hidden px-3 py-2 text-sm text-slate-600 lg:table-cell">
+                                <td class="hidden px-4 py-3 text-sm font-medium tracking-tight text-slate-700 lg:table-cell sm:px-3 sm:py-2 sm:font-normal sm:tracking-normal sm:text-slate-600">
                                     {{ formatDate(item.estimasi_tiba) }}
                                 </td>
 
-                                <td class="px-3 py-2 text-sm">
-                                    <Link :href="route('pengiriman.show', item.id)" class="btn-secondary btn-sm">
+                                <td class="px-4 py-3 text-sm sm:px-3 sm:py-2">
+                                    <!-- [UBAH KHUSUS MOBILE] Tombol Aksi lengkung penuh khusus Mobile -->
+                                    <Link :href="route('pengiriman.show', item.id)" class="btn-secondary btn-sm rounded-full sm:rounded-md">
                                         Detail
                                     </Link>
                                 </td>
@@ -269,7 +250,7 @@ const formatService = (value) => {
                     </table>
                 </div>
 
-                <div v-else class="px-4 py-8 text-center text-sm text-slate-500">
+                <div v-else class="px-4 py-10 text-center text-sm font-medium tracking-tight text-slate-500 sm:py-8 sm:font-normal sm:tracking-normal">
                     Belum ada data pengiriman.
                 </div>
 
