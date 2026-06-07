@@ -72,8 +72,8 @@ const submit = () => {
         <!-- Kontainer Form (Mobile: Premium shadow & padding | Desktop: tetap aslinya) -->
         <div class="w-full rounded-[24px] bg-white p-7 shadow-[0_8px_30px_rgb(0,0,0,0.08)] sm:rounded-2xl sm:p-8 sm:shadow-xl">
             
-            <!-- Mobile Branding (Dioptimalkan untuk mobile: tampilan premium dan spacing presisi) -->
-            <div class="mb-10 flex flex-col items-center justify-center gap-3 lg:hidden">
+            <!-- [UBAH] Menampilkan Branding Logo di Semua Perangkat (karena ilustrasi dihilangkan) -->
+            <div class="mb-8 flex flex-col items-center justify-center gap-3">
                 <div class="rounded-2xl bg-slate-50 p-3 shadow-sm ring-1 ring-slate-100">
                     <img src="/images/logo-brand.png" alt="Nexavia" class="h-10 w-10 object-contain drop-shadow-sm">
                 </div>
@@ -88,12 +88,12 @@ const submit = () => {
                 {{ page.props.flash.error }}
             </div>
 
-            <!-- Header (Dioptimalkan typography untuk mobile, desktop dipertahankan text-left aslinya) -->
-            <div class="mb-8 text-center sm:mb-6 sm:text-left">
-                <p class="mb-1.5 text-[12px] font-bold uppercase tracking-widest text-[#1E5D7B] sm:mb-1 sm:text-[11px] sm:font-semibold sm:tracking-wider">
+            <!-- [UBAH] Header Terpusat (Tipografi Premium) -->
+            <div class="mb-8 text-center">
+                <p class="mb-1.5 text-[12px] font-bold uppercase tracking-widest text-[#1E5D7B] sm:mb-1 sm:text-[11px] sm:font-semibold">
                     Admin Access
                 </p>
-                <h1 class="text-[26px] font-extrabold tracking-tight text-slate-900 sm:text-2xl sm:font-bold">
+                <h1 class="text-[26px] font-extrabold tracking-tight text-slate-900 sm:text-2xl">
                     Login Admin
                 </h1>
                 <p class="mt-2 text-[14px] font-medium text-slate-500 sm:mt-1 sm:text-[13px] sm:text-slate-600">
@@ -180,9 +180,9 @@ const submit = () => {
                     </div>
                 </div>
 
-                <!-- Submit Button (Ditingkatkan responsivitas dan efek hover mobile) -->
+                <!-- [UBAH KHUSUS MOBILE & DESKTOP] Tombol Login Premium membulat -->
                 <button type="submit" :disabled="form.processing"
-                    class="w-full rounded-xl sm:rounded-lg bg-[#1E5D7B] px-4 py-3 sm:py-2.5 text-[14px] sm:text-[13px] font-bold sm:font-semibold tracking-wide text-white shadow-md sm:shadow-sm transition-all duration-300 hover:bg-[#16465c] hover:shadow-lg sm:hover:shadow-md active:scale-[0.98] sm:active:scale-100 sm:active:translate-y-px disabled:cursor-not-allowed disabled:opacity-70 disabled:active:scale-100">
+                    class="w-full rounded-xl bg-[#1E5D7B] px-4 py-3 sm:py-2.5 text-[14px] sm:text-[13px] font-bold tracking-wide text-white shadow-md transition-all duration-300 hover:bg-[#16465c] hover:shadow-lg active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70">
                     Masuk ke Dashboard
                 </button>
             </form>
