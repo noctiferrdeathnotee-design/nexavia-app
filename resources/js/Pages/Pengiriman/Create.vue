@@ -458,7 +458,7 @@ const submit = async () => {
                 <div class="grid grid-cols-1 gap-4 sm:gap-5 xl:grid-cols-3 xl:gap-6">
                     <div class="w-full xl:col-span-1">
                         <label class="form-label xl:text-slate-300">Nama Pengirim</label>
-                        <input v-model="form.pengirim_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
+                        <input v-model="form.pengirim_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all">
                         <p v-if="form.errors.pengirim_nama" class="mt-1 text-xs text-red-500">
                             {{ form.errors.pengirim_nama }}
                         </p>
@@ -466,7 +466,7 @@ const submit = async () => {
 
                     <div class="w-full xl:col-span-1">
                         <label class="form-label xl:text-slate-300">No HP</label>
-                        <input v-model="form.pengirim_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all"
+                        <input v-model="form.pengirim_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all"
                             @input="sanitizePhone('pengirim_hp')">
                         <p v-if="form.errors.pengirim_hp" class="mt-1 text-xs text-red-500">
                             {{ form.errors.pengirim_hp }}
@@ -487,7 +487,7 @@ const submit = async () => {
 
                     <div class="w-full xl:col-span-2">
                         <label class="form-label xl:text-slate-300">Alamat Lengkap</label>
-                        <textarea v-model="form.pengirim_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all"></textarea>
+                        <textarea v-model="form.pengirim_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all"></textarea>
                         <p v-if="form.errors.pengirim_alamat" class="mt-1 text-xs text-red-500">
                             {{ form.errors.pengirim_alamat }}
                         </p>
@@ -523,7 +523,7 @@ const submit = async () => {
                 <div class="grid grid-cols-1 gap-4 sm:gap-5 xl:grid-cols-3 xl:gap-6">
                     <div class="w-full xl:col-span-1">
                         <label class="form-label xl:text-slate-300">Nama Penerima</label>
-                        <input v-model="form.penerima_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
+                        <input v-model="form.penerima_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all">
                         <p v-if="form.errors.penerima_nama" class="mt-1 text-xs text-red-500">
                             {{ form.errors.penerima_nama }}
                         </p>
@@ -531,7 +531,7 @@ const submit = async () => {
 
                     <div class="w-full xl:col-span-1">
                         <label class="form-label xl:text-slate-300">No HP</label>
-                        <input v-model="form.penerima_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all"
+                        <input v-model="form.penerima_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all"
                             @input="sanitizePhone('penerima_hp')">
                         <p v-if="form.errors.penerima_hp" class="mt-1 text-xs text-red-500">
                             {{ form.errors.penerima_hp }}
@@ -552,7 +552,7 @@ const submit = async () => {
 
                     <div class="w-full xl:col-span-2">
                         <label class="form-label xl:text-slate-300">Alamat Lengkap</label>
-                        <textarea v-model="form.penerima_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all"></textarea>
+                        <textarea v-model="form.penerima_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all"></textarea>
                         <p v-if="form.errors.penerima_alamat" class="mt-1 text-xs text-red-500">
                             {{ form.errors.penerima_alamat }}
                         </p>
@@ -614,7 +614,7 @@ const submit = async () => {
                         <div class="grid grid-cols-3 gap-3 sm:gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 xl:gap-5">
                             <div class="col-span-3 w-full sm:col-span-2 md:col-span-3 xl:col-span-2">
                                 <label class="form-label xl:text-slate-300">Nama Barang</label>
-                                <input v-model="item.nama_barang" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
+                                <input v-model="item.nama_barang" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all">
                                 <p v-if="form.errors[`barang.${index}.nama_barang`]" class="mt-1 text-xs text-red-500">
                                     {{ form.errors[`barang.${index}.nama_barang`] }}
                                 </p>
@@ -623,7 +623,7 @@ const submit = async () => {
                             <div class="col-span-3 sm:col-span-1 xl:col-span-1">
                                 <label class="form-label xl:text-slate-300">Berat Asli (kg)</label>
                                 <input v-model="item.berat_asli_kg" type="number" min="0.1" step="0.1"
-                                    class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
+                                    class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all">
                                 <p v-if="form.errors[`barang.${index}.berat_asli_kg`]"
                                     class="mt-1 text-xs text-red-500">
                                     {{ form.errors[`barang.${index}.berat_asli_kg`] }}
@@ -632,17 +632,17 @@ const submit = async () => {
 
                             <div class="col-span-1">
                                 <label class="form-label xl:text-slate-300">P cm</label>
-                                <input v-model="item.panjang_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
+                                <input v-model="item.panjang_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all">
                             </div>
 
                             <div class="col-span-1">
                                 <label class="form-label xl:text-slate-300">L cm</label>
-                                <input v-model="item.lebar_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
+                                <input v-model="item.lebar_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all">
                             </div>
 
                             <div class="col-span-1">
                                 <label class="form-label xl:text-slate-300">T cm</label>
-                                <input v-model="item.tinggi_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
+                                <input v-model="item.tinggi_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all">
                             </div>
 
                             <!-- [UPDATE: FASE 10++] Checkbox Keterangan -->
@@ -655,7 +655,7 @@ const submit = async () => {
 
                             <div v-show="item.hasKeterangan" class="col-span-3 w-full sm:col-span-2 md:col-span-3 xl:col-span-6 transition-all duration-300">
                                 <label class="form-label xl:text-slate-300">Isi Keterangan</label>
-                                <input v-model="item.keterangan" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
+                                <input v-model="item.keterangan" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all">
                             </div>
                         </div>
 
@@ -718,7 +718,7 @@ const submit = async () => {
                         </div>
                         <div v-show="hasCatatan" class="transition-all duration-300">
                             <label class="form-label xl:text-slate-300">Isi Catatan</label>
-                            <textarea v-model="form.catatan" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all"></textarea>
+                            <textarea v-model="form.catatan" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all"></textarea>
                             <p v-if="form.errors.catatan" class="mt-1 text-xs text-red-500">
                                 {{ form.errors.catatan }}
                             </p>
@@ -818,7 +818,7 @@ const submit = async () => {
                                 <div v-show="useAsuransi" class="transition-all duration-300">
                                     <label class="form-label xl:text-slate-300">Nominal Asuransi</label>
                                     <input v-model="form.biaya_asuransi" type="number" min="0" step="1000"
-                                        class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
+                                        class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all">
                                 </div>
                             </div>
 
@@ -828,7 +828,7 @@ const submit = async () => {
                                 <div v-show="useBiayaTambahan" class="transition-all duration-300">
                                     <label class="form-label xl:text-slate-300">Nominal Biaya Tambahan</label>
                                     <input v-model="form.biaya_tambahan" type="number" min="0" step="1000"
-                                        class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
+                                        class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:bg-[#1A233A] xl:focus:border-[#D4AF37] transition-all">
                                 </div>
                             </div>
 
