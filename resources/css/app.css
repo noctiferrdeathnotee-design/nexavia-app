@@ -37,11 +37,11 @@
     }
 
     .btn-secondary {
-        @apply btn bg-white border border-slate-200 text-slate-700;
+        @apply btn bg-white border border-slate-200 text-slate-700 xl:bg-[#1A233A] xl:border-white/10 xl:text-slate-200;
     }
 
     .btn-secondary:hover {
-        @apply bg-slate-50 border-slate-300;
+        @apply bg-slate-50 border-slate-300 xl:bg-[#1A233A]/80 xl:border-white/20 xl:text-white;
     }
 
     .btn-danger {
@@ -56,31 +56,34 @@
         @apply px-2.5 py-1.5 text-xs;
     }
 
+    /* [UPDATE: FASE 1] Card Desktop berubah menjadi Dark Elevated Glass */
     .card {
-        @apply bg-white rounded-xl border border-slate-200;
-        transition: box-shadow 0.2s ease;
+        @apply bg-white rounded-xl border border-slate-200 xl:bg-[#1A233A] xl:border-white/10 xl:shadow-lg;
+        transition: box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
     }
 
+    /* [UPDATE: FASE 1] Input Desktop berubah menjadi Midnight Blue dengan border/ring Xaviera Gold */
     .form-input {
-        @apply block w-full px-3 py-2 text-sm rounded-lg border border-slate-200 outline-none bg-white text-slate-800 placeholder-slate-400;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        @apply block w-full px-3 py-2 text-sm rounded-lg border border-slate-200 outline-none bg-white text-slate-800 placeholder-slate-400 xl:bg-[#0B132B] xl:border-white/10 xl:text-slate-100 xl:placeholder-slate-500 xl:focus:border-[#D4AF37] xl:focus:ring-[#D4AF37]/50;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
     }
 
     .form-input:focus {
-        @apply border-indigo-500 ring-1 ring-indigo-500;
+        @apply border-indigo-500 ring-1 ring-indigo-500 xl:border-[#D4AF37] xl:ring-[#D4AF37];
     }
 
     .form-select {
-        @apply block w-full px-3 py-2 text-sm rounded-lg border border-slate-200 outline-none bg-white text-slate-800;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        @apply block w-full px-3 py-2 text-sm rounded-lg border border-slate-200 outline-none bg-white text-slate-800 xl:bg-[#0B132B] xl:border-white/10 xl:text-slate-100 xl:focus:border-[#D4AF37] xl:focus:ring-[#D4AF37]/50;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
     }
 
     .form-select:focus {
-        @apply border-indigo-500 ring-1 ring-indigo-500;
+        @apply border-indigo-500 ring-1 ring-indigo-500 xl:border-[#D4AF37] xl:ring-[#D4AF37];
     }
 
     .form-label {
-        @apply block text-xs font-medium text-slate-600 mb-1;
+        @apply block text-xs font-medium text-slate-600 mb-1 xl:text-slate-300;
+        transition: color 0.3s ease;
     }
 
     .badge {

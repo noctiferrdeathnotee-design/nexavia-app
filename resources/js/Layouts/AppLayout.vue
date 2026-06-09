@@ -39,8 +39,8 @@ const isMobileNavActive = (match, exact) => {
 </script>
 
 <template>
-    <!-- [UBAH KHUSUS MOBILE & DESKTOP] Tambahan pb-20 untuk memberi ruang bagi Bottom Navigation Bar di Mobile -->
-    <div class="min-h-screen bg-slate-50 font-['Plus_Jakarta_Sans'] pb-20 xl:pb-0">
+    <!-- [UPDATE: FASE 1 - DARK AURORA] Desktop diubah menjadi Dark Vibes. Latar utama menjadi Midnight Blue. -->
+    <div class="min-h-screen bg-slate-50 xl:bg-[#0B132B] font-['Plus_Jakarta_Sans'] pb-20 xl:pb-0 transition-colors duration-500">
         <!-- Sidebar dimatikan sepenuhnya di Mobile Android (Overlay Background Dihapus untuk membersihkan DOM) -->
         
         <Sidebar :open="sidebarOpen" @close="sidebarOpen = false" />

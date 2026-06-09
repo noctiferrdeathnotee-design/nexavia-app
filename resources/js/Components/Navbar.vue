@@ -126,7 +126,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <!-- [UPDATE: FASE 1 - DARK AURORA] Navbar Desktop menjadi gelap (bg-[#0B132B]) dengan border tipis (border-white/10). Mobile tetap terang. -->
+    <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur xl:border-white/10 xl:bg-[#0B132B]/95">
         <div class="flex h-14 items-center justify-between gap-3 px-3 sm:h-16 sm:px-5 lg:px-6">
             <div class="flex min-w-0 items-center gap-3">
                 <button type="button"
@@ -136,10 +137,10 @@ onBeforeUnmount(() => {
                 </button>
 
                 <div class="min-w-0">
-                    <h1 class="truncate text-sm font-semibold text-slate-800 sm:text-base lg:text-lg">
+                    <h1 class="truncate text-sm font-semibold text-slate-800 sm:text-base lg:text-lg xl:text-slate-100 transition-colors">
                         {{ title }}
                     </h1>
-                    <p class="hidden text-xs text-slate-500 sm:block">
+                    <p class="hidden text-xs text-slate-500 sm:block xl:text-slate-400">
                         Panel admin
                     </p>
                 </div>
@@ -147,7 +148,7 @@ onBeforeUnmount(() => {
 
             <div class="flex items-center gap-2 sm:gap-3">
                 <div
-                    class="hidden rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-600 lg:block">
+                    class="hidden rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-600 lg:block xl:border-white/10 xl:bg-[#1A233A] xl:text-slate-300 transition-colors">
                     {{ currentTime }}
                 </div>
 

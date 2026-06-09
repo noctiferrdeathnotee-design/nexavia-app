@@ -2,6 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue'
 import KotaInfoBox from '@/Components/KotaInfoBox.vue'
 import SearchableSelect from '@/Components/SearchableSelect.vue' // [UBAH KHUSUS MOBILE & DESKTOP] Impor Dropdown Pencarian Pintar
+import ToggleSwitch from '@/Components/ToggleSwitch.vue' // [UPDATE: FASE 3]
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import axios from 'axios'
 import { computed, ref } from 'vue'
@@ -21,6 +22,11 @@ const step = ref(1)
 const loadingTarif = ref(false)
 const tarifError = ref('')
 const tarifList = ref([])
+
+// [UPDATE: FASE 3] State reaktif untuk form interaktif
+const useAsuransi = ref(false)
+const useBiayaTambahan = ref(false)
+const hasCatatan = ref(false)
 
 const stepItems = [
     { no: 1, label: 'Pengirim' },
@@ -48,6 +54,7 @@ const form = useForm({
             lebar_cm: '',
             tinggi_cm: '',
             keterangan: '',
+            hasKeterangan: false, // [UPDATE: FASE 3] Kontrol visibility keterangan per barang
         },
     ],
 
@@ -163,6 +170,7 @@ const addBarang = () => {
         lebar_cm: '',
         tinggi_cm: '',
         keterangan: '',
+        hasKeterangan: false, // [UPDATE: FASE 3]
     })
 }
 
@@ -446,35 +454,35 @@ const submit = async () => {
                     <p class="text-xs text-slate-500">Isi data pengirim dan pilih kota asal.</p>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4 sm:gap-4">
-                    <div class="w-full sm:max-w-xs">
+                <!-- [UPDATE: FASE 2] Horizontal Layout untuk Desktop (grid-cols-4) -->
+                <div class="grid grid-cols-1 gap-4 sm:gap-4 xl:grid-cols-4 xl:gap-5">
+                    <div class="w-full xl:col-span-2">
                         <label class="form-label">Nama Pengirim</label>
-                        <input v-model="form.pengirim_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
+                        <input v-model="form.pengirim_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
                         <p v-if="form.errors.pengirim_nama" class="mt-1 text-xs text-red-500">
                             {{ form.errors.pengirim_nama }}
                         </p>
                     </div>
 
-                    <div class="w-full sm:max-w-[180px]">
+                    <div class="w-full xl:col-span-2">
                         <label class="form-label">No HP</label>
-                        <input v-model="form.pengirim_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0"
+                        <input v-model="form.pengirim_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent"
                             @input="sanitizePhone('pengirim_hp')">
                         <p v-if="form.errors.pengirim_hp" class="mt-1 text-xs text-red-500">
                             {{ form.errors.pengirim_hp }}
                         </p>
                     </div>
 
-                    <div class="w-full">
+                    <div class="w-full xl:col-span-4">
                         <label class="form-label">Alamat Lengkap</label>
-                        <textarea v-model="form.pengirim_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0"></textarea>
+                        <textarea v-model="form.pengirim_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent"></textarea>
                         <p v-if="form.errors.pengirim_alamat" class="mt-1 text-xs text-red-500">
                             {{ form.errors.pengirim_alamat }}
                         </p>
                     </div>
 
-                    <div class="w-full sm:max-w-xs relative z-30">
+                    <div class="w-full relative z-30 xl:col-span-2">
                         <label class="form-label font-medium tracking-tight">Kota Asal</label>
-                        <!-- [UBAH KHUSUS MOBILE & DESKTOP] Mengganti native select panjang yang merusak tampilan dengan Searchable Select pintar -->
                         <SearchableSelect 
                             v-model="form.pengirim_kota_id"
                             :options="kotaList"
@@ -485,7 +493,7 @@ const submit = async () => {
                         </p>
                     </div>
 
-                    <div class="w-full sm:max-w-sm">
+                    <div class="w-full sm:max-w-sm xl:col-span-2">
                         <KotaInfoBox :kota="kotaPengirim" />
                     </div>
                 </div>
@@ -511,35 +519,35 @@ const submit = async () => {
                     <p class="text-xs text-slate-500">Isi data penerima dan pilih kota tujuan.</p>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4 sm:gap-4">
-                    <div class="w-full sm:max-w-xs">
+                <!-- [UPDATE: FASE 2] Horizontal Layout untuk Desktop (grid-cols-4) -->
+                <div class="grid grid-cols-1 gap-4 sm:gap-4 xl:grid-cols-4 xl:gap-5">
+                    <div class="w-full xl:col-span-2">
                         <label class="form-label">Nama Penerima</label>
-                        <input v-model="form.penerima_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
+                        <input v-model="form.penerima_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
                         <p v-if="form.errors.penerima_nama" class="mt-1 text-xs text-red-500">
                             {{ form.errors.penerima_nama }}
                         </p>
                     </div>
 
-                    <div class="w-full sm:max-w-[180px]">
+                    <div class="w-full xl:col-span-2">
                         <label class="form-label">No HP</label>
-                        <input v-model="form.penerima_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0"
+                        <input v-model="form.penerima_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent"
                             @input="sanitizePhone('penerima_hp')">
                         <p v-if="form.errors.penerima_hp" class="mt-1 text-xs text-red-500">
                             {{ form.errors.penerima_hp }}
                         </p>
                     </div>
 
-                    <div class="w-full">
+                    <div class="w-full xl:col-span-4">
                         <label class="form-label">Alamat Lengkap</label>
-                        <textarea v-model="form.penerima_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0"></textarea>
+                        <textarea v-model="form.penerima_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent"></textarea>
                         <p v-if="form.errors.penerima_alamat" class="mt-1 text-xs text-red-500">
                             {{ form.errors.penerima_alamat }}
                         </p>
                     </div>
 
-                    <div class="w-full sm:max-w-xs relative z-30">
+                    <div class="w-full relative z-30 xl:col-span-2">
                         <label class="form-label font-medium tracking-tight">Kota Tujuan</label>
-                        <!-- [UBAH KHUSUS MOBILE & DESKTOP] Searchable Select untuk Tujuan -->
                         <SearchableSelect 
                             v-model="form.penerima_kota_id"
                             :options="kotaList"
@@ -550,7 +558,7 @@ const submit = async () => {
                         </p>
                     </div>
 
-                    <div class="w-full sm:max-w-sm">
+                    <div class="w-full sm:max-w-sm xl:col-span-2">
                         <KotaInfoBox :kota="kotaPenerima" />
                     </div>
                 </div>
@@ -606,7 +614,7 @@ const submit = async () => {
                         <div class="grid grid-cols-3 gap-3 sm:gap-4 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-6">
                             <div class="col-span-3 w-full sm:col-span-2 sm:max-w-xs xl:col-span-2">
                                 <label class="form-label">Nama Barang</label>
-                                <input v-model="item.nama_barang" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
+                                <input v-model="item.nama_barang" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
                                 <p v-if="form.errors[`barang.${index}.nama_barang`]" class="mt-1 text-xs text-red-500">
                                     {{ form.errors[`barang.${index}.nama_barang`] }}
                                 </p>
@@ -615,7 +623,7 @@ const submit = async () => {
                             <div class="col-span-3 sm:col-span-1">
                                 <label class="form-label">Berat Asli (kg)</label>
                                 <input v-model="item.berat_asli_kg" type="number" min="0.1" step="0.1"
-                                    class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
+                                    class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
                                 <p v-if="form.errors[`barang.${index}.berat_asli_kg`]"
                                     class="mt-1 text-xs text-red-500">
                                     {{ form.errors[`barang.${index}.berat_asli_kg`] }}
@@ -624,22 +632,30 @@ const submit = async () => {
 
                             <div class="col-span-1">
                                 <label class="form-label">P cm</label>
-                                <input v-model="item.panjang_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left">
+                                <input v-model="item.panjang_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-transparent">
                             </div>
 
                             <div class="col-span-1">
                                 <label class="form-label">L cm</label>
-                                <input v-model="item.lebar_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left">
+                                <input v-model="item.lebar_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-transparent">
                             </div>
 
                             <div class="col-span-1">
                                 <label class="form-label">T cm</label>
-                                <input v-model="item.tinggi_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left">
+                                <input v-model="item.tinggi_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-transparent">
                             </div>
 
-                            <div class="col-span-3 w-full sm:col-span-2 sm:max-w-sm xl:col-span-3">
-                                <label class="form-label">Keterangan</label>
-                                <input v-model="item.keterangan" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
+                            <!-- [UPDATE: FASE 3] Checkbox Opsional Keterangan per barang -->
+                            <div class="col-span-3 w-full sm:col-span-2 xl:col-span-6 flex items-center gap-2 mt-1 mb-1">
+                                <input type="checkbox" v-model="item.hasKeterangan" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 xl:border-white/20 xl:bg-[#1A233A]">
+                                <label class="text-sm font-medium text-slate-600 xl:text-slate-400 cursor-pointer select-none" @click="item.hasKeterangan = !item.hasKeterangan">
+                                    Tambah Keterangan Barang
+                                </label>
+                            </div>
+
+                            <div v-show="item.hasKeterangan" class="col-span-3 w-full sm:col-span-2 sm:max-w-sm xl:col-span-6 transition-all duration-300">
+                                <label class="form-label">Isi Keterangan</label>
+                                <input v-model="item.keterangan" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
                             </div>
                         </div>
 
@@ -693,12 +709,21 @@ const submit = async () => {
                         </div>
                     </div>
 
-                    <div class="w-full max-w-lg">
-                        <label class="form-label">Catatan</label>
-                        <textarea v-model="form.catatan" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0"></textarea>
-                        <p v-if="form.errors.catatan" class="mt-1 text-xs text-red-500">
-                            {{ form.errors.catatan }}
-                        </p>
+                    <!-- [UPDATE: FASE 3] Catatan Opsional dengan Checkbox -->
+                    <div class="w-full max-w-lg mt-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <input type="checkbox" v-model="hasCatatan" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 xl:border-white/20 xl:bg-[#1A233A]">
+                            <label class="text-sm font-semibold text-slate-700 xl:text-slate-300 cursor-pointer select-none" @click="hasCatatan = !hasCatatan">
+                                Tambah Catatan Pengiriman (Opsional)
+                            </label>
+                        </div>
+                        <div v-show="hasCatatan" class="transition-all duration-300">
+                            <label class="form-label">Isi Catatan</label>
+                            <textarea v-model="form.catatan" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent"></textarea>
+                            <p v-if="form.errors.catatan" class="mt-1 text-xs text-red-500">
+                                {{ form.errors.catatan }}
+                            </p>
+                        </div>
                     </div>
                 </div>
 
@@ -761,11 +786,11 @@ const submit = async () => {
                             :style="{ transition: 'border-color 0.2s ease, background-color 0.2s ease' }"
                             @click="form.jenis_layanan = item.jenis_layanan">
                             <div class="mb-2 flex flex-wrap gap-1">
-                                <span v-if="isFastest(item)" class="badge bg-amber-100 text-amber-700">
+                                <span v-if="isFastest(item)" class="badge bg-amber-100 text-amber-700 xl:bg-amber-900/40 xl:text-amber-400">
                                     TERCEPAT
                                 </span>
 
-                                <span v-if="isCheapest(item)" class="badge bg-emerald-100 text-emerald-700">
+                                <span v-if="isCheapest(item)" class="badge bg-emerald-100 text-emerald-700 xl:bg-emerald-900/40 xl:text-emerald-400">
                                     TERHEMAT
                                 </span>
                             </div>
@@ -787,16 +812,24 @@ const submit = async () => {
 
                     <div class="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-2">
                         <div>
-                            <div class="mb-4 w-full sm:max-w-[160px]">
-                                <label class="form-label">Biaya Asuransi</label>
-                                <input v-model="form.biaya_asuransi" type="number" min="0" step="1000"
-                                    class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
+                            <!-- [UPDATE: FASE 3] Biaya Asuransi dengan Toggle Switch -->
+                            <div class="mb-5 w-full sm:max-w-xs xl:max-w-sm">
+                                <ToggleSwitch v-model="useAsuransi" label="Gunakan Asuransi Pengiriman" class="mb-3 xl:text-slate-300" />
+                                <div v-show="useAsuransi" class="transition-all duration-300">
+                                    <label class="form-label">Nominal Asuransi</label>
+                                    <input v-model="form.biaya_asuransi" type="number" min="0" step="1000"
+                                        class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
+                                </div>
                             </div>
 
-                            <div class="w-full sm:max-w-[160px]">
-                                <label class="form-label">Biaya Tambahan</label>
-                                <input v-model="form.biaya_tambahan" type="number" min="0" step="1000"
-                                    class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0">
+                            <!-- [UPDATE: FASE 3] Biaya Tambahan dengan Toggle Switch -->
+                            <div class="mb-5 w-full sm:max-w-xs xl:max-w-sm">
+                                <ToggleSwitch v-model="useBiayaTambahan" label="Ada Biaya Tambahan" class="mb-3 xl:text-slate-300" />
+                                <div v-show="useBiayaTambahan" class="transition-all duration-300">
+                                    <label class="form-label">Nominal Biaya Tambahan</label>
+                                    <input v-model="form.biaya_tambahan" type="number" min="0" step="1000"
+                                        class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
+                                </div>
                             </div>
 
                             <div class="mt-5">
@@ -804,58 +837,58 @@ const submit = async () => {
 
                                 <div class="space-y-2">
                                     <label
-                                        class="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600">
-                                        <input v-model="form.metode_pembayaran" type="radio" value="dibayar_pengirim">
+                                        class="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600 xl:border-white/10 xl:text-slate-300 xl:bg-[#1A233A]">
+                                        <input v-model="form.metode_pembayaran" type="radio" value="dibayar_pengirim" class="xl:bg-[#0B132B]">
                                         <span>Dibayar Pengirim</span>
                                     </label>
 
                                     <label
-                                        class="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600">
-                                        <input v-model="form.metode_pembayaran" type="radio" value="dibayar_penerima">
+                                        class="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600 xl:border-white/10 xl:text-slate-300 xl:bg-[#1A233A]">
+                                        <input v-model="form.metode_pembayaran" type="radio" value="dibayar_penerima" class="xl:bg-[#0B132B]">
                                         <span>Dibayar Penerima</span>
                                     </label>
 
                                     <label
-                                        class="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600">
-                                        <input v-model="form.metode_pembayaran" type="radio" value="cod">
+                                        class="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600 xl:border-white/10 xl:text-slate-300 xl:bg-[#1A233A]">
+                                        <input v-model="form.metode_pembayaran" type="radio" value="cod" class="xl:bg-[#0B132B]">
                                         <span>COD</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="rounded-xl border border-indigo-100 bg-indigo-50 p-3 sm:p-4">
-                            <h4 class="text-sm font-semibold text-slate-800">Ringkasan Biaya</h4>
+                        <div class="rounded-xl border border-indigo-100 bg-indigo-50 p-3 sm:p-4 xl:border-[#D4AF37]/30 xl:bg-[#0B132B]/80 xl:backdrop-blur-md">
+                            <h4 class="text-sm font-semibold text-slate-800 xl:text-[#D4AF37]">Ringkasan Biaya</h4>
 
                             <div class="mt-4 space-y-2 text-sm">
                                 <div class="flex items-center justify-between gap-3">
-                                    <span class="text-slate-600">Ongkir</span>
-                                    <span class="font-medium text-slate-800">{{ formatCurrency(ongkir) }}</span>
+                                    <span class="text-slate-600 xl:text-slate-300">Ongkir</span>
+                                    <span class="font-medium text-slate-800 xl:text-white">{{ formatCurrency(ongkir) }}</span>
                                 </div>
 
-                                <div class="flex items-center justify-between gap-3">
-                                    <span class="text-slate-600">Asuransi</span>
-                                    <span class="font-medium text-slate-800">{{ formatCurrency(biayaAsuransi) }}</span>
+                                <div class="flex items-center justify-between gap-3" v-if="useAsuransi">
+                                    <span class="text-slate-600 xl:text-slate-300">Asuransi</span>
+                                    <span class="font-medium text-slate-800 xl:text-white">{{ formatCurrency(biayaAsuransi) }}</span>
                                 </div>
 
-                                <div class="flex items-center justify-between gap-3">
-                                    <span class="text-slate-600">Biaya Tambahan</span>
-                                    <span class="font-medium text-slate-800">{{ formatCurrency(biayaTambahan) }}</span>
+                                <div class="flex items-center justify-between gap-3" v-if="useBiayaTambahan">
+                                    <span class="text-slate-600 xl:text-slate-300">Biaya Tambahan</span>
+                                    <span class="font-medium text-slate-800 xl:text-white">{{ formatCurrency(biayaTambahan) }}</span>
                                 </div>
 
-                                <div class="my-3 border-t border-indigo-200" />
+                                <div class="my-3 border-t border-indigo-200 xl:border-white/10" />
 
                                 <div class="flex items-center justify-between gap-3">
-                                    <span class="text-sm font-semibold text-slate-800">Total</span>
-                                    <span class="text-lg font-bold text-indigo-600">{{ formatCurrency(totalBiaya)
+                                    <span class="text-sm font-semibold text-slate-800 xl:text-slate-200">Total</span>
+                                    <span class="text-lg font-bold text-indigo-600 xl:text-[#D4AF37]">{{ formatCurrency(totalBiaya)
                                         }}</span>
                                 </div>
 
                                 <div
-                                    class="rounded-lg border border-indigo-200 bg-white px-3 py-2 text-xs text-slate-600">
-                                    <div><b>Layanan:</b> {{ form.jenis_layanan ? formatService(form.jenis_layanan) : '-'
+                                    class="rounded-lg border border-indigo-200 bg-white px-3 py-2 text-xs text-slate-600 xl:border-white/10 xl:bg-[#1A233A] xl:text-slate-400 mt-2">
+                                    <div><b class="xl:text-slate-300">Layanan:</b> {{ form.jenis_layanan ? formatService(form.jenis_layanan) : '-'
                                         }}</div>
-                                    <div><b>Pembayaran:</b> {{ paymentLabel(form.metode_pembayaran) }}</div>
+                                    <div><b class="xl:text-slate-300">Pembayaran:</b> {{ paymentLabel(form.metode_pembayaran) }}</div>
                                 </div>
                             </div>
                         </div>
