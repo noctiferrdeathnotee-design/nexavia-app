@@ -448,41 +448,33 @@ const submit = async () => {
                 Ada validasi yang belum sesuai. Periksa kembali form Anda.
             </div>
 
-            <div v-if="step === 1" class="p-4 bg-white/60 backdrop-blur-md border border-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:card sm:rounded-xl sm:bg-white sm:border-slate-200 sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
-                <div class="mb-4">
-                    <h3 class="text-sm font-semibold text-[#0B132B] sm:text-slate-800">Step 1 — Data Pengirim</h3>
-                    <p class="text-xs text-slate-500">Isi data pengirim dan pilih kota asal.</p>
+            <div v-if="step === 1" class="p-4 bg-white/60 backdrop-blur-md border border-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:card sm:rounded-xl sm:bg-white sm:border-slate-200 sm:p-6 sm:shadow-sm sm:backdrop-blur-none xl:bg-[#16203D]/95 xl:border-white/10 xl:backdrop-blur-xl xl:shadow-2xl transition-colors duration-300">
+                <div class="mb-5">
+                    <h3 class="text-sm font-semibold text-[#0B132B] sm:text-slate-800 xl:text-white">Step 1 — Data Pengirim</h3>
+                    <p class="text-xs text-slate-500 xl:text-slate-400">Isi data pengirim dan pilih kota asal.</p>
                 </div>
 
-                <!-- [UPDATE: FASE 2] Horizontal Layout untuk Desktop (grid-cols-4) -->
-                <div class="grid grid-cols-1 gap-4 sm:gap-4 xl:grid-cols-4 xl:gap-5">
-                    <div class="w-full xl:col-span-2">
-                        <label class="form-label">Nama Pengirim</label>
-                        <input v-model="form.pengirim_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
+                <!-- [UPDATE: FASE 10++] Master Horizontal Flow (grid-cols-3) di Desktop -->
+                <div class="grid grid-cols-1 gap-4 sm:gap-5 xl:grid-cols-3 xl:gap-6">
+                    <div class="w-full xl:col-span-1">
+                        <label class="form-label xl:text-slate-300">Nama Pengirim</label>
+                        <input v-model="form.pengirim_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
                         <p v-if="form.errors.pengirim_nama" class="mt-1 text-xs text-red-500">
                             {{ form.errors.pengirim_nama }}
                         </p>
                     </div>
 
-                    <div class="w-full xl:col-span-2">
-                        <label class="form-label">No HP</label>
-                        <input v-model="form.pengirim_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent"
+                    <div class="w-full xl:col-span-1">
+                        <label class="form-label xl:text-slate-300">No HP</label>
+                        <input v-model="form.pengirim_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all"
                             @input="sanitizePhone('pengirim_hp')">
                         <p v-if="form.errors.pengirim_hp" class="mt-1 text-xs text-red-500">
                             {{ form.errors.pengirim_hp }}
                         </p>
                     </div>
 
-                    <div class="w-full xl:col-span-4">
-                        <label class="form-label">Alamat Lengkap</label>
-                        <textarea v-model="form.pengirim_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent"></textarea>
-                        <p v-if="form.errors.pengirim_alamat" class="mt-1 text-xs text-red-500">
-                            {{ form.errors.pengirim_alamat }}
-                        </p>
-                    </div>
-
-                    <div class="w-full relative z-30 xl:col-span-2">
-                        <label class="form-label font-medium tracking-tight">Kota Asal</label>
+                    <div class="w-full relative z-30 xl:col-span-1">
+                        <label class="form-label font-medium tracking-tight xl:text-slate-300">Kota Asal</label>
                         <SearchableSelect 
                             v-model="form.pengirim_kota_id"
                             :options="kotaList"
@@ -493,8 +485,16 @@ const submit = async () => {
                         </p>
                     </div>
 
-                    <div class="w-full sm:max-w-sm xl:col-span-2">
-                        <KotaInfoBox :kota="kotaPengirim" />
+                    <div class="w-full xl:col-span-2">
+                        <label class="form-label xl:text-slate-300">Alamat Lengkap</label>
+                        <textarea v-model="form.pengirim_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all"></textarea>
+                        <p v-if="form.errors.pengirim_alamat" class="mt-1 text-xs text-red-500">
+                            {{ form.errors.pengirim_alamat }}
+                        </p>
+                    </div>
+
+                    <div class="w-full xl:col-span-1 flex items-end">
+                        <KotaInfoBox :kota="kotaPengirim" class="w-full xl:bg-[#1A233A] xl:border-white/10 xl:text-white transition-colors" />
                     </div>
                 </div>
 
@@ -513,41 +513,33 @@ const submit = async () => {
                 </div>
             </div>
 
-            <div v-else-if="step === 2" class="p-4 bg-white/60 backdrop-blur-md border border-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:card sm:rounded-xl sm:bg-white sm:border-slate-200 sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
-                <div class="mb-4">
-                    <h3 class="text-sm font-semibold text-[#0B132B] sm:text-slate-800">Step 2 — Data Penerima</h3>
-                    <p class="text-xs text-slate-500">Isi data penerima dan pilih kota tujuan.</p>
+            <div v-else-if="step === 2" class="p-4 bg-white/60 backdrop-blur-md border border-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:card sm:rounded-xl sm:bg-white sm:border-slate-200 sm:p-6 sm:shadow-sm sm:backdrop-blur-none xl:bg-[#16203D]/95 xl:border-white/10 xl:backdrop-blur-xl xl:shadow-2xl transition-colors duration-300">
+                <div class="mb-5">
+                    <h3 class="text-sm font-semibold text-[#0B132B] sm:text-slate-800 xl:text-white">Step 2 — Data Penerima</h3>
+                    <p class="text-xs text-slate-500 xl:text-slate-400">Isi data penerima dan pilih kota tujuan.</p>
                 </div>
 
-                <!-- [UPDATE: FASE 2] Horizontal Layout untuk Desktop (grid-cols-4) -->
-                <div class="grid grid-cols-1 gap-4 sm:gap-4 xl:grid-cols-4 xl:gap-5">
-                    <div class="w-full xl:col-span-2">
-                        <label class="form-label">Nama Penerima</label>
-                        <input v-model="form.penerima_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
+                <!-- [UPDATE: FASE 10++] Master Horizontal Flow (grid-cols-3) di Desktop -->
+                <div class="grid grid-cols-1 gap-4 sm:gap-5 xl:grid-cols-3 xl:gap-6">
+                    <div class="w-full xl:col-span-1">
+                        <label class="form-label xl:text-slate-300">Nama Penerima</label>
+                        <input v-model="form.penerima_nama" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
                         <p v-if="form.errors.penerima_nama" class="mt-1 text-xs text-red-500">
                             {{ form.errors.penerima_nama }}
                         </p>
                     </div>
 
-                    <div class="w-full xl:col-span-2">
-                        <label class="form-label">No HP</label>
-                        <input v-model="form.penerima_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent"
+                    <div class="w-full xl:col-span-1">
+                        <label class="form-label xl:text-slate-300">No HP</label>
+                        <input v-model="form.penerima_hp" type="tel" inputmode="numeric" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all"
                             @input="sanitizePhone('penerima_hp')">
                         <p v-if="form.errors.penerima_hp" class="mt-1 text-xs text-red-500">
                             {{ form.errors.penerima_hp }}
                         </p>
                     </div>
 
-                    <div class="w-full xl:col-span-4">
-                        <label class="form-label">Alamat Lengkap</label>
-                        <textarea v-model="form.penerima_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent"></textarea>
-                        <p v-if="form.errors.penerima_alamat" class="mt-1 text-xs text-red-500">
-                            {{ form.errors.penerima_alamat }}
-                        </p>
-                    </div>
-
-                    <div class="w-full relative z-30 xl:col-span-2">
-                        <label class="form-label font-medium tracking-tight">Kota Tujuan</label>
+                    <div class="w-full relative z-30 xl:col-span-1">
+                        <label class="form-label font-medium tracking-tight xl:text-slate-300">Kota Tujuan</label>
                         <SearchableSelect 
                             v-model="form.penerima_kota_id"
                             :options="kotaList"
@@ -558,8 +550,16 @@ const submit = async () => {
                         </p>
                     </div>
 
-                    <div class="w-full sm:max-w-sm xl:col-span-2">
-                        <KotaInfoBox :kota="kotaPenerima" />
+                    <div class="w-full xl:col-span-2">
+                        <label class="form-label xl:text-slate-300">Alamat Lengkap</label>
+                        <textarea v-model="form.penerima_alamat" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all"></textarea>
+                        <p v-if="form.errors.penerima_alamat" class="mt-1 text-xs text-red-500">
+                            {{ form.errors.penerima_alamat }}
+                        </p>
+                    </div>
+
+                    <div class="w-full xl:col-span-1 flex items-end">
+                        <KotaInfoBox :kota="kotaPenerima" class="w-full xl:bg-[#1A233A] xl:border-white/10 xl:text-white transition-colors" />
                     </div>
                 </div>
 
@@ -588,10 +588,10 @@ const submit = async () => {
                 </div>
             </div>
 
-            <div v-else-if="step === 3" class="p-4 bg-white/60 backdrop-blur-md border border-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:card sm:rounded-xl sm:bg-white sm:border-slate-200 sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
-                <div class="mb-4">
-                    <h3 class="text-sm font-semibold text-[#0B132B] sm:text-slate-800">Step 3 — Detail Barang</h3>
-                    <p class="text-xs text-slate-500">Isi seluruh barang dan dimensi untuk hitung volumetrik.</p>
+            <div v-else-if="step === 3" class="p-4 bg-white/60 backdrop-blur-md border border-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:card sm:rounded-xl sm:bg-white sm:border-slate-200 sm:p-6 sm:shadow-sm sm:backdrop-blur-none xl:bg-[#16203D]/95 xl:border-white/10 xl:backdrop-blur-xl xl:shadow-2xl transition-colors duration-300">
+                <div class="mb-5">
+                    <h3 class="text-sm font-semibold text-[#0B132B] sm:text-slate-800 xl:text-white">Step 3 — Detail Barang</h3>
+                    <p class="text-xs text-slate-500 xl:text-slate-400">Isi seluruh barang dan dimensi untuk hitung volumetrik.</p>
                 </div>
 
                 <div class="space-y-4">
@@ -610,20 +610,20 @@ const submit = async () => {
                             </button>
                         </div>
 
-                        <!-- [UPDATE: FASE 8] Smart Grid. P,L,T digabung ke dalam 1 sub-grid (grid-cols-3) khusus di mobile agar hemat tinggi layar -->
-                        <div class="grid grid-cols-3 gap-3 sm:gap-4 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-6">
-                            <div class="col-span-3 w-full sm:col-span-2 sm:max-w-xs xl:col-span-2">
-                                <label class="form-label">Nama Barang</label>
-                                <input v-model="item.nama_barang" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
+                        <!-- [UPDATE: FASE 10++] Full Horizontal Grid di Desktop -->
+                        <div class="grid grid-cols-3 gap-3 sm:gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 xl:gap-5">
+                            <div class="col-span-3 w-full sm:col-span-2 md:col-span-3 xl:col-span-2">
+                                <label class="form-label xl:text-slate-300">Nama Barang</label>
+                                <input v-model="item.nama_barang" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
                                 <p v-if="form.errors[`barang.${index}.nama_barang`]" class="mt-1 text-xs text-red-500">
                                     {{ form.errors[`barang.${index}.nama_barang`] }}
                                 </p>
                             </div>
 
-                            <div class="col-span-3 sm:col-span-1">
-                                <label class="form-label">Berat Asli (kg)</label>
+                            <div class="col-span-3 sm:col-span-1 xl:col-span-1">
+                                <label class="form-label xl:text-slate-300">Berat Asli (kg)</label>
                                 <input v-model="item.berat_asli_kg" type="number" min="0.1" step="0.1"
-                                    class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
+                                    class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
                                 <p v-if="form.errors[`barang.${index}.berat_asli_kg`]"
                                     class="mt-1 text-xs text-red-500">
                                     {{ form.errors[`barang.${index}.berat_asli_kg`] }}
@@ -631,43 +631,42 @@ const submit = async () => {
                             </div>
 
                             <div class="col-span-1">
-                                <label class="form-label">P cm</label>
-                                <input v-model="item.panjang_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-transparent">
+                                <label class="form-label xl:text-slate-300">P cm</label>
+                                <input v-model="item.panjang_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
                             </div>
 
                             <div class="col-span-1">
-                                <label class="form-label">L cm</label>
-                                <input v-model="item.lebar_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-transparent">
+                                <label class="form-label xl:text-slate-300">L cm</label>
+                                <input v-model="item.lebar_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
                             </div>
 
                             <div class="col-span-1">
-                                <label class="form-label">T cm</label>
-                                <input v-model="item.tinggi_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-transparent">
+                                <label class="form-label xl:text-slate-300">T cm</label>
+                                <input v-model="item.tinggi_cm" type="number" min="0" step="0.1" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 text-center sm:text-left xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
                             </div>
 
-                            <!-- [UPDATE: FASE 3] Checkbox Opsional Keterangan per barang -->
-                            <div class="col-span-3 w-full sm:col-span-2 xl:col-span-6 flex items-center gap-2 mt-1 mb-1">
-                                <input type="checkbox" v-model="item.hasKeterangan" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 xl:border-white/20 xl:bg-[#1A233A]">
+                            <!-- [UPDATE: FASE 10++] Checkbox Keterangan -->
+                            <div class="col-span-3 w-full sm:col-span-2 xl:col-span-6 flex items-center gap-2 mt-2 mb-1">
+                                <input type="checkbox" v-model="item.hasKeterangan" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 xl:border-white/20 xl:bg-[#1A233A] xl:checked:bg-[#D4AF37]">
                                 <label class="text-sm font-medium text-slate-600 xl:text-slate-400 cursor-pointer select-none" @click="item.hasKeterangan = !item.hasKeterangan">
                                     Tambah Keterangan Barang
                                 </label>
                             </div>
 
-                            <div v-show="item.hasKeterangan" class="col-span-3 w-full sm:col-span-2 sm:max-w-sm xl:col-span-6 transition-all duration-300">
-                                <label class="form-label">Isi Keterangan</label>
-                                <input v-model="item.keterangan" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
+                            <div v-show="item.hasKeterangan" class="col-span-3 w-full sm:col-span-2 md:col-span-3 xl:col-span-6 transition-all duration-300">
+                                <label class="form-label xl:text-slate-300">Isi Keterangan</label>
+                                <input v-model="item.keterangan" type="text" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
                             </div>
                         </div>
 
-                        <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                            <div class="rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-xs text-blue-700">
-                                <p class="text-[11px] text-blue-500">Berat Volumetrik</p>
+                        <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                            <div class="rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-xs text-blue-700 xl:bg-[#0B132B] xl:border-blue-900/40 xl:text-blue-400">
+                                <p class="text-[11px] text-blue-500 xl:text-blue-500/80">Berat Volumetrik</p>
                                 <p class="font-semibold">{{ formatWeight(volumetrik(item)) }}</p>
                             </div>
 
-                            <div
-                                class="rounded-lg border border-indigo-100 bg-indigo-50 px-3 py-2 text-xs text-indigo-700">
-                                <p class="text-[11px] text-indigo-500">Berat Tagihan</p>
+                            <div class="rounded-lg border border-indigo-100 bg-indigo-50 px-3 py-2 text-xs text-indigo-700 xl:bg-[#0B132B] xl:border-indigo-900/40 xl:text-indigo-400">
+                                <p class="text-[11px] text-indigo-500 xl:text-indigo-500/80">Berat Tagihan</p>
                                 <p class="font-semibold">{{ formatWeight(tagihan(item)) }}</p>
                             </div>
                         </div>
@@ -709,17 +708,17 @@ const submit = async () => {
                         </div>
                     </div>
 
-                    <!-- [UPDATE: FASE 3] Catatan Opsional dengan Checkbox -->
-                    <div class="w-full max-w-lg mt-6">
+                    <!-- [UPDATE: FASE 10++] Catatan Opsional dengan Checkbox -->
+                    <div class="w-full mt-6">
                         <div class="flex items-center gap-2 mb-3">
-                            <input type="checkbox" v-model="hasCatatan" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 xl:border-white/20 xl:bg-[#1A233A]">
+                            <input type="checkbox" v-model="hasCatatan" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 xl:border-white/20 xl:bg-[#1A233A] xl:checked:bg-[#D4AF37]">
                             <label class="text-sm font-semibold text-slate-700 xl:text-slate-300 cursor-pointer select-none" @click="hasCatatan = !hasCatatan">
                                 Tambah Catatan Pengiriman (Opsional)
                             </label>
                         </div>
                         <div v-show="hasCatatan" class="transition-all duration-300">
-                            <label class="form-label">Isi Catatan</label>
-                            <textarea v-model="form.catatan" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent"></textarea>
+                            <label class="form-label xl:text-slate-300">Isi Catatan</label>
+                            <textarea v-model="form.catatan" rows="2" class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] py-3 focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all"></textarea>
                             <p v-if="form.errors.catatan" class="mt-1 text-xs text-red-500">
                                 {{ form.errors.catatan }}
                             </p>
@@ -752,18 +751,19 @@ const submit = async () => {
                 </div>
             </div>
 
-            <div v-else class="p-4 bg-white/60 backdrop-blur-md border border-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:card sm:rounded-xl sm:bg-white sm:border-slate-200 sm:p-4 sm:shadow-sm sm:backdrop-blur-none">
-                <div class="mb-4">
-                    <h3 class="text-sm font-semibold text-[#0B132B] sm:text-slate-800">Step 4 — Layanan & Pembayaran</h3>
-                    <p class="text-xs text-slate-500">Pilih layanan, isi biaya tambahan, lalu simpan.</p>
+            <div v-else class="p-4 bg-white/60 backdrop-blur-md border border-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:card sm:rounded-xl sm:bg-white sm:border-slate-200 sm:p-6 sm:shadow-sm sm:backdrop-blur-none xl:bg-[#16203D]/95 xl:border-white/10 xl:backdrop-blur-xl xl:shadow-2xl transition-colors duration-300">
+                <div class="mb-5">
+                    <h3 class="text-sm font-semibold text-[#0B132B] sm:text-slate-800 xl:text-white">Step 4 — Layanan & Pembayaran</h3>
+                    <p class="text-xs text-slate-500 xl:text-slate-400">Pilih layanan, isi biaya tambahan, lalu simpan.</p>
                 </div>
 
-                <div class="mb-4 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-600 sm:p-4">
+                <!-- [UPDATE: FASE 10++] Rute Banner dengan efek Glassmorphism Premium di Desktop -->
+                <div class="mb-5 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-600 sm:p-4 xl:bg-[#0B132B]/50 xl:border-white/10 xl:text-slate-300 xl:backdrop-blur-md transition-colors">
                     <div class="flex flex-col gap-1 lg:flex-row lg:flex-wrap lg:items-center lg:gap-3">
-                        <span><b>Rute:</b> {{ kotaPengirim?.nama_kota || '-' }} → {{ kotaPenerima?.nama_kota || '-'
+                        <span><b class="xl:text-white">Rute:</b> {{ kotaPengirim?.nama_kota || '-' }} → {{ kotaPenerima?.nama_kota || '-'
                             }}</span>
-                        <span><b>Berat:</b> {{ formatWeight(totalBeratTagihan) }}</span>
-                        <span><b>Barang:</b> {{ jumlahBarang }}</span>
+                        <span><b class="xl:text-white">Berat:</b> {{ formatWeight(totalBeratTagihan) }}</span>
+                        <span><b class="xl:text-white">Barang:</b> {{ jumlahBarang }}</span>
                     </div>
                 </div>
 
@@ -778,15 +778,15 @@ const submit = async () => {
                 </div>
 
                 <div v-else class="space-y-4">
-                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4 xl:gap-5">
                         <button v-for="item in tarifList" :key="item.jenis_layanan" type="button"
-                            class="relative rounded-xl border p-3 text-left sm:p-4" :class="item.jenis_layanan === form.jenis_layanan
-                                ? 'border-2 border-indigo-500 bg-indigo-50'
-                                : 'border-slate-200 bg-white hover:border-indigo-200 hover:bg-slate-50'"
-                            :style="{ transition: 'border-color 0.2s ease, background-color 0.2s ease' }"
+                            class="relative rounded-xl border p-3 text-left sm:p-4 xl:transition-transform xl:hover:-translate-y-1 xl:hover:shadow-lg" :class="item.jenis_layanan === form.jenis_layanan
+                                ? 'border-2 border-indigo-500 bg-indigo-50 xl:border-[#D4AF37] xl:bg-[#D4AF37]/10'
+                                : 'border-slate-200 bg-white hover:border-indigo-200 hover:bg-slate-50 xl:border-white/10 xl:bg-[#0B132B] xl:hover:border-[#D4AF37]/50 xl:hover:bg-[#1A233A]'"
+                            :style="{ transition: 'border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease' }"
                             @click="form.jenis_layanan = item.jenis_layanan">
                             <div class="mb-2 flex flex-wrap gap-1">
-                                <span v-if="isFastest(item)" class="badge bg-amber-100 text-amber-700 xl:bg-amber-900/40 xl:text-amber-400">
+                                <span v-if="isFastest(item)" class="badge bg-amber-100 text-amber-700 xl:bg-amber-900/40 xl:text-[#D4AF37] xl:border xl:border-[#D4AF37]/30">
                                     TERCEPAT
                                 </span>
 
@@ -795,45 +795,45 @@ const submit = async () => {
                                 </span>
                             </div>
 
-                            <p class="text-sm font-semibold text-slate-800">
+                            <p class="text-sm font-semibold text-slate-800 xl:text-white">
                                 {{ formatService(item.jenis_layanan) }}
                             </p>
-                            <p class="mt-2 text-lg font-bold text-indigo-600">
+                            <p class="mt-2 text-lg font-bold text-indigo-600 xl:text-[#D4AF37]">
                                 {{ formatCurrency(item.total) }}
                             </p>
-                            <p class="mt-1 text-xs text-slate-500">
+                            <p class="mt-1 text-xs text-slate-500 xl:text-slate-400">
                                 Estimasi {{ item.estimasi_hari }} hari
                             </p>
-                            <p class="text-xs text-slate-500">
+                            <p class="text-xs text-slate-500 xl:text-slate-400">
                                 {{ formatCurrency(item.per_kg) }}/kg
                             </p>
                         </button>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-2">
+                    <div class="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-2 mt-2 xl:gap-8">
                         <div>
-                            <!-- [UPDATE: FASE 3] Biaya Asuransi dengan Toggle Switch -->
-                            <div class="mb-5 w-full sm:max-w-xs xl:max-w-sm">
+                            <!-- [UPDATE: FASE 10++] Biaya Asuransi dengan Toggle Switch -->
+                            <div class="mb-5 w-full">
                                 <ToggleSwitch v-model="useAsuransi" label="Gunakan Asuransi Pengiriman" class="mb-3 xl:text-slate-300" />
                                 <div v-show="useAsuransi" class="transition-all duration-300">
-                                    <label class="form-label">Nominal Asuransi</label>
+                                    <label class="form-label xl:text-slate-300">Nominal Asuransi</label>
                                     <input v-model="form.biaya_asuransi" type="number" min="0" step="1000"
-                                        class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
+                                        class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
                                 </div>
                             </div>
 
-                            <!-- [UPDATE: FASE 3] Biaya Tambahan dengan Toggle Switch -->
-                            <div class="mb-5 w-full sm:max-w-xs xl:max-w-sm">
+                            <!-- [UPDATE: FASE 10++] Biaya Tambahan dengan Toggle Switch -->
+                            <div class="mb-5 w-full">
                                 <ToggleSwitch v-model="useBiayaTambahan" label="Ada Biaya Tambahan" class="mb-3 xl:text-slate-300" />
                                 <div v-show="useBiayaTambahan" class="transition-all duration-300">
-                                    <label class="form-label">Nominal Biaya Tambahan</label>
+                                    <label class="form-label xl:text-slate-300">Nominal Biaya Tambahan</label>
                                     <input v-model="form.biaya_tambahan" type="number" min="0" step="1000"
-                                        class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-transparent">
+                                        class="form-input w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] focus:bg-white sm:rounded-lg sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10 xl:text-white xl:focus:border-[#D4AF37] transition-all">
                                 </div>
                             </div>
 
-                            <div class="mt-5">
-                                <label class="form-label">Metode Pembayaran</label>
+                            <div class="mt-5 w-full">
+                                <label class="form-label xl:text-slate-300">Metode Pembayaran</label>
 
                                 <div class="space-y-2">
                                     <label
