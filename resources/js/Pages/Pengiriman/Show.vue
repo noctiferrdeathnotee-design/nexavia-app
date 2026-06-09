@@ -355,25 +355,32 @@ const submitCancel = async () => {
 
                         <!-- Desktop View -->
                         <div v-if="barangList.length" class="hidden sm:block overflow-x-auto">
-                            <table class="min-w-full divide-y divide-slate-100">
-                                <thead class="bg-slate-50/50">
+                            <!-- [UPDATE: FASE 3] Tabel menggunakan class global .table-xaviera dari app.css untuk konsistensi -->
+                            <table class="table-xaviera">
+                                <thead>
                                     <tr>
-                                        <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">#</th>
-                                        <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">Nama</th>
-                                        <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">Asli</th>
-                                        <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">Vol</th>
-                                        <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-indigo-600">Tagihan</th>
-                                        <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">Dimensi</th>
+                                        <th>#</th>
+                                        <th>Nama</th>
+                                        <th>Asli</th>
+                                        <th>Vol</th>
+                                        <th class="text-indigo-600 xl:text-indigo-400">Tagihan</th>
+                                        <th>Dimensi</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100 bg-white">
+                                <tbody>
                                     <tr v-for="(item, index) in barangList" :key="'desk-brg-'+item.id">
-                                        <td class="px-4 py-3 text-sm text-slate-600">{{ index + 1 }}</td>
-                                        <td class="px-4 py-3 text-sm font-semibold text-slate-700">{{ item.nama_barang || '-' }}</td>
-                                        <td class="px-4 py-3 text-sm text-slate-600">{{ formatWeight(item.berat_asli_kg) }}</td>
-                                        <td class="px-4 py-3 text-sm text-slate-600">{{ formatWeight(item.berat_volumetrik_kg) }}</td>
-                                        <td class="px-4 py-3 text-sm font-bold text-indigo-600">{{ formatWeight(item.berat_tagihan_kg) }}</td>
-                                        <td class="px-4 py-3 text-sm text-slate-500">{{ Number(item.panjang_cm||0) }}×{{ Number(item.lebar_cm||0) }}×{{ Number(item.tinggi_cm||0) }} cm</td>
+                                        <td>{{ index + 1 }}</td>
+                                        <td>
+                                            <span class="font-semibold">{{ item.nama_barang || '-' }}</span>
+                                        </td>
+                                        <td>{{ formatWeight(item.berat_asli_kg) }}</td>
+                                        <td>{{ formatWeight(item.berat_volumetrik_kg) }}</td>
+                                        <td>
+                                            <span class="font-bold text-indigo-600 xl:text-indigo-400">
+                                                {{ formatWeight(item.berat_tagihan_kg) }}
+                                            </span>
+                                        </td>
+                                        <td>{{ Number(item.panjang_cm||0) }}×{{ Number(item.lebar_cm||0) }}×{{ Number(item.tinggi_cm||0) }} cm</td>
                                     </tr>
                                 </tbody>
                             </table>

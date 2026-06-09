@@ -94,6 +94,50 @@
         @apply w-full overflow-x-auto;
         -webkit-overflow-scrolling: touch;
     }
+
+    /* [UPDATE: FASE 3] Global Table Styling (Dark-Light Hybrid)
+       Sistem ini menjamin SEMUA tabel di halaman manapun memiliki tampilan yang 100% konsisten
+       dan tidak perlu menulis ratusan utilitas berulang kali di setiap file Vue (Anti-Double Code). */
+    .table-xaviera {
+        @apply min-w-full divide-y divide-slate-100 sm:divide-slate-200 xl:divide-white/10;
+    }
+
+    .table-xaviera thead {
+        @apply bg-slate-50 xl:bg-[#0B132B];
+    }
+
+    .table-xaviera thead th {
+        @apply px-3 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 xl:text-slate-400 whitespace-nowrap;
+    }
+
+    .table-xaviera tbody {
+        @apply divide-y divide-slate-100 bg-white xl:divide-white/10 xl:bg-[#1A233A];
+    }
+
+    .table-xaviera tbody tr {
+        @apply transition-colors duration-200 hover:bg-slate-50/80 xl:hover:bg-white/5;
+    }
+
+    .table-xaviera tbody tr.is-late {
+        @apply bg-red-50/80 hover:bg-red-50 xl:bg-red-900/20 xl:hover:bg-red-900/40;
+    }
+
+    .table-xaviera tbody td {
+        @apply px-3 py-3 sm:px-4 sm:py-3.5 text-sm text-slate-600 xl:text-slate-300;
+    }
+
+}
+
+/* Override spesifik untuk warna teks tebal/judul/resi agar mencolok (Putih/Emas) di mode Gelap */
+@media (min-width: 1280px) {
+    .table-xaviera tbody td [class*="font-bold"],
+    .table-xaviera tbody td [class*="font-semibold"],
+    .table-xaviera tbody td[class*="font-bold"],
+    .table-xaviera tbody td[class*="font-semibold"],
+    .table-xaviera tbody td .text-\[\#0B132B\],
+    .table-xaviera tbody td .text-\[\#1a365d\] {
+        color: #ffffff !important;
+    }
 }
 
 ::-webkit-scrollbar {

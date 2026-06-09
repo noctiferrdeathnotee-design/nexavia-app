@@ -278,70 +278,56 @@ const chartSeries = computed(() => ([
                      Fungsi: Mempertahankan tabel renggang nan kokoh untuk layar besar.
                      Perbaikan: 'hidden sm:block' memastikan tabel ini tidak merusak HP. -->
                 <div v-if="latestItems.length > 0" class="hidden sm:block w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                    <table class="min-w-full divide-y divide-slate-100 sm:divide-slate-200">
-                        <thead class="bg-slate-50/80 backdrop-blur-sm border-b border-slate-100">
+                    <!-- [UPDATE: FASE 3] Tabel menggunakan class global .table-xaviera dari app.css untuk anti-double-code -->
+                    <table class="table-xaviera">
+                        <thead>
                             <tr>
-                                <th scope="col"
-                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
-                                    No Resi
-                                </th>
-                                <th scope="col"
-                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
-                                    Pengirim
-                                </th>
-                                <th scope="col"
-                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
-                                    Kota Tujuan
-                                </th>
-                                <th scope="col"
-                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
-                                    Layanan
-                                </th>
-                                <th scope="col"
-                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
-                                    Status
-                                </th>
-                                <th scope="col"
-                                    class="px-4 py-3 sm:px-4 sm:py-3.5 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">
-                                    Estimasi
-                                </th>
+                                <th scope="col">No Resi</th>
+                                <th scope="col">Pengirim</th>
+                                <th scope="col">Kota Tujuan</th>
+                                <th scope="col">Layanan</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Estimasi</th>
                             </tr>
                         </thead>
 
-                        <tbody class="bg-white">
+                        <tbody>
                             <tr v-for="item in latestItems" :key="'desk-'+item.id"
-                                class="cursor-pointer hover:bg-slate-50/80 transition-colors duration-200"
-                                :class="{ 'bg-red-50/50 hover:bg-red-50': item.is_terlambat }" tabindex="0"
+                                class="cursor-pointer"
+                                :class="{ 'is-late': item.is_terlambat }" tabindex="0"
                                 @click="openDetail(item.id)" @keydown.enter.prevent="openDetail(item.id)"
                                 @keydown.space.prevent="openDetail(item.id)">
-                                <td class="px-4 py-3 sm:py-3.5 text-[13px] font-bold tracking-tight text-[#0B132B] whitespace-nowrap border-b border-slate-50">
+                                <td>
                                     <div class="flex flex-col gap-1">
-                                        <span>{{ item.nomor_resi }}</span>
+                                        <span class="font-bold">{{ item.nomor_resi }}</span>
 
                                         <span v-if="item.is_terlambat"
-                                            class="inline-flex w-fit items-center rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold tracking-wide text-red-600">
-                                            Terlambat
+                                            class="inline-flex w-fit rounded-md bg-red-100 px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-red-600 xl:bg-red-900/40 xl:text-red-400">
+                                            TERLAMBAT
                                         </span>
                                     </div>
                                 </td>
 
-                                <td class="px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 whitespace-nowrap border-b border-slate-50">
-                                    {{ item.pengirim_nama || '-' }}
+                                <td>
+                                    <span class="font-medium">{{ item.pengirim_nama || '-' }}</span>
                                 </td>
 
-                                <td class="px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 whitespace-nowrap border-b border-slate-50">
+                                <td>
                                     {{ item.tujuan_kota || '-' }}
                                 </td>
 
-                                <td class="px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 whitespace-nowrap border-b border-slate-50">
-                                    {{ formatLayanan(item.layanan) }}
+                                <td>
+                                    <span
+                                        class="inline-flex items-center rounded-md bg-[#b8860b]/10 px-2.5 py-1 text-xs font-semibold text-[#b8860b] xl:bg-[#D4AF37]/20 xl:text-[#D4AF37]">
+                                        {{ formatLayanan(item.layanan) }}
+                                    </span>
                                 </td>
 
-                                <td class="px-4 py-3 sm:py-3.5 text-[13px] border-b border-slate-50 whitespace-nowrap">
+                                <td>
                                     <StatusBadge :status="item.status" />
                                 </td>
 
-                                <td class="px-4 py-3 sm:py-3.5 text-[13px] font-medium text-slate-600 whitespace-nowrap border-b border-slate-50">
+                                <td>
                                     {{ formatDate(item.estimasi_tiba) }}
                                 </td>
                             </tr>

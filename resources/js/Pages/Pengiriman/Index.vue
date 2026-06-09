@@ -294,40 +294,26 @@ const formatService = (value) => {
                     </div>
                 </div>
 
-                <!-- [UBAH KHUSUS DESKTOP] Table View (Hanya muncul di Layar >= sm) -->
                 <div v-if="rows.length" class="hidden sm:block w-full overflow-x-auto">
-                    <table class="min-w-full divide-y divide-slate-100 sm:divide-slate-200 xl:divide-white/10">
-                        <thead class="bg-slate-50 xl:bg-[#0B132B]">
+                    <!-- [UPDATE: FASE 3] Tabel menggunakan class global .table-xaviera dari app.css untuk konsistensi -->
+                    <table class="table-xaviera">
+                        <thead>
                             <tr>
-                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 xl:text-slate-400">
-                                    No Resi
-                                </th>
-                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 xl:text-slate-400">
-                                    Pengirim
-                                </th>
-                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 xl:text-slate-400">
-                                    Tujuan
-                                </th>
-                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 xl:text-slate-400">
-                                    Layanan
-                                </th>
-                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 xl:text-slate-400">
-                                    Status
-                                </th>
-                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 xl:text-slate-400">
-                                    Estimasi
-                                </th>
-                                <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 xl:text-slate-400">
-                                    Aksi
-                                </th>
+                                <th>No Resi</th>
+                                <th>Pengirim</th>
+                                <th>Tujuan</th>
+                                <th>Layanan</th>
+                                <th>Status</th>
+                                <th>Estimasi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
 
-                        <tbody class="divide-y divide-slate-100 bg-white xl:divide-white/10 xl:bg-[#1A233A]">
-                            <tr v-for="item in rows" :key="item.id" :class="item.is_terlambat ? 'bg-red-50/80 hover:bg-red-50 xl:bg-red-900/20 xl:hover:bg-red-900/40' : 'hover:bg-slate-50/80 xl:hover:bg-white/5 transition-colors duration-150'">
-                                <td class="px-3 py-3 text-sm font-semibold text-[#0B132B] xl:text-white">
+                        <tbody>
+                            <tr v-for="item in rows" :key="item.id" :class="{ 'is-late': item.is_terlambat }">
+                                <td>
                                     <div class="flex flex-col gap-1">
-                                        <span>{{ item.nomor_resi || '-' }}</span>
+                                        <span class="font-bold">{{ item.nomor_resi || '-' }}</span>
                                         <span v-if="item.is_terlambat"
                                             class="inline-flex w-fit rounded-md bg-red-100 px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-red-600 xl:bg-red-900/40 xl:text-red-400">
                                             TERLAMBAT
@@ -335,29 +321,29 @@ const formatService = (value) => {
                                     </div>
                                 </td>
 
-                                <td class="px-3 py-3 text-sm font-medium text-slate-700 xl:text-slate-300">
-                                    {{ item.pengirim_nama || '-' }}
+                                <td>
+                                    <span class="font-bold">{{ item.pengirim_nama || '-' }}</span>
                                 </td>
 
-                                <td class="px-3 py-3 text-sm text-slate-600 xl:text-slate-300">
+                                <td>
                                     {{ item.tujuan_kota || '-' }}
                                 </td>
 
-                                <td class="px-3 py-3 text-sm text-slate-600">
+                                <td>
                                     <span class="inline-flex items-center rounded-md bg-[#b8860b]/10 px-2.5 py-1 text-xs font-semibold text-[#b8860b] xl:bg-[#D4AF37]/20 xl:text-[#D4AF37]">
                                         {{ formatService(item.layanan) }}
                                     </span>
                                 </td>
 
-                                <td class="px-3 py-3 text-sm">
+                                <td>
                                     <StatusBadge :status="item.status" />
                                 </td>
 
-                                <td class="px-3 py-3 text-sm text-slate-600 xl:text-slate-400">
+                                <td>
                                     {{ formatDate(item.estimasi_tiba) }}
                                 </td>
 
-                                <td class="px-3 py-3 text-sm font-medium">
+                                <td>
                                     <Link :href="route('pengiriman.show', item.id)"
                                         class="btn-secondary btn-sm !rounded-md xl:hover:bg-[#0B132B]">
                                         Detail

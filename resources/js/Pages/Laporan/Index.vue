@@ -509,63 +509,51 @@ const setTab = (tab) => {
 
                     <!-- Desktop Table View -->
                     <div v-if="detailRows.length" class="hidden sm:block table-wrap">
-                        <table class="min-w-full divide-y divide-slate-200">
-                            <thead class="bg-slate-50">
+                        <!-- [UPDATE: FASE 3] Tabel menggunakan class global .table-xaviera dari app.css untuk konsistensi -->
+                        <table class="table-xaviera">
+                            <thead>
                                 <tr>
-                                    <th
-                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
-                                        No Resi</th>
-                                    <th
-                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
-                                        Tanggal</th>
-                                    <th
-                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
-                                        Pengirim</th>
-                                    <th
-                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
-                                        Tujuan</th>
-                                    <th
-                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
-                                        Layanan</th>
-                                    <th
-                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
-                                        B. Asli</th>
-                                    <th
-                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
-                                        B. Tagihan</th>
-                                    <th
-                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
-                                        Status</th>
-                                    <th
-                                        class="px-3 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-500">
-                                        Biaya</th>
+                                    <th>No Resi</th>
+                                    <th>Tanggal</th>
+                                    <th>Pengirim</th>
+                                    <th>Tujuan</th>
+                                    <th>Layanan</th>
+                                    <th>B. Asli</th>
+                                    <th>B. Tagihan</th>
+                                    <th>Status</th>
+                                    <th>Biaya</th>
                                 </tr>
                             </thead>
 
-                            <tbody class="divide-y divide-slate-100 bg-white">
-                                <tr v-for="item in detailRows" :key="'dt-'+item.id" class="hover:bg-slate-50/50">
-                                    <td class="px-3 py-2 text-sm font-bold text-[#1a365d]">
-                                        <Link :href="route('pengiriman.show', item.id)" class="hover:text-[#b8860b]">
+                            <tbody>
+                                <tr v-for="item in detailRows" :key="'dt-'+item.id">
+                                    <td>
+                                        <Link :href="route('pengiriman.show', item.id)" class="font-bold hover:text-[#D4AF37] transition-colors">
                                             {{ item.nomor_resi }}
                                         </Link>
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{
-                                        formatDate(item.tanggal, true) }}</td>
-                                    <td class="px-3 py-2 text-sm font-medium text-slate-700">{{ item.pengirim }}</td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">
+                                    <td>{{ formatDate(item.tanggal, true) }}</td>
+                                    <td>
+                                        <span class="font-bold">{{ item.pengirim }}</span>
+                                    </td>
+                                    <td>
                                         {{ item.kota_asal || '-' }} &rarr; {{ item.tujuan || '-' }}
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{
-                                        formatService(item.layanan) }}</td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{
-                                        formatWeight(item.berat_asli) }}</td>
-                                    <td class="px-3 py-2 text-sm text-slate-600">{{
-                                        formatWeight(item.berat_tagihan) }}</td>
-                                    <td class="px-3 py-2 text-sm">
+                                    <td>
+                                        <span class="inline-flex items-center rounded-md bg-[#b8860b]/10 px-2.5 py-1 text-xs font-semibold text-[#b8860b] xl:bg-[#D4AF37]/20 xl:text-[#D4AF37]">
+                                            {{ formatService(item.layanan) }}
+                                        </span>
+                                    </td>
+                                    <td>{{ formatWeight(item.berat_asli) }}</td>
+                                    <td>{{ formatWeight(item.berat_tagihan) }}</td>
+                                    <td>
                                         <StatusBadge :status="item.status" />
                                     </td>
-                                    <td class="px-3 py-2 text-sm font-bold text-indigo-600">{{
-                                        formatCurrency(item.biaya) }}</td>
+                                    <td>
+                                        <span class="font-bold text-indigo-600 xl:text-indigo-400">
+                                            {{ formatCurrency(item.biaya) }}
+                                        </span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
