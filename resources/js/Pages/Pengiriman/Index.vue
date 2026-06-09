@@ -192,7 +192,7 @@ const formatService = (value) => {
             </div>
 
             <!-- FILTER DESKTOP (100% Tidak Disentuh, Hanya Disembunyikan di Mobile) -->
-            <div class="hidden sm:block card relative overflow-hidden rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="hidden sm:block card relative overflow-hidden p-4 rounded-xl border border-slate-200 bg-white shadow-sm xl:bg-[#1A233A] xl:border-white/10 xl:shadow-lg">
                 <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none lg:hidden"></div>
                 
                 <!-- [UBAH KHUSUS MOBILE & DESKTOP] Tata letak grid baru setelah "Sort" dan "Layanan" dihapus -->
@@ -235,7 +235,7 @@ const formatService = (value) => {
                     </div>
 
                     <!-- [UBAH KHUSUS MOBILE & DESKTOP] Premium Toggle Switch untuk Filter 'Hanya Terlambat' -->
-                    <div class="col-span-2 flex items-center justify-between lg:col-span-1 p-2 bg-slate-50/50 rounded-lg border border-slate-100/50">
+                    <div class="col-span-2 flex items-center justify-between lg:col-span-1 p-2 bg-slate-50/50 rounded-lg border border-slate-100/50 xl:bg-white/5 xl:border-white/10 xl:backdrop-blur-sm">
                         <ToggleSwitch v-model="filterForm.only_late" label="Hanya Terlambat" @change="applyFilters" />
                     </div>
 
@@ -249,7 +249,7 @@ const formatService = (value) => {
 
             <!-- Table Section -->
             <!-- [UBAH KHUSUS MOBILE] Kotak Tabel Premium: glassmorphism, shadow tipis, border tipis -->
-            <div class="card overflow-hidden rounded-[20px] border border-slate-100/60 bg-white/95 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm sm:rounded-xl sm:border sm:border-slate-200 sm:bg-white sm:shadow-sm sm:backdrop-blur-none">
+            <div class="card overflow-hidden rounded-[20px] border border-slate-100/60 bg-white/95 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-sm sm:rounded-xl sm:border sm:border-slate-200 sm:bg-white sm:shadow-sm sm:backdrop-blur-none xl:bg-[#1A233A] xl:border-white/10 xl:shadow-lg">
                 
                 <!-- [UPDATE: FASE 2 STACKED CARDS KHUSUS MOBILE]
                      Perbaikan: Padding dikurangi dari p-4 menjadi p-3.5 agar tidak memakan layar.

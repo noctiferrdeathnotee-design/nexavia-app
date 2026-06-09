@@ -154,31 +154,22 @@ onBeforeUnmount(() => {
 
                 <div ref="dropdownRef" class="relative">
                     <button type="button"
-                        class="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2 py-1.5 hover:bg-slate-50 sm:px-2.5 sm:py-2 xl:border-white/10 xl:bg-[#1A233A] xl:hover:bg-[#1A233A]/80 transition-colors"
+                        class="flex items-center gap-1 p-1 sm:p-1.5 transition-colors group"
                         @click="dropdownOpen = !dropdownOpen">
                         
-                        <!-- [UPDATE: FASE 2] Mengganti Teks Nama Admin dengan Icon Guest Saja -->
-                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-600 sm:h-9 sm:w-9 xl:bg-[#0B132B] xl:text-[#D4AF37] transition-colors">
-                            <i class="bi bi-person-circle text-xl" />
+                        <!-- [UPDATE: FASE 2] Ikon profil murni tanpa kotak border -->
+                        <div class="flex items-center justify-center text-slate-400 group-hover:text-slate-600 xl:text-slate-400 xl:group-hover:text-[#D4AF37] transition-colors">
+                            <i class="bi bi-person-circle text-2xl sm:text-3xl" />
                         </div>
-
-                        <i class="bi bi-chevron-down text-xs text-slate-400 xl:text-slate-500" />
                     </button>
 
+                    <!-- [UPDATE: FASE 2] Dropdown menu disederhanakan hanya berisi tombol Logout, dengan perpaduan Dark-Light (Glassmorphism) -->
                     <div v-if="dropdownOpen"
-                        class="absolute right-0 mt-2 w-64 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
-                        <div class="border-b border-slate-100 px-4 py-3">
-                            <p class="text-sm font-semibold text-slate-800">
-                                {{ authUser?.nama || 'Admin' }}
-                            </p>
-                            <p class="text-xs text-slate-500">
-                                {{ authUser?.email || '-' }}
-                            </p>
-                        </div>
+                        class="absolute right-0 mt-2 w-48 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg xl:bg-[#1A233A]/95 xl:backdrop-blur-md xl:border-white/10 xl:shadow-2xl">
 
                         <div class="px-2 py-2">
                             <button type="button"
-                                class="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-red-500 hover:bg-red-50"
+                                class="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-red-500 hover:bg-red-50 xl:hover:bg-red-900/30 transition-colors"
                                 @click="logout">
                                 <i class="bi bi-box-arrow-right" />
                                 <span>Keluar</span>
