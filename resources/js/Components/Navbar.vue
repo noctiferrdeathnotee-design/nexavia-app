@@ -154,23 +154,15 @@ onBeforeUnmount(() => {
 
                 <div ref="dropdownRef" class="relative">
                     <button type="button"
-                        class="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2 py-1.5 hover:bg-slate-50 sm:px-2.5 sm:py-2"
+                        class="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2 py-1.5 hover:bg-slate-50 sm:px-2.5 sm:py-2 xl:border-white/10 xl:bg-[#1A233A] xl:hover:bg-[#1A233A]/80 transition-colors"
                         @click="dropdownOpen = !dropdownOpen">
-                        <div
-                            class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-xs font-semibold text-indigo-600 sm:h-9 sm:w-9 sm:text-sm">
-                            {{ initials }}
+                        
+                        <!-- [UPDATE: FASE 2] Mengganti Teks Nama Admin dengan Icon Guest Saja -->
+                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-600 sm:h-9 sm:w-9 xl:bg-[#0B132B] xl:text-[#D4AF37] transition-colors">
+                            <i class="bi bi-person-circle text-xl" />
                         </div>
 
-                        <div class="hidden text-left sm:block">
-                            <p class="max-w-[140px] truncate text-sm font-medium text-slate-700">
-                                {{ authUser?.nama || 'Admin' }}
-                            </p>
-                            <p class="max-w-[160px] truncate text-xs text-slate-500">
-                                {{ authUser?.email || '-' }}
-                            </p>
-                        </div>
-
-                        <i class="bi bi-chevron-down text-xs text-slate-400" />
+                        <i class="bi bi-chevron-down text-xs text-slate-400 xl:text-slate-500" />
                     </button>
 
                     <div v-if="dropdownOpen"

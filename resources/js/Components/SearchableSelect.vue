@@ -65,13 +65,13 @@ onUnmounted(() => document.removeEventListener('click', closeDropdown))
         <!-- [UBAH KHUSUS MOBILE & DESKTOP] Tombol Pemicu Dropdown bergaya modern, seragam dengan input premium lainnya -->
         <div 
             @click="toggle"
-            class="flex items-center justify-between w-full form-input cursor-pointer transition-colors w-full rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] sm:hover:border-indigo-400 sm:rounded-md sm:bg-white sm:border-slate-300 sm:min-h-0"
-            :class="{ 'ring-2 ring-indigo-500/20 border-indigo-500 bg-white': isOpen }"
+            class="flex items-center justify-between w-full form-input cursor-pointer transition-colors rounded-[16px] bg-slate-50/80 border-transparent min-h-[48px] sm:hover:border-indigo-400 sm:rounded-md sm:bg-white sm:border-slate-300 sm:min-h-0 xl:bg-[#0B132B] xl:border-white/10"
+            :class="{ 'ring-2 ring-indigo-500/20 border-indigo-500 bg-white xl:border-[#D4AF37] xl:ring-[#D4AF37]/50': isOpen }"
         >
-            <span class="truncate font-medium tracking-tight" :class="selectedOption ? 'text-slate-800' : 'text-slate-500'">
+            <span class="truncate font-medium tracking-tight" :class="selectedOption ? 'text-slate-800 xl:text-slate-100' : 'text-slate-500 xl:text-slate-400'">
                 {{ selectedOption ? selectedOption.nama_kota : placeholder }}
             </span>
-            <i class="bi bi-chevron-down text-slate-400 transition-transform duration-200" :class="{ 'rotate-180': isOpen }" />
+            <i class="bi bi-chevron-down text-slate-400 xl:text-slate-500 transition-transform duration-200" :class="{ 'rotate-180': isOpen }" />
         </div>
 
         <!-- [UBAH KHUSUS MOBILE & DESKTOP] Menu Dropdown dengan efek Glassmorphism tipis, membatasi tinggi agar tidak merusak tata letak layar HP -->
@@ -83,16 +83,16 @@ onUnmounted(() => document.removeEventListener('click', closeDropdown))
             leave-from-class="transform scale-100 opacity-100 translate-y-0"
             leave-to-class="transform scale-95 opacity-0 translate-y-[-10px]"
         >
-            <div v-if="isOpen" class="absolute z-50 w-full mt-2 bg-white/95 backdrop-blur-sm border border-slate-200/80 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] overflow-hidden origin-top">
+            <div v-if="isOpen" class="absolute z-50 w-full mt-2 bg-white/95 backdrop-blur-sm border border-slate-200/80 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] overflow-hidden origin-top xl:bg-[#1A233A]/95 xl:border-white/10 xl:shadow-[0_8px_30px_rgb(0,0,0,0.5)]">
                 
                 <!-- Kotak Pencarian Pintar -->
-                <div class="p-2 border-b border-slate-100 bg-slate-50/50">
+                <div class="p-2 border-b border-slate-100 bg-slate-50/50 xl:bg-[#0B132B]/50 xl:border-white/5">
                     <div class="relative">
-                        <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs" />
+                        <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs xl:text-slate-500" />
                         <input 
                             v-model="search" 
                             type="text" 
-                            class="w-full pl-8 pr-3 py-2 text-sm bg-white border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all outline-none" 
+                            class="w-full pl-8 pr-3 py-2 text-sm bg-white border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all outline-none xl:bg-[#0B132B] xl:border-white/10 xl:text-slate-100 xl:placeholder-slate-500 xl:focus:border-[#D4AF37] xl:focus:ring-[#D4AF37]/50" 
                             placeholder="Ketik nama kota..."
                             @click.stop
                         >
@@ -108,10 +108,10 @@ onUnmounted(() => document.removeEventListener('click', closeDropdown))
                         v-for="opt in filteredOptions" 
                         :key="opt.id"
                         @click.stop="selectOption(opt)"
-                        class="px-3 py-2.5 text-sm cursor-pointer transition-colors duration-150 border-b border-slate-50 last:border-0"
+                        class="px-3 py-2.5 text-sm cursor-pointer transition-colors duration-150 border-b border-slate-50 last:border-0 xl:border-white/5"
                         :class="{ 
-                            'bg-indigo-50 text-indigo-700 font-semibold': String(opt.id) === String(modelValue), 
-                            'text-slate-700 font-medium tracking-tight hover:bg-slate-50': String(opt.id) !== String(modelValue) 
+                            'bg-indigo-50 text-indigo-700 font-semibold xl:bg-[#D4AF37]/20 xl:text-[#D4AF37]': String(opt.id) === String(modelValue), 
+                            'text-slate-700 font-medium tracking-tight hover:bg-slate-50 xl:text-slate-300 xl:hover:bg-[#0B132B] xl:hover:text-white': String(opt.id) !== String(modelValue) 
                         }"
                     >
                         {{ opt.nama_kota }}
