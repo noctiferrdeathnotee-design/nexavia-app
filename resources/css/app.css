@@ -62,9 +62,9 @@
         transition: box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
     }
 
-    /* [UPDATE: FASE 1] Input Desktop berubah menjadi Midnight Blue dengan border/ring Xaviera Gold */
+    /* [UPDATE: FASE 1] Input Desktop diubah agar warna menyatu dengan latar belakang Dark-Light (Glassmorphism Transparan) */
     .form-input {
-        @apply block w-full px-3 py-2 text-sm rounded-lg border border-slate-200 outline-none bg-white text-slate-800 placeholder-slate-400 xl:bg-[#0B132B] xl:border-white/10 xl:text-slate-100 xl:placeholder-slate-500 xl:focus:border-[#D4AF37] xl:focus:ring-[#D4AF37]/50;
+        @apply block w-full px-3 py-2 text-sm rounded-lg border border-slate-200 outline-none bg-white text-slate-800 placeholder-slate-400 xl:bg-white/5 xl:border-white/10 xl:text-slate-100 xl:placeholder-slate-400 xl:focus:border-[#D4AF37] xl:focus:ring-[#D4AF37]/50 xl:backdrop-blur-sm;
         transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
     }
 
@@ -73,7 +73,7 @@
     }
 
     .form-select {
-        @apply block w-full px-3 py-2 text-sm rounded-lg border border-slate-200 outline-none bg-white text-slate-800 xl:bg-[#0B132B] xl:border-white/10 xl:text-slate-100 xl:focus:border-[#D4AF37] xl:focus:ring-[#D4AF37]/50;
+        @apply block w-full px-3 py-2 text-sm rounded-lg border border-slate-200 outline-none bg-white text-slate-800 xl:bg-[#1A233A] xl:border-white/10 xl:text-slate-100 xl:focus:border-[#D4AF37] xl:focus:ring-[#D4AF37]/50;
         transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
     }
 

@@ -39,8 +39,8 @@ const isMobileNavActive = (match, exact) => {
 </script>
 
 <template>
-    <!-- [UPDATE: FASE 1 - DARK AURORA] Desktop diubah menjadi Dark Vibes. Latar utama menjadi Midnight Blue. -->
-    <div class="min-h-screen bg-slate-50 xl:bg-[#0B132B] font-['Plus_Jakarta_Sans'] pb-20 xl:pb-0 transition-colors duration-500">
+    <!-- [UPDATE: FASE 1 - DARK AURORA] Desktop diubah menjadi perpaduan Dark Vibes dengan sentuhan light gradient (Dark-Light Hybrid). -->
+    <div class="min-h-screen bg-slate-50 xl:bg-gradient-to-br xl:from-[#0B132B] xl:via-[#1A233A] xl:to-[#111827] font-['Plus_Jakarta_Sans'] pb-20 xl:pb-0 transition-colors duration-500">
         <!-- Sidebar dimatikan sepenuhnya di Mobile Android (Overlay Background Dihapus untuk membersihkan DOM) -->
         
         <Sidebar :open="sidebarOpen" @close="sidebarOpen = false" />
